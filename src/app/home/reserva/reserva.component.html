@@ -1,0 +1,78 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Reserva</li>
+    </ol>
+</nav>
+
+<div style="margin-left: 12%">
+    <div class="arrow-steps clearfix">
+        <div [ngClass]=" 'step ' + arreglo[variable - 0]"> <span> Elige servicio </span> </div>
+        <div [ngClass]=" 'step ' + arreglo[variable - 1]"> <span>Elige dia y hora</span> </div>
+        <div [ngClass]=" 'step ' + arreglo[variable - 2]"> <span> Ingresa tus datos</span> </div>
+        <div [ngClass]=" 'step ' + arreglo[variable - 3]"> <span>Reserva Exitosa</span> </div>
+    </div>
+</div>
+
+
+<div class="tab-content" id="pills-tabContent">
+    <!--Inicio Servicio-->
+    <div class="tab-pane fade show active" id="pills-servicio" role="tabpanel" aria-labelledby="pills-servicio-tab">
+        <div class="row">
+            <div class="col-8" style="padding: 4%">
+                <h1>Elegir Servicios</h1>
+                <div class="overflow-auto" style="height:500px">
+                    <div class="list-group" *ngFor="let servicio of arregloServicios">
+                        <a class="list-group-item list-group-item-action " (click)="agregarServicio(servicio)">
+                            <div class="media">
+                                <img src="../../../assets/servicio_uñas.jpg" class="align-self-center mr-3" style="width: 64px;height:64px;">
+                                <div class="media-body">
+                                    <h5 class="mt-0">{{servicio.nombre}}</h5>
+                                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+
+                                </div>
+                                <span style="text-align: right"><i class="fa fa-plus-square"></i></span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div style="padding: 4%">
+
+                    <a class="btn btn-outline-success btn-lg btn-block" (click)="press()" id="pills-fecha-tab" data-toggle="pill" href="#pills-fecha" role="tab" aria-controls="pills-fecha" aria-selected="true">Elige Dia y Hora</a>
+
+                    <h5 class="mt-0">Profesional Disponible</h5>
+                    <select class="form-control" id="exampleFormControlSelect1">
+                        <option>Juan Perez</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="pills-fecha" role="tabpanel" aria-labelledby="pills-fecha-tab">
+        <div class="row" style="padding: 2%;">
+            <div class="col-2" style="margin-bottom: 30px;">
+
+            </div>
+            <div class="col-3" style="margin-bottom: 30px; ">
+                <ngb-datepicker #d style="background-color: #FFFF;"></ngb-datepicker>
+
+            </div>
+            <div style=" width: 1px;background: #BDBDBD;">
+            </div>
+            <div class="col-1" style="margin-bottom: 30px;">
+
+            </div>
+            <div class="col-4" style="margin-bottom: 30px;">
+                <h3>Horarios</h3>
+                <a class="btn btn-outline-success btn-lg btn-block" (click)="press()" id="pills-contact-tab" data-toggle="pill" href="#pills-contacto" role="tab" aria-controls="pills-contacto" aria-selected="true">Confirmar</a>
+            </div>
+            <div class="col-1" style="margin-bottom: 30px;">
+
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="pills-contacto" role="tabpanel" aria-labelledby="pills-contact-tab">..tytuiytre.
+    </div>
+</div>

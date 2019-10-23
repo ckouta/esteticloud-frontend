@@ -1,0 +1,23 @@
+<button type="button" class="btn btn-outline-success waves-effect" (click)="AgregarEvento()">Agregar Reserva</button>
+<div class="row" style="margin: 0; padding:2%; display: grid;">
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-primary form-check-label active">
+          <input class="form-check-input" type="radio" name="options" id="option1" autocomplete="off">
+      <button class="botonformato" (click)="formatoDia()">Dia</button>
+    </label>
+        <label class="btn btn-primary form-check-label">
+      <button class="botonformato" (click)="formatoSemana()"><input class="form-check-input" type="radio" name="options"
+          id="option2" autocomplete="off">Semana</button>
+    </label>
+        <label class="btn btn-primary form-check-label">
+          <input class="form-check-input" type="radio" name="options" id="option3" autocomplete="off">
+      <button class="botonformato" (click)="formatoMes()">Mes</button>
+    </label>
+    </div>
+</div>
+<div style="padding: 15px; height: 0;">
+    <full-calendar #calendar defaultView="dayGridMonth" [plugins]="calendarPlugins" [events]="calendarEvents" [header]="{
+        left: 'title',
+        right: 'prev,next'
+      }" [weekends]="calendarWeekends" locale="es-us"></full-calendar>
+</div>
