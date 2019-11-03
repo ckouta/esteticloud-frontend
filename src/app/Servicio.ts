@@ -3,4 +3,6 @@ export interface Servicio {
     nombre: string;
     duracion: string;
     precio: number;
+    descripcion: string;
+    foto:string;
 }

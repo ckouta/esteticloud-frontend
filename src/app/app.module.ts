@@ -24,6 +24,7 @@ import { HorarioComponent } from './profesional/horario/horario.component';
 import { RegistrarServicioComponent } from './profesional/registrar-servicio/registrar-servicio.component';
 import { MDBBootstrapModule,WavesModule, TableModule, IconsModule } from 'angular-bootstrap-md';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { DetalleServicioComponent } from './profesional/profesional-servicio/detalle-servicio/detalle-servicio.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     RegistrarClientesComponent,
     HorarioComponent,
     RegistrarServicioComponent,
+    DetalleServicioComponent,
     
     
   ],

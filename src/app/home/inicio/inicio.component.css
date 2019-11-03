@@ -2,12 +2,9 @@
     background: url(/../../../assets/chica_camilla.jpg) no-repeat center;
     background-size: cover;
     min-height: 55vh;
-  }
-  img{
-    background-size: cover;
-    height: 400px;
-  }
-  .row{
+}
+
+.row {
     display: flex;
     justify-content: center;
-  }
+}

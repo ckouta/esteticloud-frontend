@@ -19,22 +19,25 @@ export class RestService {
 
   /*Profesional */
   getListaProfesional() {
-    return this.http.get('http://localhost:8080/profesional/listar').pipe(map((res) => res as Profesional[]));
+    return this.http.get(this.URL+'profesional/listar').pipe(map((res) => res as Profesional[]));
   }
   saveProfesional(profesional: Profesional) {
     return this.http.post<Profesional[]>(this.URL + '/profesional/save', profesional);
   }
-  updateProfesional(id, profesional) {
+  updateProfesional(id: number, profesional:Profesional) {
     return this.http.put(this.URL + '/profesional/update/' + id, profesional);
   }
   /*Servicio */
   getListaServicio() {
-    return this.http.get('http://localhost:8080/servicio/listar').pipe(map((res) => res as Servicio[]));
+    return this.http.get(this.URL +'/servicio/listar').pipe(map((res) => res as Servicio[]));
+  }
+  getServicio(id:number) {
+    return this.http.get(this.URL +'/servicio/servicio/'+id).pipe(map((res) => res as Servicio));
   }
   saveServicio(servicio: Servicio) {
     return this.http.post<Servicio[]>(this.URL + '/servicio/save', servicio);
   }
-  updateServicio(id, servicio) {
+  updateServicio(id:number, servicio:Servicio) {
     return this.http.put(this.URL + '/servicio/update/' + id, servicio);
   }
   /*Horario */

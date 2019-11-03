@@ -4,6 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGrigPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { FullCalendarComponent } from '@fullcalendar/angular';
+import { RestService } from 'src/app/servicioBackend/rest.service';
 
 @Component({
   selector: 'app-reserva',
@@ -15,55 +16,15 @@ export class ReservaComponent implements OnInit {
   calendarWeekends = true;
   arreglo: String[] = ["", "current", "done", "done", "done"];
   variable: number = 1;
-  listServicios: Servicio[] = [];
-  arregloServicios: Servicio[] = [
-    {
-      id_servicio: 1,
-      nombre: "Corte de Pelo",
-      duracion: "NO existe descripcion",
-      precio: 345
-    },
-    {
-      id_servicio: 1,
-      nombre: "Corte de Pelo",
-      duracion: "NO existe descripcion",
-      precio: 345
-    },
-    {
-      id_servicio: 1,
-      nombre: "Corte de Pelo",
-      duracion: "NO existe descripcion",
-      precio: 345
-    },
-    {
-      id_servicio: 1,
-      nombre: "Corte de Pelo",
-      duracion: "NO existe descripcion",
-      precio: 345
-    },
-    {
-      id_servicio: 1,
-      nombre: "Corte de Pelo",
-      duracion: "NO existe descripcion",
-      precio: 345
-    },
-    {
-      id_servicio: 1,
-      nombre: "Corte de Pelo",
-      duracion: "NO existe descripcion",
-      precio: 345
-    },
-    {
-      id_servicio: 1,
-      nombre: "Corte de Pelo",
-      duracion: "NO existe descripcion",
-      precio: 345
-    }
-  ];
+  listServicios: Servicio[];
+  
   valor: String = "done";
-  constructor() { }
+  constructor(public restService: RestService) { }
 
   ngOnInit() {
+    this.restService.getListaServicio().subscribe((res: any[]) => {
+      this.listServicios = res;
+      });
   }
 
   press() {
