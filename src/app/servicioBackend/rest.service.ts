@@ -41,6 +41,9 @@ export class RestService {
   saveProfesional(profesional: Profesional) {
     return this.http.post<Profesional>(this.URL + '/profesional/save', profesional, { headers: this.agregarAuthorizationHeader() });
   }
+  saveUsuarioProfesional(registrar: Registro) {
+    return this.http.post<Profesional>(this.URL + '/profesional/usuario', registrar, { headers: this.agregarAuthorizationHeader() });
+  }
   saveImagenProfesional(id: string, archivo:File) {
     let formData = new FormData();
     formData.append("archivo",archivo);
@@ -90,7 +93,7 @@ updateReserva(id: number, profesional:Profesional) {
     return this.http.get(this.URL +'/servicio/servicio/'+id).pipe(map((res) => res as Servicio));
   }
   saveServicio(servicio: Servicio) {
-    return this.http.post<Servicio[]>(this.URL + '/servicio/save', servicio,{ headers: this.agregarAuthorizationHeader() });
+    return this.http.post<Servicio>(this.URL + '/servicio/save', servicio,{ headers: this.agregarAuthorizationHeader() });
   }
   saveImagenServicio(id: string, archivo:File) {
     let formData = new FormData();

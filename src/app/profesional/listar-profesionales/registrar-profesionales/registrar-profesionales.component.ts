@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Profesional } from 'src/app/entidades/Profesional';
-import { RestService } from '../../servicioBackend/rest.service';
+import { RestService } from '../../../servicioBackend/rest.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -28,6 +28,7 @@ export class RegistrarProfesionalesComponent implements OnInit {
       email: ['', [Validators.required]],
       estado: ['', [Validators.required]],
       descripcion: ['', [Validators.required]],
+      password: ['', [Validators.required]]
     });
   }
 
@@ -42,6 +43,8 @@ export class RegistrarProfesionalesComponent implements OnInit {
         email: this.ProfesionalActualizar.email,
         estado: '',
         descripcion: '',
+        password:''
+
       });
       console.log(this.ProfesionalActualizar)
     }

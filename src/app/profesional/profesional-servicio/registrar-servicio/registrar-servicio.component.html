@@ -1,21 +1,21 @@
 <div class="container">
-    <h2>Formulario </h2>
+    <h2>Formulario de registro de servicio</h2>
     <hr>
     <div class="row">
         <div class="col-md-12">
             <div class="form-row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <form [formGroup]="formProduct" (ngSubmit)="saveData()" novalidate enctype="multipart/form-data">
+                        <form [formGroup]="formServicio" (ngSubmit)="saveData()" novalidate enctype="multipart/form-data">
 
                             <div class="row">
                                 <div class="col-md-6">
                                     <!--Nombre producto-->
                                     <div class="form-group">
-                                        <h6 for="nombre">Nombre Profesional</h6>
+                                        <h6 for="nombre">Nombre del Servicio</h6>
                                         <input formControlName="nombre" class="form-control" type="text" placeholder="Ingrese Nombre">
-                                        <div *ngIf="formProduct.get('nombre').errors && (formProduct.get('nombre').touched 
-                            || formProduct.get('nombre').dirty)" class="alert alert-danger">El nombre del profesional es obligatorio
+                                        <div *ngIf="formServicio.get('nombre').errors && (formServicio.get('nombre').touched 
+                            || formServicio.get('nombre').dirty)" class="alert alert-danger">El nombre del servicio es obligatorio
                                         </div>
                                     </div>
                                     <!--Fin Nombre producto-->
@@ -23,7 +23,7 @@
                                 <div class="col-md-6">
                                     <!-- Subir imagen-->
                                     <div class="form-group">
-                                        <h6 for="imagen">Seleccione una imagen para el producto</h6>
+                                        <h6 for="imagen">Seleccione una imagen para el Servicio</h6>
                                         <input (change)="seleccionarFoto($event)" type="file" class="form-control-file">
                                     </div>
                                     <!-- fin Subir imagen-->
@@ -32,36 +32,26 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <!--Seleccionar categoria-->
-                                    <h6 for="apellido">Apellido</h6>
-                                    <input formControlName="apellido" class="form-control" type="text" placeholder="Ingrese apellido">
+                                    <h6 for="apellido">Duracion</h6>
+                                    <input formControlName="duracion" class="form-control" type="number" placeholder="Ingrese duracion del servicio en minutos">
                                     <!--Fin seleccionar categoria-->
                                 </div>
                                 <div class="col-md-6">
                                     <!--Precio producto-->
                                     <div class="form-group">
-                                        <h6 for="Telefono">Telefono</h6>
-                                        <input formControlName="telefono" type="text" class="form-control" placeholder="Ingrese Telefono">
+                                        <h6 for="Telefono">Precio</h6>
+                                        <input formControlName="precio" type="text" class="form-control" placeholder="Ingrese precio">
                                     </div>
                                     <!--Fin Precio producto-->
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <!--Seleccionar cantidad personas-->
-                                    <div class="form-group">
-                                        <h6 for="Email">Email</h6>
-                                        <input formControlName="email" type="text" class="form-control" placeholder="Ingrese el email">
-                                        <!--Fin cantidad personas-->
-                                    </div>
-                                </div>
-                            </div>
                             <!--Ingresar Descripción-->
                             <div class="form-group">
                                 <h6 for="descripcionProducto">Descripción</h6>
-                                <textarea formControlName="descripcion" class="form-control" placeholder="Ingrese una descripción para el profesional"></textarea>
-                                <div *ngIf="formProduct.get('descripcion').errors && (formProduct.get('descripcion').touched 
-                              || formProduct.get('descripcion').dirty)" class="alert alert-danger">Es necesario ingresar una descripción.
+                                <textarea formControlName="descripcion" class="form-control" placeholder="Ingrese una descripción para el servicio"></textarea>
+                                <div *ngIf="formServicio.get('descripcion').errors && (formServicio.get('descripcion').touched 
+                              || formServicio.get('descripcion').dirty)" class="alert alert-danger">Es necesario ingresar una descripción.
                                 </div>
                             </div>
                             <!-- fin Ingresar Descripción-->
@@ -86,17 +76,17 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Salir de formulario de ingreso de productos</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Salir de formulario de ingreso de servicio</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                ¿Estás seguro que deseas salir del formulario de ingreso de productos?
+                ¿Estás seguro que deseas salir del formulario de ingreso de servicio?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-warning" data-dismiss="modal" [routerLink]="['/profesional/profesional']">Confirmar</button>
+                <button type="button" class="btn btn-warning" data-dismiss="modal" [routerLink]="['/servicio/servicio']">Confirmar</button>
             </div>
         </div>
     </div>

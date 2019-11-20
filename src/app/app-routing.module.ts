@@ -9,13 +9,13 @@ import { ReservaComponent } from './home/reserva/reserva.component';
 import { InicioComponent } from './home/inicio/inicio.component';
 import { ListarProfesionalesComponent } from './profesional/listar-profesionales/listar-profesionales.component';
 import { CalendarioComponent } from './profesional/calendario/calendario.component'; // for FullCalendar!
-import { RegistrarProfesionalesComponent } from './profesional/registrar-profesionales/registrar-profesionales.component';
+import { RegistrarProfesionalesComponent } from './profesional/listar-profesionales/registrar-profesionales/registrar-profesionales.component';
 import { MovimientosComponent } from './profesional/movimientos/movimientos.component';
 import { ClientesComponent } from './profesional/clientes/clientes.component';
 import { ProfesionalServicioComponent } from './profesional/profesional-servicio/profesional-servicio.component';
-import { RegistrarClientesComponent } from './profesional/registrar-clientes/registrar-clientes.component';
+import { RegistrarClientesComponent } from './profesional/clientes/registrar-clientes/registrar-clientes.component';
 import { HorarioComponent } from './profesional/horario/horario.component';
-import { RegistrarServicioComponent } from './profesional/registrar-servicio/registrar-servicio.component';
+import { RegistrarServicioComponent } from './profesional/profesional-servicio/registrar-servicio/registrar-servicio.component';
 import { DetalleServicioComponent } from './profesional/profesional-servicio/detalle-servicio/detalle-servicio.component';
 import { ListaHorarioComponent } from './profesional/horario/lista-horario/lista-horario.component';
 import { RegistrarHorarioComponent } from './profesional/horario/registrar-horario/registrar-horario.component';
