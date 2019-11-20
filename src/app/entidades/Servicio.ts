@@ -1,7 +1,7 @@
 export interface Servicio {
     id_servicio: number;
     nombre: string;
-    duracion: string;
+    duracion: number;
     precio: number;
     descripcion: string;
     foto:string;

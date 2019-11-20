@@ -3,10 +3,6 @@
     max-width: 100px;
 }
 
-.ngb-datepicker {
-    background-color: #fffF!important;
-}
-
 div.hr {
     border-bottom-style: solid;
     border-bottom-width: 1px;
@@ -41,12 +37,6 @@ div.hr {
     float: right;
 }
 
-a,
-a:active {
-    color: #333;
-    text-decoration: none;
-}
-
 a:hover {
     color: #999;
 }
@@ -55,7 +45,7 @@ a:hover {
 /* Breadcrups CSS */
 
 .arrow-steps .step {
-    width: 20%;
+    width: 30%;
     font-size: 14px;
     text-align: center;
     color: #666;

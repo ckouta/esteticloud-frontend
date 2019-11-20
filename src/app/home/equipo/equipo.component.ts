@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RestService } from 'src/app/servicioBackend/rest.service';
 
 @Component({
   selector: 'app-equipo',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EquipoComponent implements OnInit {
 
-  constructor() { }
+  constructor( public restService: RestService) { }
 
   ngOnInit() {
+    this.restService.getListaProfesional().subscribe((res: any[]) => {
+      this.restService.listaProfesional = res;
+      });
   }
 
 }

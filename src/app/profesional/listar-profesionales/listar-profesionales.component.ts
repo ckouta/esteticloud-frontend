@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Profesional } from 'src/app/Profesional';
+import { Profesional } from 'src/app/entidades/Profesional';
 import { RestService } from '../../servicioBackend/rest.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 

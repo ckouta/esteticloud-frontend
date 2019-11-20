@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
+import { Usuario } from '../entidades/Usuario';
+import { RestService } from '../servicioBackend/rest.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -9,19 +12,33 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   formUser: FormGroup;
+  usuario: Usuario;
 
-  constructor(private router: Router,private formBuilder: FormBuilder) { 
-    this.formUser = this.formBuilder.group({
-      username: ['', [Validators.required]],
-      password: ['', [Validators.required]],
-    });
+  constructor(private router: Router,private restService: RestService) { 
+    this.usuario = new Usuario();
   }
 
   ngOnInit() {
+    
   }
   
-  save() {
-    
+  
+  login(): void{
+    console.log(this.usuario);
+    if(this.usuario.username ==null || this.usuario.password == null){
+      Swal.fire('Campos Vacios', 'los campos estan vacios', 'error');
+      return;
+    }
+    this.restService.login(this.usuario).subscribe(response =>{
+      console.log(response);
+    this.restService.guardarUsuario(response.access_token);
+    this.restService.guardarToken(response.access_token);
     this.router.navigate(['profesional']);
+    }, err =>{
+      if(err.status==400){
+        Swal.fire('Credenciales Incorrectas', 'las credenciales no coinciden', 'error');
+      }
+    }
+    )
   }
 }

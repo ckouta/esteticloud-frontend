@@ -31,20 +31,21 @@
                                     <th style="vertical-align: middle">Acciones</th>
                                 </tr>
                             </thead>
-                            <tbody *ngFor="let Profesional of restService.listaProfesional">
+                            <tbody *ngFor="let servicio of restService.listaServicio">
                                 <tr style="text-align: center">
 
-                                    <td style="vertical-align: middle"> </td>
-                                    <td style="vertical-align: middle">{{Profesional.nombre}}</td>
-                                    <td style="vertical-align: middle">{{Profesional.apellido}}</td>
-                                    <td style="vertical-align: middle">{{Profesional.telefono}}</td>
-                                    <td style="vertical-align: middle">{{Profesional.email}}</td>
+                                    <td style="vertical-align: middle">
+                                        <img src="http://localhost:8080/servicio/uploads/img/{{servicio.foto}}" class="align-self-center mr-3" style="width: 80px;height:80px;">
+                                    </td>
+                                    <td style="vertical-align: middle">{{servicio.nombre}}</td>
+                                    <td style="vertical-align: middle">{{servicio.duracion}}</td>
+                                    <td style="vertical-align: middle">{{servicio.precio}}</td>
                                     <td style="vertical-align: middle">
                                         <div>
                                             <button type="button" class="btn btn-danger" (click)="preguntaEliminar(prod)" data-toggle="modal" data-target="#modalEliminar">
                         <i class="far fa-trash-alt d-xl-flex justify-content-xl-center align-items-xl-center"></i>
                       </button>&nbsp;
-                                            <button type="button" class="btn btn-warning" [routerLink]="['/profesional/registrar/'+Profesional.id_profesional]" data-toggle="modal" data-target="#modalUpdateProduct">
+                                            <button type="button" class="btn btn-warning" [routerLink]="" data-toggle="modal" data-target="#modalUpdateProduct">
                         <i class="fas fa-pencil-alt d-xl-flex justify-content-xl-center align-items-xl-center"></i>
                       </button>
                                         </div>

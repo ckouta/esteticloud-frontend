@@ -23,3 +23,13 @@
     .custom-day.faded {
         background-color: rgba(2, 117, 216, 0.5);
     }
+    
+    .col {
+        margin-top: 10px;
+        padding: 10px;
+    }
+    
+    .row {
+        margin: 0px;
+        margin-bottom: 10px;
+    }

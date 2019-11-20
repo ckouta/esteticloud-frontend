@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Servicio } from 'src/app/Servicio';
+import { Servicio } from 'src/app/entidades/Servicio';
 import { RestService } from '../../servicioBackend/rest.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Calendar } from '@fullcalendar/core';

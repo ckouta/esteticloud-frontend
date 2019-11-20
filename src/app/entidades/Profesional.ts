@@ -7,4 +7,5 @@ export interface Profesional {
     telefono: string;
     email: string;
     estado:estado;
+    foto:File;
 }

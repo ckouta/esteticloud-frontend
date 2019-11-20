@@ -1,0 +1,52 @@
+<hr>
+
+<body>
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h2>Horario profesional</h2>
+                    <br>
+                </div>
+                <div class="col-md-4 d-flex justify-content-end align-self-start">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-4 d-flex justify-content-end align-self-start">
+                    <button class="btn btn-warning d-flex align-items-center align-self-center" [routerLink]="['registrar']" routerLinkActive="router-link-active" type="button" style="height: 38px;background-color:  #ff8000;">Agregar Horario
+                        <i class="fa fa-plus-circle"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table id="example" class="table table-striped table-bordered" width="100%">
+                            <thead>
+                                <tr style="text-align: center">
+                                    <th style="vertical-align: middle">Hora de Inicio</th>
+                                    <th style="vertical-align: middle">Hora de Fin</th>
+                                    <th style="vertical-align: middle">Reserva</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let horas of horasProfesional">
+
+                                <td style=" vertical-align: middle "> {{horas.bloque_horario.horaInicio}}</td>
+                                <td style="vertical-align: middle ">{{horas.bloque_horario.horaFin}}</td>
+                                <td style="vertical-align: middle ">{{horas.reserva}}</td>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

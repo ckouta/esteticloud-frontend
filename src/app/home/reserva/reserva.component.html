@@ -5,12 +5,11 @@
     </ol>
 </nav>
 
-<div style="margin-left: 12%">
-    <div class="arrow-steps clearfix">
+<div>
+    <div class="arrow-steps clearfix mx-auto " style="width: 900px;">
         <div [ngClass]=" 'step ' + arreglo[variable - 0]"> <span> Elige servicio </span> </div>
         <div [ngClass]=" 'step ' + arreglo[variable - 1]"> <span>Elige dia y hora</span> </div>
-        <div [ngClass]=" 'step ' + arreglo[variable - 2]"> <span> Ingresa tus datos</span> </div>
-        <div [ngClass]=" 'step ' + arreglo[variable - 3]"> <span>Reserva Exitosa</span> </div>
+        <div [ngClass]=" 'step ' + arreglo[variable - 2]"> <span> Reserva Exitosa</span> </div>
     </div>
 </div>
 
@@ -23,16 +22,13 @@
 
             <div class="col-3 z-depth-1" style="margin-right: 30px; padding: 3%;">
                 <div>
-
                     <h5 class="mt-0" style="margin-bottom: 4%;">Profesionales</h5>
                     <div class="hr">
-
                     </div>
-                    <select class="form-control" id="exampleFormControlSelect1" style="margin-top: 5%;">
-                        <option> Ninguno Seleccionado</option>
-                        <option>Juan Perez</option>
+                    <select [(ngModel)]="esteticista" class="form-control" id="exampleFormControlSelect1" style="margin-top: 5%;">
+                        <option  [ngValue]="0"  > Ninguno Seleccionado</option>
+                        <option *ngFor="let profesional of listProfesionales" [ngValue]="profesional" > {{profesional.nombre}}</option>                       
                     </select>
-                    <a class="btn btn-outline-success btn-lg btn-block" (click)="press()" id="pills-fecha-tab" data-toggle="pill" href="#pills-fecha" role="tab" aria-controls="pills-fecha" aria-selected="true" style="margin-top: 10%;">Elige Dia y Hora</a>
                     <h5 style="margin-bottom: 4%; margin-top: 30%;">Servicios Anteriores</h5>
                     <div class="hr">
 
@@ -45,16 +41,18 @@
                 <div class="overflow-auto" style="height:500px">
                     <h5 class="mt-0" style="margin-bottom: 4%;">Lista de Servicios</h5>
                     <div class="list-group" *ngFor="let servicio of listServicios">
-                        <a class="list-group-item list-group-item-action " (click)="agregarServicio(servicio)">
+                        <a class="list-group-item list-group-item-action ">
                             <div class="media">
-                                <img src="../../../assets/servicio_uñas.jpg" class="align-self-center mr-3" style="width: 64px;height:64px;">
+                                <img src="http://localhost:8080/servicio/uploads/img/{{servicio.foto}}" class="align-self-center mr-3" style="width: 80px;height:80px;">
                                 <div class="media-body">
                                     <h5 class="mt-0">{{servicio.nombre}}</h5>
-                                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                                    <p> {{servicio.descripcion}}</p>
+                                    <p><a class="btn btn-success btn-lg float-right" (click)="press(servicio)" id="pills-fecha-tab" data-toggle="pill" href="#pills-fecha" role="tab" aria-controls="pills-fecha" aria-selected="true">Reserva</a></p>
 
                                 </div>
-                                <span style="text-align: right"><i class="fa fa-plus-square"></i></span>
+
                             </div>
+
                         </a>
                     </div>
                 </div>
@@ -68,20 +66,24 @@
 
             </div>
             <div class="col-3" style="margin-bottom: 30px; ">
-                <ngb-datepicker #d style="background-color: #FFFF;"></ngb-datepicker>
+                <ngb-datepicker #dp [(ngModel)]="model" (select)="Select()" (navigate)="date = $event.next"></ngb-datepicker>
+
 
             </div>
             <div style=" width: 1px;background: #BDBDBD;">
             </div>
-            <div class="col-1" style="margin-bottom: 30px;">
-
-            </div>
-            <div class="col-4" style="margin-bottom: 30px;">
+            <div class="col-5" style="margin-bottom: 30px;padding-left: 20px;">
+                <h5 class="mt-0" style="margin-bottom: 4%;">Profesional</h5>
+                <select [(ngModel)]="esteticista" (change)="Select()" class="form-control" id="exampleFormControlSelect1" style="margin-top: 5%;">
+                        <option  [ngValue]="0" > Ninguno Seleccionado</option>
+                        <option *ngFor="let profesional of listProfesionales"  [ngValue]="profesional"> {{profesional.nombre}}</option>                       
+                    </select>
                 <h3>Horarios</h3>
-                <a class="btn btn-outline-success btn-lg btn-block" (click)="press()" id="pills-contact-tab" data-toggle="pill" href="#pills-contacto" role="tab" aria-controls="pills-contacto" aria-selected="true">Confirmar</a>
-            </div>
-            <div class="col-1" style="margin-bottom: 30px;">
-
+                <select [(ngModel)]="hora" class="form-control" id="horario" style="margin-top: 5%;">
+                    <option  [ngValue]="0" > Ninguno Seleccionado</option>
+                    <option *ngFor="let horas of bloquesPosibles"  [ngValue]="horas"> Hora de Inicio:{{horas.horaInicio}} Hora de Fin:{{horas.horaFin}}</option>                       
+                </select>
+                <a class="btn btn-outline-success btn-lg btn-block" (click)="save()" id="pills-contact-tab" data-toggle="pill" href="#pills-contacto" role="tab" aria-controls="pills-contacto" aria-selected="true">Confirmar</a>
             </div>
         </div>
     </div>

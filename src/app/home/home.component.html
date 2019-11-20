@@ -2,10 +2,12 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="#">Logo</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-    <a [routerLink]="['/login']" class="navbar-tile" title="Ingresa"><i class="fas fa-user-circle fa-fw"></i> Ingresa</a>
-    <a [routerLink]="['/login']" class="navbar-tile" title="Ingresa"><i class="fas fa-user-circle fa-fw"></i> Ingresa</a>
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a [routerLink]="['/login']" class="navbar-tile" title="Ingresa"><i class="fas fa-user-circle fa-fw"></i>
+        Ingresa</a>
+    <a [routerLink]="['/login']" class="navbar-tile" title="Ingresa"><i class="fas fa-user-circle fa-fw"></i>
+        Ingresa</a>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav my-auto">
             <li class="nav-list-item">
@@ -29,13 +31,14 @@
     <ul class="">
 
         <li class="">
-            <a [routerLink]="['/login']" class="navbar-tile" title="Ingresa"><i class="fas fa-user-circle fa-fw"></i> Ingresa</a>
+            <a data-toggle="modal" data-target="#modalLoginForm" class="navbar-tile" title="Ingresa"><i
+                    class="fas fa-user-circle fa-fw"></i> Ingresa</a>
         </li>
 
         <li class="" id="espacio"></li>
 
         <li class="">
-            <a [routerLink]="['/login']" class="navbar-tile" title="Regístrate">Regístrate</a>
+            <a [routerLink]="['/home/registro']" class="navbar-tile" title="Regístrate">Regístrate</a>
         </li>
 
         <li class="" id="espacio"></li>
@@ -63,7 +66,14 @@
             <a [routerLink]="['/home/equipo']" class="nav-link">Equipo</a>
         </li>
         <li class="nav-list-item">
-            <a [routerLink]="['/home/reserva']" class="nav-link">Reserva</a>
+            <div *ngIf="restService.hasRole('ROLE_CLIENT');then thenBlock else elseBlock "></div>
+            <ng-template #thenBlock>
+                <a [routerLink]="[ '/home/reserva'] " class="nav-link ">Reserva</a>
+            </ng-template>
+            <ng-template #elseBlock>
+                <a data-toggle="modal" data-target="#modalLoginForm" class="nav-link ">Reserva</a>
+            </ng-template>
+
         </li>
     </ul>
 
@@ -72,17 +82,17 @@
 <router-outlet></router-outlet>
 
 <footer>
-    <div class="container-fluid bg-primary py-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-7">
-                    <div class="row py-0">
-                        <div class="col-sm-1 hidden-md-down">
-                            <a class="bg-circle bg-info" href="#">
-                                <i class="fa fa-2x fa-fw fa-address-card" aria-hidden="true "></i>
+    <div class="container-fluid bg-primary py-3 ">
+        <div class="container ">
+            <div class="row ">
+                <div class="col-md-7 ">
+                    <div class="row py-0 ">
+                        <div class="col-sm-1 hidden-md-down ">
+                            <a class="bg-circle bg-info " href="# ">
+                                <i class="fa fa-2x fa-fw fa-address-card " aria-hidden="true "></i>
                             </a>
                         </div>
-                        <div class="col-sm-11 text-white">
+                        <div class="col-sm-11 text-white ">
                             <div>
                                 <h4>  Contact</h4>
 
@@ -90,24 +100,24 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-5" style="text-align: right">
-                    <div class="d-inline-block">
-                        <div class="bg-circle-outline d-inline-block" style="background-color:#3b5998">
-                            <a href="https://www.facebook.com/"><i class="fa fa-2x fa-fw fa-facebook text-white"></i>
-   </a>
+                <div class="col-md-5 " style="text-align: right ">
+                    <div class="d-inline-block ">
+                        <div class="bg-circle-outline d-inline-block " style="background-color:#3b5998 ">
+                            <a href="https://www.facebook.com/ "><i class="fa fa-2x fa-fw fa-facebook text-white "></i>
+                            </a>
                         </div>
-                        <div class="bg-circle-outline d-inline-block" style="background-color:#4099FF">
-                            <a href="https://twitter.com/">
-                                <i class="fa fa-2x fa-fw fa-twitter text-white"></i></a>
+                        <div class="bg-circle-outline d-inline-block " style="background-color:#4099FF ">
+                            <a href="https://twitter.com/ ">
+                                <i class="fa fa-2x fa-fw fa-twitter text-white "></i></a>
                         </div>
 
-                        <div class="bg-circle-outline d-inline-block" style="background-color:#0077B5">
-                            <a href="https://www.linkedin.com/company/">
-                                <i class="fa fa-2x fa-fw fa-linkedin text-white"></i></a>
+                        <div class="bg-circle-outline d-inline-block " style="background-color:#0077B5 ">
+                            <a href="https://www.linkedin.com/company/ ">
+                                <i class="fa fa-2x fa-fw fa-linkedin text-white "></i></a>
                         </div>
-                        <div class="bg-circle-outline d-inline-block" style="background-color:#d34836">
-                            <a href="https://www.google.com/">
-                                <i class="fa fa-2x fa-fw fa-google text-white"></i></a>
+                        <div class="bg-circle-outline d-inline-block " style="background-color:#d34836 ">
+                            <a href="https://www.google.com/ ">
+                                <i class="fa fa-2x fa-fw fa-google text-white "></i></a>
                         </div>
                     </div>
                 </div>
@@ -115,3 +125,33 @@
         </div>
     </div>
 </footer>
+
+<div [hidden]="IsmodelShow" class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" data-backdrop="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body mx-3">
+                <div class="md-form mb-5">
+                    <i class="fas fa-envelope prefix grey-text"></i>
+                    <input [(ngModel)]="usuario.username" type="email" id="defaultForm-email" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="defaultForm-email">Your email</label>
+                </div>
+
+                <div class="md-form mb-4">
+                    <i class="fas fa-lock prefix grey-text"></i>
+                    <input [(ngModel)]="usuario.password" type="password" id="defaultForm-pass" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="defaultForm-pass">Your password</label>
+                </div>
+
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button (click)="login()" class="btn btn-default">Login</button>
+            </div>
+        </div>
+    </div>
+</div>

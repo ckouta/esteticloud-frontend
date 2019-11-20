@@ -2,5 +2,7 @@ export interface Bloque {
     idBloque: number;
     horaInicio: string;
     horaFin: string;
-    dia_semana: string;
+    diaSemana: string;
+    id_bloque_inicio:number;
+    id_bloque_fin:number;
 }

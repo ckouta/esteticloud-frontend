@@ -1,0 +1,237 @@
+<div class="" style="margin-left: 2%;margin-right: 2%;">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-10">
+            <div class="row" style="display: table;margin-left: auto;margin-right: auto;">
+                <div class="row">
+                    <h3>Ingresa las fechas para generar reservas</h3>
+
+                </div>
+                <div class="row">
+                    <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden">
+                    </ngb-datepicker>
+
+                    <ng-template #t let-date let-focused="focused">
+                        <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)" [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date" (mouseleave)="hoveredDate = null">
+                            {{ date.day }}
+                        </span>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="custom-control custom-checkbox">
+                            <input [(ngModel)]="checklunes" type="checkbox" class="custom-control-input" id="lunes" checked>
+                            <label class="custom-control-label" for="lunes"><b>Lunes</b></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p style="margin-bottom: 4%;">
+                            <b>Hora de Inicio:</b>
+                        </p>
+                        <select [(ngModel)]="horaInicioLunes" [disabled]="!checklunes" class="form-control" id="exampleFormControlSelect1">
+                            <option> Ninguno Seleccionado</option>
+                            <ng-container *ngFor="let horario of this.restService.listaBloque">
+                                <option *ngIf="horario.diaSemana==1"> {{horario.horaInicio}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <p style="margin-bottom: 4%;">
+                            <b>hora de Fin</b>
+                        </p>
+                        <select [(ngModel)]="horaFinLunes" [disabled]="!checklunes" class="form-control" id="exampleFormControlSelect1">
+                            <option> Ninguno Seleccionado</option>
+                            <ng-container *ngFor="let horario of this.restService.listaBloque">
+                                <option *ngIf="horario.diaSemana==1"> {{horario.horaFin}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <div class="custom-control custom-checkbox">
+                            <input [(ngModel)]="checkmartes" type="checkbox" class="custom-control-input" id="martes">
+                            <label class="custom-control-label" for="martes"><b>Martes</b></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p style="margin-bottom: 4%;">
+                            <b>Hora de Inicio:</b>
+                        </p>
+                        <select [(ngModel)]="horaInicioMartes" [disabled]="!checkmartes" class="form-control" id="exampleFormControlSelect1">
+                            <option> Ninguno Seleccionado</option>
+                            <ng-container *ngFor="let horario of this.restService.listaBloque">
+                                <option *ngIf="horario.diaSemana==1"> {{horario.horaInicio}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <p style="margin-bottom: 4%;">
+                            <b>Hora de Fin:</b>
+                        </p>
+                        <select [(ngModel)]="horaFinMartes" [disabled]="!checkmartes" class="form-control" id="exampleFormControlSelect1">
+                            <option> Ninguno Seleccionado</option>
+                            <ng-container *ngFor="let horario of this.restService.listaBloque">
+                                <option *ngIf="horario.diaSemana==1"> {{horario.horaFin}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <div class="custom-control custom-checkbox">
+                            <input [(ngModel)]="checkmiercoles" type="checkbox" class="custom-control-input" id="miercoles" checked>
+                            <label class="custom-control-label" for="miercoles"><b>Miercoles</b></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p style="margin-bottom: 4%;">
+                            <b>Hora de Inicio:</b>
+                        </p>
+                        <select [(ngModel)]="horaInicioMiercoles" [disabled]="!checkmiercoles" class="form-control" id="exampleFormControlSelect1">
+                            <option> Ninguno Seleccionado</option>
+                            <ng-container *ngFor="let horario of this.restService.listaBloque">
+                                <option *ngIf="horario.diaSemana==1"> {{horario.horaInicio}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <p style="margin-bottom: 4%;">
+                            <b>Hora de Fin:</b>
+                        </p>
+                        <select [(ngModel)]="horaFinMiercoles" [disabled]="!checkmiercoles" class="form-control" id="exampleFormControlSelect1">
+                            <option> Ninguno Seleccionado</option>
+                            <ng-container *ngFor="let horario of this.restService.listaBloque">
+                                <option *ngIf="horario.diaSemana==1"> {{horario.horaFin}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <div class="custom-control custom-checkbox">
+                            <input [(ngModel)]="checkjueves" type="checkbox" class="custom-control-input" id="jueves" checked>
+                            <label class="custom-control-label" for="jueves"><b>Jueves</b></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p style="margin-bottom: 4%;">
+                            <b>hora de Inicio:</b>
+                        </p>
+                        <select [(ngModel)]="horaInicioJueves" [disabled]="!checkjueves" class="form-control" id="exampleFormControlSelect1">
+                            <option> Ninguno Seleccionado</option>
+                            <ng-container *ngFor="let horario of this.restService.listaBloque">
+                                <option *ngIf="horario.diaSemana==1"> {{horario.horaInicio}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <p style="margin-bottom: 4%;">
+                            <b>Hora de Fin:</b>
+                        </p>
+                        <select [(ngModel)]="horaFinJueves" [disabled]="!checkjueves" class="form-control" id="exampleFormControlSelect1">
+                            <option> Ninguno Seleccionado</option>
+                            <ng-container *ngFor="let horario of this.restService.listaBloque">
+                                <option *ngIf="horario.diaSemana==1"> {{horario.horaFin}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <div class="custom-control custom-checkbox">
+                            <input [(ngModel)]="checkviernes" type="checkbox" class="custom-control-input" id="viernes" checked>
+                            <label class="custom-control-label" for="viernes"><b>Viernes</b></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p style="margin-bottom: 4%;">
+                            <b>Hora de Inicio:</b>
+                        </p>
+                        <select [(ngModel)]="horaInicioViernes" [disabled]="!checkviernes" class="form-control" id="exampleFormControlSelect1">
+                            <option> Ninguno Seleccionado</option>
+                            <ng-container *ngFor="let horario of this.restService.listaBloque">
+                                <option *ngIf="horario.diaSemana==1"> {{horario.horaInicio}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <p style="margin-bottom: 4%;">
+                            <b>Hora de Fin:</b>
+                        </p>
+                        <select [(ngModel)]="horaFinViernes" [disabled]="!checkviernes" class="form-control" id="exampleFormControlSelect1">
+                            <option> Ninguno Seleccionado</option>
+                            <ng-container *ngFor="let horario of this.restService.listaBloque">
+                                <option *ngIf="horario.diaSemana==1"> {{horario.horaFin}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <div class="custom-control custom-checkbox">
+                            <input [(ngModel)]="checksabado" type="checkbox" class="custom-control-input" id="sabado" checked>
+                            <label class="custom-control-label" for="sabado"><b>sabado</b></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p style="margin-bottom: 4%;">
+                            <b>Hora de Inicio:</b>
+                        </p>
+                        <select [(ngModel)]="horaInicioSabado" [disabled]="!checksabado" class="form-control" id="exampleFormControlSelect1">
+                            <option> Ninguno Seleccionado</option>
+                            <ng-container *ngFor="let horario of this.restService.listaBloque">
+                                <option *ngIf="horario.diaSemana==1"> {{horario.horaInicio}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <p style="margin-bottom: 4%;">
+                            <b>hora de Fin</b>
+                        </p>
+                        <select [(ngModel)]="horaFinSabado" [disabled]="!checksabado" class="form-control" id="exampleFormControlSelect1">
+                            <option> Ninguno Seleccionado</option>
+                            <ng-container *ngFor="let horario of this.restService.listaBloque">
+                                <option *ngIf="horario.diaSemana==1"> {{horario.horaFin}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <div class="custom-control custom-checkbox">
+                            <input [(ngModel)]="checkdomingo" type="checkbox" class="custom-control-input" id="domingo" checked>
+                            <label class="custom-control-label" for="domingo"><b>domingo</b></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p style="margin-bottom: 4%;">
+                            <b>Hora de Inicio:</b>
+                        </p>
+                        <select [(ngModel)]="horaInicioDomingo" [disabled]="!checkdomingo" class="form-control" id="exampleFormControlSelect1">
+                            <option> Ninguno Seleccionado</option>
+                            <ng-container *ngFor="let horario of this.restService.listaBloque">
+                                <option *ngIf="horario.diaSemana==1"> {{horario.horaInicio}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <p style="margin-bottom: 4%;">
+                            <b>Hora de Fin:</b>
+                        </p>
+                        <select [(ngModel)]="horaFinDomingo" [disabled]="!checkdomingo" class="form-control" id="exampleFormControlSelect1">
+                            <option> Ninguno Seleccionado</option>
+                            <ng-container *ngFor="let horario of this.restService.listaBloque">
+                                <option *ngIf="horario.diaSemana==1"> {{horario.horaFin}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-success" (click)="registrarHorario()">Registrar  Horario</button>
+            <button type="button" class="btn btn-danger">Cancelar</button>
+        </div>
+
+    </div>

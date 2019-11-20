@@ -1,0 +1,99 @@
+<div class="container">
+    <h2>Formulario de Registro </h2>
+    <hr>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <form [formGroup]="formCliente" (ngSubmit)="saveData()" novalidate>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <!--Nombre cliente-->
+                                    <div class="form-group">
+                                        <div class="md-form">
+                                            <input formControlName="nombre" type="text" id="nombre" class="form-control">
+                                            <label for="nombre">Nombre</label>
+                                        </div>
+                                    </div>
+                                    <!--Fin Nombre cliente-->
+                                </div>
+                                <div class="col-md-6">
+                                    <!-- Apellido cliente-->
+                                    <div class="form-group">
+                                        <div class="md-form">
+                                            <input formControlName="apellido" type="text" id="apellido" class="form-control">
+                                            <label for="apellido">Apellido</label>
+                                        </div>
+                                    </div>
+                                    <!-- fin Apellido cliente-->
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <!--Rut Cliente-->
+                                    <div class="md-form">
+                                        <input formControlName="rut" type="text" id="rut" class="form-control">
+                                        <label for="rut">Rut</label>
+                                    </div>
+                                    <!--Fin Rut Cliente-->
+                                </div>
+                                <div class="col-md-6">
+                                    <!--Telefono Cliente-->
+                                    <div class="form-group">
+                                        <div class="md-form">
+                                            <input formControlName="telefono" type="text" id="telefono" class="form-control">
+                                            <label for="telefono">Telefono</label>
+                                        </div>
+                                    </div>
+                                    <!--Fin Telefono Cliente-->
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <!--Email Cliente-->
+                                    <div class="form-group">
+                                        <div class="md-form">
+                                            <input formControlName="email" type="text" id="email" class="form-control">
+                                            <label for="email">Correo</label>
+                                        </div>
+
+                                    </div>
+                                    <!--Fin Email Cliente-->
+                                </div>
+
+                                <div class="col-md-6">
+                                    <!--Ingresar contraseña-->
+                                    <div class="form-group">
+                                        <div class="md-form">
+                                            <input formControlName="password" type="password" id="contraseña" class="form-control">
+                                            <label for="contraseña">Contraseña</label>
+                                        </div>
+                                    </div>
+                                    <!-- fin Ingresar contraseña-->
+                                </div>
+                            </div>
+                            <!--Botones-->
+                            <div class="col-md-12" style="text-align: right">
+                                <button type="button" class="btn btn-danger botones" style="background: #ff0000" data-toggle="modal" data-target="#modalSalir"> Cancelar </button> &nbsp;
+                                <button type="submit" class="btn btn-warning botones" style="background: #ff8800">
+                                    Guardar </button>
+                            </div>
+
+                            <!--Fin Botones-->
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Material input -->
+<div class="md-form">
+    <i class="fas fa-user prefix"></i>
+    <input type="text" id="inputIconEx2" class="form-control">
+    <label for="inputIconEx2">E-mail address</label>
+</div>

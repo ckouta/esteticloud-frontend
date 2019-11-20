@@ -25,6 +25,9 @@ import { RegistrarServicioComponent } from './profesional/registrar-servicio/reg
 import { MDBBootstrapModule,WavesModule, TableModule, IconsModule } from 'angular-bootstrap-md';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { DetalleServicioComponent } from './profesional/profesional-servicio/detalle-servicio/detalle-servicio.component';
+import { ListaHorarioComponent } from './profesional/horario/lista-horario/lista-horario.component';
+import { RegistrarHorarioComponent } from './profesional/horario/registrar-horario/registrar-horario.component';
+import { RegistrarComponent } from './registrar/registrar.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +49,9 @@ import { DetalleServicioComponent } from './profesional/profesional-servicio/det
     HorarioComponent,
     RegistrarServicioComponent,
     DetalleServicioComponent,
+    ListaHorarioComponent,
+    RegistrarHorarioComponent,
+    RegistrarComponent,
     
     
   ],
