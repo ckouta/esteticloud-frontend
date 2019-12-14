@@ -1,0 +1,58 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+        <li class="breadcrumb-item active" aria-current="page">MisReserva</li>
+    </ol>
+</nav>
+<h2 style="margin-left: 30px;">Reservas Realizadas</h2>
+<hr>
+<div class="row" style="padding: 2%;">
+
+    <!--Grid column-->
+    <div class="col-md-12 mb-4">
+        <mdb-card class="mb-3" borderColor="border-secondary">
+            <mdb-card-header>Reservas Vigentes</mdb-card-header>
+            <mdb-card-body>
+                <div class="overflow-auto" style="height:200px">
+                    <div class="list-group" *ngFor="let reserva of reserva">
+                        <a class="list-group-item list-group-item-action ">
+                            <div class="media">
+                                <img src="http://localhost:8080/servicio/uploads/img/{{reserva.reserva.servicio.foto}}" class="align-self-center mr-3" style="width: 80px;height:80px;">
+                                <div class="media-body">
+                                    <h5 class="mt-0">Nombre del servicio: {{reserva.reserva.servicio.nombre}}</h5>
+                                    <p> Profesional: {{reserva.profesional.nombre}} Día: {{reserva.fecha}} Hora: {{reserva.bloque_horario.horaInicio}}
+                                    </p>
+                                </div>
+
+                            </div>
+
+                        </a>
+                    </div>
+                </div>
+            </mdb-card-body>
+        </mdb-card>
+    </div>
+    <div class="col-md-12 mb-4">
+        <mdb-card class="mb-3" borderColor="border-secondary">
+            <mdb-card-header>Reservas anteriores</mdb-card-header>
+            <mdb-card-body>
+                <div class="overflow-auto" style="height:200px">
+                    <div class="list-group" *ngFor="let reserva of reserva">
+                        <a class="list-group-item list-group-item-action ">
+                            <div class="media">
+                                <img src="http://localhost:8080/servicio/uploads/img/{{reserva.reserva.servicio.foto}}" class="align-self-center mr-3" style="width: 80px;height:80px;">
+                                <div class="media-body">
+                                    <h5 class="mt-0">Nombre del servicio: {{reserva.reserva.servicio.nombre}}</h5>
+                                    <p> Profesional: {{reserva.profesional.nombre}} Día: {{reserva.fecha}} Hora: {{reserva.bloque_horario.horaInicio}}
+                                    </p>
+                                </div>
+
+                            </div>
+
+                        </a>
+                    </div>
+                </div>
+            </mdb-card-body>
+        </mdb-card>
+    </div>
+</div>

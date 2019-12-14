@@ -9,50 +9,100 @@
                     <br>
                 </div>
                 <div class="col-md-4 d-flex justify-content-end align-self-start">
-                    <i class="fas fa-search d-xl-flex justify-content-xl-center align-items-xl-center"></i>
-                    <input class="border rounded d-xl-flex justify-content-xl-center align-items-xl-center search-field" type="search" id="search-field" style="background-color: #eaeaea;width: 80%;height: 38px;padding: 0px;margin-left: 17px;" name="search" />
+                    <div class="md-form" style="width: 100%;">
+                        <mdb-icon fas icon="search"></mdb-icon>
+                        <input type="search" [(ngModel)]="searchText" placeholder="Busca por su nombre" width="100%">
+                    </div>
                 </div>
                 <div class="col-md-4 d-flex justify-content-end align-self-start">
                     <button class="btn btn-warning d-flex align-items-center align-self-center" [routerLink]="['/profesional/servicios/registrar']" routerLinkActive="router-link-active" type="button" style="height: 38px;background-color:  #ff8000;">Agregar Servicio
-            <i class="fa fa-plus-circle"></i>
-          </button>
+                        <i class="fa fa-plus-circle"></i>
+                    </button>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="table-responsive">
-                        <table id="example" class="table table-striped table-bordered" width="100%">
-                            <thead>
-                                <tr style="text-align: center">
-                                    <th style="vertical-align: middle">Imagen</th>
-                                    <th style="vertical-align: middle">Nombre</th>
-                                    <th style="vertical-align: middle">Duracion</th>
-                                    <th style="vertical-align: middle">Precio</th>
-                                    <th style="vertical-align: middle">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody *ngFor="let servicio of restService.listaServicio">
-                                <tr style="text-align: center">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#serviciosOfrecidos" role="tab" data-toggle="tab">Servicios ofrecidos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#serviciosNoAsignados" role="tab" data-toggle="tab">Servicios sin asignar</a>
+                        </li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade show active" id="serviciosOfrecidos">
+                            <div class="table-responsive">
+                                <table mdbTable>
+                                    <thead>
+                                        <tr style="text-align: center">
+                                            <th style="vertical-align: middle">Imagen</th>
+                                            <th style="vertical-align: middle">Nombre</th>
+                                            <th style="vertical-align: middle">Duración</th>
+                                            <th style="vertical-align: middle">Precio mínimo</th>
+                                            <th style="vertical-align: middle">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngFor="let servicio of serviciosOfrecido | filter: searchText">
+                                        <tr style="text-align: center">
 
-                                    <td style="vertical-align: middle">
-                                        <img src="http://localhost:8080/servicio/uploads/img/{{servicio.foto}}" class="align-self-center mr-3" style="width: 80px;height:80px;">
-                                    </td>
-                                    <td style="vertical-align: middle">{{servicio.nombre}}</td>
-                                    <td style="vertical-align: middle">{{servicio.duracion}}</td>
-                                    <td style="vertical-align: middle">{{servicio.precio}}</td>
-                                    <td style="vertical-align: middle">
-                                        <div>
-                                            <button type="button" class="btn btn-danger" (click)="preguntaEliminar(prod)" data-toggle="modal" data-target="#modalEliminar">
-                        <i class="far fa-trash-alt d-xl-flex justify-content-xl-center align-items-xl-center"></i>
-                      </button>&nbsp;
-                                            <button type="button" class="btn btn-warning" [routerLink]="" data-toggle="modal" data-target="#modalUpdateProduct">
-                        <i class="fas fa-pencil-alt d-xl-flex justify-content-xl-center align-items-xl-center"></i>
-                      </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                            <td style="vertical-align: middle">
+                                                <img src="http://localhost:8080/servicio/uploads/img/{{servicio.servicio.foto}}" class="align-self-center mr-3" style="width: 80px;height:80px;">
+                                            </td>
+                                            <td style="vertical-align: middle">{{servicio.servicio.nombre}}</td>
+                                            <td style="vertical-align: middle">{{servicio.servicio.duracion}} Min</td>
+                                            <td style="vertical-align: middle">{{servicio.servicio.precio | currency:'$ '}}</td>
+                                            <td style="vertical-align: middle">
+                                                <div>
+                                                    <button type="button" class="btn btn-danger" (click)="eliminarServicioOfrecido(servicio.id_servicioOfrecido)" data-toggle="modal" data-target="#modalEliminar">
+                                        <i
+                                            class="far fa-trash-alt d-xl-flex justify-content-xl-center align-items-xl-center"></i>
+                                    </button>&nbsp;
+                                                    <button type="button" class="btn btn-warning" [routerLink]="'/profesional/servicios/registrar/'+servicio.servicio.id_servicio">
+                                        <i
+                                            class="fas fa-pencil-alt d-xl-flex justify-content-xl-center align-items-xl-center"></i>
+                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="serviciosNoAsignados">
+                            <div class="table-responsive">
+                                <table mdbTable>
+                                    <thead>
+                                        <tr style="text-align: center">
+                                            <th style="vertical-align: middle">Imagen</th>
+                                            <th style="vertical-align: middle">Nombre</th>
+                                            <th style="vertical-align: middle">Duración</th>
+                                            <th style="vertical-align: middle">Precio</th>
+                                            <th style="vertical-align: middle">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngFor="let servi of serviciosNoOfrecido | filter: searchText">
+                                        <tr style="text-align: center">
+
+                                            <td style="vertical-align: middle">
+                                                <img src="http://localhost:8080/servicio/uploads/img/{{servi.foto}}" class="align-self-center mr-3" style="width: 80px;height:80px;">
+                                            </td>
+                                            <td style="vertical-align: middle">{{servi.nombre}}</td>
+                                            <td style="vertical-align: middle">{{servi.duracion}} (Min)</td>
+                                            <td style="vertical-align: middle">{{servi.precio | currency:'$ '}}</td>
+                                            <td style="vertical-align: middle">
+                                                <div>
+                                                    <button type="button" class="btn btn-success" (click)="guardarServicioOfrecido(servi)">
+                                                            <i class="fas fa-plus-circle"></i>
+                                            </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -67,8 +117,8 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Eliminar Productos</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-            <span aria-hidden="true">&times;</span>
-          </button>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     ¿Estás seguro que deseas eliminar el producto {{eliminar.nombre}} ?

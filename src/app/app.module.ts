@@ -28,6 +28,9 @@ import { DetalleServicioComponent } from './profesional/profesional-servicio/det
 import { ListaHorarioComponent } from './profesional/horario/lista-horario/lista-horario.component';
 import { RegistrarHorarioComponent } from './profesional/horario/registrar-horario/registrar-horario.component';
 import { RegistrarComponent } from './registrar/registrar.component';
+import { FilterPipe } from './pipe/search.pipe';
+import { InicioProfesionalComponent } from './profesional/inicio-profesional/inicio-profesional.component';
+import { ClienteReservaComponent } from './home/cliente-reserva/cliente-reserva.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +55,9 @@ import { RegistrarComponent } from './registrar/registrar.component';
     ListaHorarioComponent,
     RegistrarHorarioComponent,
     RegistrarComponent,
+    FilterPipe,
+    InicioProfesionalComponent,
+    ClienteReservaComponent,
     
     
   ],
@@ -66,8 +72,7 @@ import { RegistrarComponent } from './registrar/registrar.component';
     WavesModule,
     TableModule,
     IconsModule ,
-    NgbModule
-    
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

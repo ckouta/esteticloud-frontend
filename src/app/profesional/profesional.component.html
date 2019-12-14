@@ -8,23 +8,23 @@
             <li class="nav-item" routerLinkActive="active">
                 <a [routerLink]="['/profesional/reserva']" routerLinkActive="active" class="nav-link"> <i class="fas fa-calendar-alt"></i>Reservas <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item" routerLinkActive="active">
+            <li class="nav-item" routerLinkActive="active" *ngIf="restService.hasRole('ROLE_ESTETI')">
                 <a [routerLink]="['/profesional/movimientos']" class="nav-link"><i class="fas fa-hand-holding-usd"></i>Movimientos</a>
             </li>
-            <li class="nav-item" routerLinkActive="active">
+            <li class="nav-item" routerLinkActive="active" *ngIf="restService.hasRole('ROLE_ADMIN')">
                 <a [routerLink]="['/profesional/clientes']" class="nav-link"><i class="fas fa-user"></i>Clientes</a>
             </li>
-            <li class="nav-item" routerLinkActive="active">
+            <li class="nav-item" routerLinkActive="active" *ngIf="restService.hasRole('ROLE_ESTETI')">
                 <a [routerLink]="['/profesional/horario']" class="nav-link"><i class="far fa-clock"></i>Horario</a>
             </li>
-            <li class="nav-item" routerLinkActive="active">
+            <li class="nav-item" routerLinkActive="active" *ngIf="restService.hasRole('ROLE_ESTETI')">
                 <a [routerLink]="['/profesional/servicios']" class="nav-link"><i class="fas fa-user-edit"></i>Servicios</a>
             </li>
-            <li class="nav-item" routerLinkActive="active">
+            <li class="nav-item" routerLinkActive="active" *ngIf="restService.hasRole('ROLE_ADMIN')">
                 <a [routerLink]="['/profesional/profesional']" class="nav-link"><i class="fas fa-user-tie"></i>Profesional</a>
             </li>
             <li class="nav-item">
-                <a [routerLink]="['']" class="nav-link"><i class="fas fa-sign-out-alt"></i>Cerrar Sesion</a>
+                <a [routerLink]="['']" (click)="cerrarSesion()" class="nav-link"><i class="fas fa-sign-out-alt"></i>Cerrar Sesión</a>
             </li>
         </ul>
     </div>

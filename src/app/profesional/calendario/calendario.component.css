@@ -47,3 +47,7 @@ li a:hover:not(.active) {
 label {
     padding: 0;
 }
+
+.breadcrumb {
+    margin: 0;
+}

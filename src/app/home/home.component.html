@@ -1,6 +1,8 @@
 <!--navbar responsive-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Logo</a>
+    <a class="navbar-brand" href="#">
+        <img src="/../../../assets/logo.jpg" class="d-block w-100" style="min-height: 230px;">
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -27,33 +29,50 @@
 </nav>
 <!--Fin navbar Responsive-->
 <!-- Navbar Superior-->
-<nav class="navbar-top" style="background-color: #F9F9F9;padding-right: 20px">
+<nav class="navbar-top" style="background-color: black;padding-right: 20px">
     <ul class="">
 
-        <li class="">
-            <a data-toggle="modal" data-target="#modalLoginForm" class="navbar-tile" title="Ingresa"><i
+        <li class="" *ngIf="!restService.hasRole('ROLE_CLIENT')">
+            <a data-toggle="modal" data-target="#modalLoginForm" (click)="abrirmodal()" class="navbar-tile" title="Ingresa"><i
                     class="fas fa-user-circle fa-fw"></i> Ingresa</a>
         </li>
 
-        <li class="" id="espacio"></li>
+        <li class="" id="espacio" *ngIf="!restService.hasRole('ROLE_CLIENT')"></li>
 
-        <li class="">
+        <li class="" *ngIf="!restService.hasRole('ROLE_CLIENT')">
             <a [routerLink]="['/home/registro']" class="navbar-tile" title="Regístrate">Regístrate</a>
         </li>
+        <li class="" *ngIf="restService.hasRole('ROLE_CLIENT')">
+            <a [routerLink]="['/home/misReservas']" class="navbar-tile" title="Regístrate">
+                <i class="far fa-address-card"></i> Mis Reservas</a>
+        </li>
 
-        <li class="" id="espacio"></li>
+        <li class="" id="espacio" *ngIf="!restService.hasRole('ROLE_CLIENT')"></li>
 
-        <li class="">
+        <li class="" *ngIf="!restService.hasRole('ROLE_CLIENT')">
             <a [routerLink]="['/login']" class="navbar-tile" title="Portal Profesionales">Portal Profesionales</a>
+        </li>
+        <li class="" *ngIf="restService.hasRole('ROLE_CLIENT')">
+            <div class="btn-group" mdbDropdown>
+                <button mdbDropdownToggle type="button" mdbBtn color="secondary" class="dropdown-toggle waves-light" mdbWavesEffect>
+                          Mi cuenta
+                        </button>
+
+                <div class="dropdown-menu dropdown-secondary" style="background-color: #aa66cc;">
+                    <a class="dropdown-item" (click)="cerrarSesion()">Cerrar Sesión</a>
+                </div>
+            </div>
         </li>
 
     </ul>
 </nav>
 <!--Fin Navbar superior-->
 <!-- Navber de Navegacion-->
-<nav class="main-navigation" style="background-color: #552a67d6 !important;">
+<nav class="main-navigation" style="background-color: white !important;">
     <div class="navbar-header animated fadeInUp ">
-        <a class="navbar-brand" href="#">Logo Area</a>
+        <a class="navbar-brand" href="#">
+            <img src="/../../../assets/logo.jpg" style="width: 100px;">
+        </a>
     </div>
     <ul class="nav-list">
         <li class="nav-list-item">
@@ -66,13 +85,7 @@
             <a [routerLink]="['/home/equipo']" class="nav-link">Equipo</a>
         </li>
         <li class="nav-list-item">
-            <div *ngIf="restService.hasRole('ROLE_CLIENT');then thenBlock else elseBlock "></div>
-            <ng-template #thenBlock>
-                <a [routerLink]="[ '/home/reserva'] " class="nav-link ">Reserva</a>
-            </ng-template>
-            <ng-template #elseBlock>
-                <a data-toggle="modal" data-target="#modalLoginForm" class="nav-link ">Reserva</a>
-            </ng-template>
+            <a data-toggle="modal" data-target="#modalLoginForm" (click)="abrirmodal()" class="nav-link ">Reserva</a>
 
         </li>
     </ul>
@@ -81,76 +94,153 @@
 <!--Fin Navbar Navegacion-->
 <router-outlet></router-outlet>
 
-<footer>
-    <div class="container-fluid bg-primary py-3 ">
-        <div class="container ">
-            <div class="row ">
-                <div class="col-md-7 ">
-                    <div class="row py-0 ">
-                        <div class="col-sm-1 hidden-md-down ">
-                            <a class="bg-circle bg-info " href="# ">
-                                <i class="fa fa-2x fa-fw fa-address-card " aria-hidden="true "></i>
-                            </a>
-                        </div>
-                        <div class="col-sm-11 text-white ">
-                            <div>
-                                <h4>  Contact</h4>
+<!-- Footer -->
+<footer class="page-footer font-small " style="background-color: #aa66cc;">
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-5 " style="text-align: right ">
-                    <div class="d-inline-block ">
-                        <div class="bg-circle-outline d-inline-block " style="background-color:#3b5998 ">
-                            <a href="https://www.facebook.com/ "><i class="fa fa-2x fa-fw fa-facebook text-white "></i>
-                            </a>
-                        </div>
-                        <div class="bg-circle-outline d-inline-block " style="background-color:#4099FF ">
-                            <a href="https://twitter.com/ ">
-                                <i class="fa fa-2x fa-fw fa-twitter text-white "></i></a>
-                        </div>
+    <!-- Footer Elements -->
+    <div class="container">
+        <!-- Call to action -->
+        <hr>
+        <ul class="list-unstyled list-inline text-center py-2">
+            <li class="list-inline-item">
+                <h5 class="mb-1">Regístrate Gratis</h5>
+            </li>
+            <li class="list-inline-item">
+                <a [routerLink]="['/home/registro']" mdbBtn color="blue">Ingresa!</a>
+            </li>
+        </ul>
+        <hr>
+        <!-- Call to action -->
+        <ul class="list-unstyled list-inline text-center py-2">
+            <li class="list-inline-item">
+                <h5 class="mb-1">Algunas muestras del trabajo</h5>
+            </li>
+        </ul>
+        <!--Grid row-->
+        <div class="row">
 
-                        <div class="bg-circle-outline d-inline-block " style="background-color:#0077B5 ">
-                            <a href="https://www.linkedin.com/company/ ">
-                                <i class="fa fa-2x fa-fw fa-linkedin text-white "></i></a>
-                        </div>
-                        <div class="bg-circle-outline d-inline-block " style="background-color:#d34836 ">
-                            <a href="https://www.google.com/ ">
-                                <i class="fa fa-2x fa-fw fa-google text-white "></i></a>
-                        </div>
-                    </div>
+            <!--Grid column-->
+            <div class="col-2">
+
+                <!--Image-->
+                <div class="view overlay z-depth-1-half" style="margin-bottom: 20px;">
+                    <img src="../../assets/muestra1.jpg" class="img-fluid" alt="" style="height: 160px;width: 100%;">
+                    <a>
+                        <div class="mask rgba-white-light" mdbWavesEffect></div>
+                    </a>
                 </div>
+
             </div>
-        </div>
-    </div>
-</footer>
+            <!--Grid column-->
 
+            <!--Grid column-->
+            <div class="col-2 ">
+
+                <!--Image-->
+                <div class="view overlay z-depth-1-half">
+                    <img src="../../assets/muestra2.jpg" class="img-fluid" alt="" style="height: 160px;width: 100%;">
+                    <a>
+                        <div class="mask rgba-white-light" mdbWavesEffect></div>
+                    </a>
+                </div>
+
+            </div>
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-2 ">
+
+                <!--Image-->
+                <div class="view overlay z-depth-1-half">
+                    <img src="../../assets/muestra3.jpg" class="img-fluid" alt="" style="height: 160px;width: 100%;">
+                    <a>
+                        <div class="mask rgba-white-light" mdbWavesEffect></div>
+                    </a>
+                </div>
+
+            </div>
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-2 ">
+
+                <!--Image-->
+                <div class="view overlay z-depth-1-half">
+                    <img src="../../assets/muestra4.jpg" class="img-fluid" alt="" style="height: 160px;width: 100%;">
+                    <a>
+                        <div class="mask rgba-white-light" mdbWavesEffect></div>
+                    </a>
+                </div>
+
+            </div>
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-2 ">
+
+                <!--Image-->
+                <div class="view overlay z-depth-1-half">
+                    <img src="../../assets/muestra5.jpg" class="img-fluid" alt="" style="height: 160px;width: 100%;">
+                    <a>
+                        <div class="mask rgba-white-light" mdbWavesEffect></div>
+                    </a>
+                </div>
+
+            </div>
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-2 ">
+
+                <!--Image-->
+                <div class="view overlay z-depth-1-half">
+                    <img src="../../assets/muestra6.jpg" class="img-fluid" alt="" style="height: 160px;width: 100%;">
+                    <a>
+                        <div class="mask rgba-white-light" mdbWavesEffect></div>
+                    </a>
+                </div>
+
+            </div>
+            <!--Grid column-->
+
+        </div>
+        <!--Grid row-->
+
+    </div>
+    <!-- Footer Elements -->
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">© 2019:EstetiCloud
+        <a>  Álvaro Castillo - Francisca Palma</a>
+    </div>
+    <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
+<!--MOdal-->
 <div [hidden]="IsmodelShow" class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" data-backdrop="false">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header text-center">
-                <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
+                <h4 class="modal-title w-100 font-weight-bold">Inicia Sesión</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+              <span aria-hidden="true">&times;</span>
+            </button>
             </div>
             <div class="modal-body mx-3">
                 <div class="md-form mb-5">
                     <i class="fas fa-envelope prefix grey-text"></i>
                     <input [(ngModel)]="usuario.username" type="email" id="defaultForm-email" class="form-control validate">
-                    <label data-error="wrong" data-success="right" for="defaultForm-email">Your email</label>
+                    <label data-error="wrong" data-success="right" for="defaultForm-email">Ingresa tu email</label>
+                    <div class="md-form mb-4">
+                        <i class="fas fa-lock prefix grey-text"></i>
+                        <input [(ngModel)]="usuario.password" type="password" id="defaultForm-pass" class="form-control validate">
+                        <label data-error="wrong" data-success="right" for="defaultForm-pass">Ingresa tu contraseña</label>
+                        <div class="modal-footer d-flex justify-content-center">
+                            <button (click)="login()" class="btn btn-default">Iniciar Sesión</button>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="md-form mb-4">
-                    <i class="fas fa-lock prefix grey-text"></i>
-                    <input [(ngModel)]="usuario.password" type="password" id="defaultForm-pass" class="form-control validate">
-                    <label data-error="wrong" data-success="right" for="defaultForm-pass">Your password</label>
-                </div>
-
-            </div>
-            <div class="modal-footer d-flex justify-content-center">
-                <button (click)="login()" class="btn btn-default">Login</button>
             </div>
         </div>
     </div>

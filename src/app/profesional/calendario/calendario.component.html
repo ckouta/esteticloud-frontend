@@ -1,3 +1,8 @@
+<div style="margin: 20px;"></div>
+<mdb-breadcrumb style="margin-top: 15px;">
+    <mdb-breadcrumb-item>Inicio</mdb-breadcrumb-item>
+    <mdb-breadcrumb-item class="active">Reserva</mdb-breadcrumb-item>
+</mdb-breadcrumb>
 <div class="row" style="margin: 0; padding:2%; display: grid;display: none">
     <div class="btn-group btn-group-toggle" data-toggle="buttons">
         <label class="btn btn-primary form-check-label active">
@@ -16,7 +21,7 @@
 </div>
 <div class="row">
     <div class="col-3">
-        <ul>
+        <ul style="padding-top: 40px;">
             <li>
                 <a (click)="formatoMes()" [ngClass]="{active: li=='mes'}" class="active"><i class="far fa-calendar-alt"></i>Mes </a>
             </li>
@@ -24,20 +29,41 @@
                 <a (click)="formatoSemana()" [ngClass]="{active: li=='semana'}"><i class="far fa-calendar-alt"></i>   Semana </a>
             </li>
             <li>
-                <a (click)="formatoDia()" [ngClass]="{active: li=='dia'}"><i class="far fa-calendar-alt"></i>   Dia </a>
+                <a (click)="formatoDia()" [ngClass]="{active: li=='dia'}"><i class="far fa-calendar-alt"></i>   Día </a>
             </li>
             <li>
-                <a (click)="AgregarEvento()" [ngClass]="{active: li=='reserva'}"><i class="far fa-calendar-alt"></i>   Reservar </a>
+                <a (click)="AgregarEvento()" [ngClass]="{active: li=='reserva'}"><i class="far fa-calendar-alt"></i> Agregar Reserva </a>
             </li>
 
         </ul>
     </div>
-    <div class="col-9">
+    <div class="col-1"></div>
+    <div class="col-7">
         <div style="padding: 15px;">
-            <full-calendar #calendar defaultView="dayGridMonth" [plugins]="calendarPlugins" [events]="calendarEvents" [header]="{
+            <full-calendar #calendar defaultView="dayGridMonth" selectable="true" (dateClick)="handleDateClick($event)" dateClick="test()" [plugins]="calendarPlugins" [events]="calendarEvents" [header]="{
                 left: 'title',
                 right: 'prev,next'
               }" [weekends]="calendarWeekends" locale="es-us"></full-calendar>
+        </div>
+    </div>
+</div>
+<!--modal -->
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" (click)="onCloseHandled()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="onCloseHandled()">Close</button>
+            </div>
         </div>
     </div>
 </div>

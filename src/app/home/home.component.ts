@@ -45,7 +45,18 @@ export class HomeComponent implements OnInit {
     )
   }
 
-
+abrirmodal(){
+  if(this.restService.hasRole('ROLE_CLIENT')){
+    this.router.navigate(['home/reserva']);
+    this.IsmodelShow = true;
+  }else{
+    this.IsmodelShow = false;
+  }
+}
+cerrarSesion(){
+  this.restService.logout();
+  this.router.navigate(['home']);
+}
 
 
 }

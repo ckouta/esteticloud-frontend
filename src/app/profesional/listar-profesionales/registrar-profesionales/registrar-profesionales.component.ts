@@ -3,6 +3,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Profesional } from 'src/app/entidades/Profesional';
 import { RestService } from '../../../servicioBackend/rest.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Usuario } from 'src/app/entidades/Usuario';
+import { Registro } from 'src/app/entidades/Registro';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-registrar-profesionales',
@@ -13,6 +16,8 @@ export class RegistrarProfesionalesComponent implements OnInit {
   ProfesionalActualizar: Profesional = null;
   fotoSeleccionada: File;
   formProduct: FormGroup;
+  usuario: Usuario;
+  registrar: Registro;
   constructor(
     private router: Router,
     public restService: RestService,
@@ -24,12 +29,15 @@ export class RegistrarProfesionalesComponent implements OnInit {
       id_profesional: [],
       nombre: ['', [Validators.required]],
       apellido: ['', [Validators.required]],
+      rut: ['', [Validators.required]],
       telefono: ['', [Validators.required]],
       email: ['', [Validators.required]],
       estado: ['', [Validators.required]],
       descripcion: ['', [Validators.required]],
-      password: ['', [Validators.required]]
+      password: ['']
     });
+    this.usuario = new Usuario();
+    this.registrar = new Registro();
   }
 
   ngOnInit() {
@@ -43,26 +51,32 @@ export class RegistrarProfesionalesComponent implements OnInit {
         email: this.ProfesionalActualizar.email,
         estado: '',
         descripcion: '',
-        password:''
+        password: ''
 
       });
       console.log(this.ProfesionalActualizar)
     }
 
   }
-  guardarProducto(profesional: Profesional) {
+  guardarProducto(registrar: Registro) {
     console.log(this.fotoSeleccionada);
-    this.restService.saveProfesional(profesional).subscribe((profesional) => {
-      
+
+
+    this.restService.saveUsuarioProfesional(registrar).subscribe((profesional) => {
       this.restService.saveImagenProfesional(profesional.id_profesional + "", this.fotoSeleccionada).subscribe(() => {
         return this.restService.getListaProfesional().subscribe((res: any[]) => {
           this.restService.listaProfesional = res;
-        },
-          err => console.log(err));
-      })
-    })
+          Swal.fire('Ingreso Correcto ', 'Se ingreso el profesional', 'success')
+          this.router.navigate(['profesional/profesional']);
+          });
+      },
+      err =>   {Swal.fire('Imagen', 'imagen no insertada', 'error')}
+      )
 
-  }
+    },
+    err=> {Swal.fire('Datos incorrectos', 'profesional no insertado, Datos incorrectos o duplicados', 'error')}
+    )
+  } 
   actualizarProfesional(profesional: Profesional) {
 
     this.restService.updateProfesional(profesional.id_profesional, profesional).subscribe(() => {
@@ -76,11 +90,16 @@ export class RegistrarProfesionalesComponent implements OnInit {
   saveData() {
 
     if (this.formProduct.getRawValue().id_profesional == null) {
-      this.guardarProducto(this.formProduct.value);
+      let profesional: Profesional = this.formProduct.value;
+      this.usuario.username = profesional.email;
+      this.usuario.password = this.formProduct.get("password").value;
+      this.registrar.profesional = profesional;
+      this.registrar.usuario = this.usuario;
+      this.guardarProducto(this.registrar);
     } else {
       this.actualizarProfesional(this.formProduct.value);
     }
-    this.router.navigate(['profesional/profesional']);
+    //this.router.navigate(['profesional/profesional']);
     console.log(this.formProduct.value);
   }
   seleccionarFoto(event) {

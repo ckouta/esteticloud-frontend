@@ -8,25 +8,31 @@
 
     <div class="col-3 z-depth-1" style="margin-right: 30px;padding: 20px">
         <h1>Servicios</h1>
+        <label for="sel1">Buscar servicio:</label>
+        <div class="md-form" style="margin-top: 0px;">
+
+            <input type="search" [(ngModel)]="searchText" placeholder="Nombre del servicio">
+        </div>
         <div class="form-group">
             <label for="sel1">Ordenar por:</label>
             <select class="form-control" id="sel1">
-        <option>Precio:Mayor a Menor</option>
-        <option>Precio:Menor a Mayor</option>
-        <option>Ofertas</option>
-        <option>4</option>
-      </select>
+                <option>Precio:Mayor a Menor</option>
+                <option>Precio:Menor a Mayor</option>
+                <option>Ofertas</option>
+                <option>4</option>
+            </select>
         </div>
+
     </div>
     <div class="col-8">
         <div class="row">
-            <div class="col-md-4" *ngFor="let servicio of restService.listaServicio" style="margin-bottom: 20px;">
+            <div class="col-md-4" *ngFor="let servicio of restService.listaServicio | filter: searchText" style="margin-bottom: 20px;">
                 <div class="card-deck">
                     <div class="card">
                         <img class="card-img-top" src="http://localhost:8080/servicio/uploads/img/{{servicio.foto}}" alt="Card image cap">
                         <div class="card-body">
-                            <h5 class="card-title">{{servicio.nombre}}</h5>
-                            <p class="card-text"> {{servicio.descripcion}}</p>
+                            <h5 class="card-title" style="height: 50px;">{{servicio.nombre}}</h5>
+                            <p class="card-text" style="overflow: hidden;height: 100px;"> {{servicio.descripcion }}</p>
                             <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                         </div>
                     </div>

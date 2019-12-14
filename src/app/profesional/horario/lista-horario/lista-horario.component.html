@@ -12,9 +12,11 @@
                     <form class="form-inline">
                         <div class="form-group">
                             <div class="input-group">
-                                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+                                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" (ngModelChange)="horario()">
                                 <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                                    <button class="" (click)="d.toggle()" type="button">
+                                        <mdb-icon far icon="calendar-alt" class="cyan-text" size="lg"></mdb-icon>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -41,7 +43,13 @@
 
                                 <td style=" vertical-align: middle "> {{horas.bloque_horario.horaInicio}}</td>
                                 <td style="vertical-align: middle ">{{horas.bloque_horario.horaFin}}</td>
-                                <td style="vertical-align: middle ">{{horas.reserva}}</td>
+                                <div *ngIf="horas.reserva;then thenBlock else elseBlock "></div>
+                                <ng-template #thenBlock>
+                                    <td style="vertical-align: middle ">Sí</td>
+                                </ng-template>
+                                <ng-template #elseBlock>
+                                    <td style="vertical-align: middle ">No</td>
+                                </ng-template>
                             </tbody>
                         </table>
                     </div>

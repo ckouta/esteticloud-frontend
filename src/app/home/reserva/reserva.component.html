@@ -25,7 +25,7 @@
                     <h5 class="mt-0" style="margin-bottom: 4%;">Profesionales</h5>
                     <div class="hr">
                     </div>
-                    <select [(ngModel)]="esteticista" class="form-control" id="exampleFormControlSelect1" style="margin-top: 5%;">
+                    <select [(ngModel)]="esteticista" class="form-control" id="exampleFormControlSelect1" style="margin-top: 5%;" (ngModelChange)="serviciosofrecidos()">
                         <option  [ngValue]="0"  > Ninguno Seleccionado</option>
                         <option *ngFor="let profesional of listProfesionales" [ngValue]="profesional" > {{profesional.nombre}}</option>                       
                     </select>
@@ -36,7 +36,7 @@
 
                 </div>
             </div>
-            <div class="col-8 ">
+            <div class="col-8">
 
                 <div class="overflow-auto" style="height:500px">
                     <h5 class="mt-0" style="margin-bottom: 4%;">Lista de Servicios</h5>
@@ -88,52 +88,20 @@
         </div>
     </div>
     <div class="tab-pane fade" id="pills-contacto" role="tabpanel" aria-labelledby="pills-contact-tab">
-        <div style="margin: 20px;">
-            <div class="example z-depth-1">
-                <div class="d-flex justify-content-center h-100">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>Sign In</h3>
-                            <div class="d-flex justify-content-end social_icon">
-                                <span><i class="fab fa-facebook-square"></i></span>
-                                <span><i class="fab fa-google-plus-square"></i></span>
-                                <span><i class="fab fa-twitter-square"></i></span>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <form>
-                                <div class="input-group form-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="username">
-
-                                </div>
-                                <div class="input-group form-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-key"></i></span>
-                                    </div>
-                                    <input type="password" class="form-control" placeholder="password">
-                                </div>
-                                <div class="row align-items-center remember">
-                                    <input type="checkbox">Remember Me
-                                </div>
-                                <div class="form-group">
-                                    <input type="submit" value="Login" class="btn float-right login_btn">
-                                </div>
-                            </form>
-                        </div>
-                        <div class="card-footer">
-                            <div class="d-flex justify-content-center links">
-                                Don't have an account?<a href="#">Sign Up</a>
-                            </div>
-                            <div class="d-flex justify-content-center">
-                                <a href="#">Forgot your password?</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div *ngIf="reserva">
+            <div class="z-depth-1" style="margin: 30px;text-align: center;">
+                <h1>Reserva Realizada con Exito</h1>
+                <h2>Detalles de la reserva</h2>
+                <h5>Nombre del servicio: {{reserva.servicio.nombre}}</h5>
+                <h5>Duración del servicio: {{reserva.servicio.duracion}}</h5>
+                <h5>Precio del servicio: {{reserva.servicio.precio}}</h5>
+                <h5>Nombre del cliente: {{reserva.cliente.nombre}} {{reserva.cliente.apellido}}</h5>
+                <h5>Correo: {{reserva.cliente.email}}</h5>
+                <h5>Fecha: {{hora.horarioProfesional[0].fecha}}</h5>
+                <h5>Nombre del Profesional: {{hora.horarioProfesional[0].profesional.nombre}} {{hora.horarioProfesional[0].profesional.apellido}}</h5>
+                <h5>Hora de Atencion: {{hora.horarioProfesional[0].bloque_horario.horaInicio}}</h5>
             </div>
+
         </div>
 
 

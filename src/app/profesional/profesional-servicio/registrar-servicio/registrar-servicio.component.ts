@@ -29,18 +29,31 @@ export class RegistrarServicioComponent implements OnInit {
 
   ngOnInit() {
     if (this.rutaActiva.snapshot.params.id != null) {
-      this.servicioActualizar = this.restService.listaServicio[this.rutaActiva.snapshot.params.id - 1];
-      this.formServicio.setValue({
-        id_servicio: this.servicioActualizar.id_servicio,
-        nombre: this.servicioActualizar.nombre,
-        duracion: this.servicioActualizar.duracion,
-        precio: this.servicioActualizar.precio,
-        descripcion: this.servicioActualizar.descripcion,
-      });
+      this.restService.getServicio(this.rutaActiva.snapshot.params.id).subscribe((res => {
+
+        this.servicioActualizar = res;
+        this.formServicio.setValue({
+          id_servicio: this.servicioActualizar.id_servicio,
+          nombre: this.servicioActualizar.nombre,
+          duracion: this.servicioActualizar.duracion,
+          precio: this.servicioActualizar.precio,
+          descripcion: this.servicioActualizar.descripcion,
+        });
+      })
+      )
     }
   }
   guardarServicio(servicio: Servicio) {
     this.restService.saveServicio(servicio).subscribe((servicio) => {
+      if (this.fotoSeleccionada == null) {
+        
+        return this.restService.getListaServicio().subscribe((res: any[]) => {
+          this.restService.listaServicio = res;
+          Swal.fire('Actualizacion servicio ', 'Se actualizo el servicio', 'success')
+          this.router.navigate(['profesional/servicios']);
+        },
+          err => console.log(err));
+      }
       this.restService.saveImagenServicio(servicio.id_servicio + "", this.fotoSeleccionada).subscribe(() => {
         return this.restService.getListaServicio().subscribe((res: any[]) => {
           this.restService.listaServicio = res;
@@ -57,30 +70,51 @@ export class RegistrarServicioComponent implements OnInit {
       )
 
     },
-    err =>{
-      Swal.fire('Servicio', 'servicio no insertada', 'error')
-    })
+      err => {
+        Swal.fire('Servicio', 'servicio no insertada', 'error')
+      })
   }
-  actualizarProfesional(servicio: Servicio) {
+  actualizarServicio(servicio: Servicio) {
 
-      this.restService.updateServicio(servicio.id_servicio, servicio).subscribe(() => {
+    this.restService.updateServicio(servicio.id_servicio, servicio).subscribe(() => {
+      if (this.fotoSeleccionada == null) {
+        
         return this.restService.getListaServicio().subscribe((res: any[]) => {
           this.restService.listaServicio = res;
+          Swal.fire('Actualizacion servicio ', 'Se actualizo el servicio', 'success')
+          this.router.navigate(['profesional/servicios']);
         },
           err => console.log(err));
-      })
+      }
+      this.restService.saveImagenServicio(servicio.id_servicio + "", this.fotoSeleccionada).subscribe(() => {
+        return this.restService.getListaServicio().subscribe((res: any[]) => {
+          this.restService.listaServicio = res;
+          Swal.fire('Actualizacion servicio ', 'Se actualizo el servicio', 'success')
+          this.router.navigate(['profesional/servicios']);
+        },
+          err => {
+            Swal.fire('Campos Vacios', 'los campos estan vacios', 'error')
+          })
+      },
+        err => {
+          Swal.fire('Imagen', 'imagen no insertada', 'error')
+        }
+      )
     }
+    )
 
-  saveData() {
+  }
 
-      if(this.formServicio.getRawValue().id_profesional == null) {
-      this.guardarServicio(this.formServicio.value);
-    } else {
-      this.actualizarProfesional(this.formServicio.value);
-    }
-    //this.router.navigate(['profesional/profesional']);
+saveData() {
+
+  if (this.formServicio.getRawValue().id_servicio == null) {
+    this.guardarServicio(this.formServicio.value);
+  } else {
+    this.actualizarServicio(this.formServicio.value);
   }
-  seleccionarFoto(event) {
-    this.fotoSeleccionada = event.target.files[0];
-  }
+  //this.router.navigate(['profesional/profesional']);
+}
+seleccionarFoto(event) {
+  this.fotoSeleccionada = event.target.files[0];
+}
 }

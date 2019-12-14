@@ -20,6 +20,8 @@ import { DetalleServicioComponent } from './profesional/profesional-servicio/det
 import { ListaHorarioComponent } from './profesional/horario/lista-horario/lista-horario.component';
 import { RegistrarHorarioComponent } from './profesional/horario/registrar-horario/registrar-horario.component';
 import { RegistrarComponent } from './registrar/registrar.component';
+import { InicioProfesionalComponent } from './profesional/inicio-profesional/inicio-profesional.component';
+import { ClienteReservaComponent } from './home/cliente-reserva/cliente-reserva.component';
 
 
 const routes: Routes = [
@@ -35,18 +37,20 @@ const routes: Routes = [
     {path:'reserva',
     component:ReservaComponent},
     {path:'registro',
-    component:RegistrarComponent}]},
+    component:RegistrarComponent},
+    {path:'misReservas',
+    component:ClienteReservaComponent}]},
     
   {path:'login',component: LoginComponent},
   {path:'profesional',component: ProfesionalComponent,
   children:[
     {path:'',
-    component:CalendarioComponent},
+    component:InicioProfesionalComponent},
     {path:'profesional',
     component:ListarProfesionalesComponent},
-    {path:'registrar',
+    {path:'profesional/registrar',
     component:RegistrarProfesionalesComponent},
-    {path:'registrar/:id',
+    {path:'profesional/registrar/:id',
     component:RegistrarProfesionalesComponent},
     {path:'reserva',
     component:CalendarioComponent},
@@ -59,6 +63,8 @@ const routes: Routes = [
     {path:'servicios',
     component:ProfesionalServicioComponent},
     {path:'servicios/registrar',
+    component:RegistrarServicioComponent},
+    {path:'servicios/registrar/:id',
     component:RegistrarServicioComponent},
     {path:'servicios/detalle',
     component:DetalleServicioComponent},

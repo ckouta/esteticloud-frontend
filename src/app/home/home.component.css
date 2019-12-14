@@ -10,6 +10,10 @@
     display: none;
 }
 
+.navbar-top ul li a {
+    color: white;
+}
+
 @media screen and (max-width:800px) {
     .main-navigation {
         display: none;
@@ -39,8 +43,8 @@
     margin: 0;
 }
 
-a {
-    display: block;
+a:hover {
+    color: blue !important;
 }
 
 span {
@@ -50,7 +54,7 @@ span {
 #espacio {
     line-height: 59px;
     width: 1px;
-    height: 20px;
+    height: 15px;
     margin-top: 11px !important;
     background: #BDBDBD;
 }
@@ -71,14 +75,7 @@ body {
 
 a.navbar-brand {
     float: left;
-    height: 50px;
-    padding: 15px 15px;
-    font-size: 18px;
-    line-height: 20px;
-    text-decoration: none;
-    color: rgb(255, 255, 255);
-    font-family: cursive;
-    font-weight: 700;
+    margin-left: 30px;
 }
 
 nav.main-navigation {
@@ -96,18 +93,18 @@ nav.main-navigation ul.nav-list {
 .nav-list li.nav-list-item {
     display: inline-block;
     line-height: 40px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 7px;
+    padding-bottom: 7px;
 }
 
 a.nav-link {
     text-decoration: none;
-    font-size: 18px;
+    font-size: 20px;
     font-family: sans-serif;
     font-weight: 500;
     cursor: pointer;
     position: relative;
-    color: #fffbfb;
+    color: blueviolet !important;
 }
 
 @keyframes FadeIn {

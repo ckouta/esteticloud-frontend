@@ -6,9 +6,18 @@
 </nav>
 <section id="team" class="pb-5">
     <div class="container">
+        <div class="row text-center py-2">
+            <!--Grid column-->
+            <div class=" col-md-12 ">
+                <h2>¡Encuentra a tu Esteticista!</h2>
+                <div class="md-form">
+                    <input type="search" [(ngModel)]="searchText" placeholder="Busca por su nombre">
+                </div>
+            </div>
+        </div>
         <div class="row">
             <!-- Team member -->
-            <div class="col-xs-12 col-sm-6 col-md-4" *ngFor="let Profesional of restService.listaProfesional">
+            <div class="col-xs-12 col-sm-6 col-md-4" *ngFor="let Profesional of restService.listaProfesional | filter: searchText">
                 <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
                     <div class="mainflip">
                         <div class="frontside">
@@ -16,7 +25,8 @@
                                 <div class="card-body text-center">
                                     <p><img class=" img-fluid" src="https://sunlimetech.com/portfolio/boot4menu/assets/imgs/team/img_01.png" alt="card image"></p>
                                     <h4 class="card-title">{{Profesional.nombre}} {{Profesional.apellido}}</h4>
-                                    <p class="card-text">This is basic card with image on top, title, description and button.</p>
+                                    <p class="card-text">Esteticista perteneciente a EstetiCloud
+                                    </p>
 
                                 </div>
                             </div>

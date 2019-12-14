@@ -4,6 +4,7 @@ import { RangoFecha } from 'src/app/entidades/RangoFecha';
 
 import Swal from 'sweetalert2';
 import { HorarioProfesional } from 'src/app/entidades/HorarioProfesional';
+import { NgbDateStruct, NgbDateParserFormatter, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-lista-horario',
   templateUrl: './lista-horario.component.html',
@@ -11,16 +12,35 @@ import { HorarioProfesional } from 'src/app/entidades/HorarioProfesional';
 })
 export class ListaHorarioComponent implements OnInit {
 
-  constructor(public restService: RestService) { }
+  constructor(public restService: RestService,
+    private parseCalendar: NgbDateParserFormatter,
+    private calendar: NgbCalendar) { 
+      this.model = this.calendar.getToday();
+    }
   horasProfesional:HorarioProfesional[];
   fecha:RangoFecha=null;
+  model:NgbDateStruct;
+  
 
   ngOnInit() {
-    let fecha: RangoFecha = {id:1,fecha:"2019-11-08",horaInicio:null,horaFin:null};
+    this.restService.getProfesional(this.restService.usuario.username).subscribe((res: any) => {
+      this.restService.profesional = res;
+      let fecha: RangoFecha = {id:this.restService.profesional.id_profesional,fecha:this.parseCalendar.format(this.model),horaInicio:null,horaFin:null};
     this.restService.getHorarioprofesionalfecha(fecha).subscribe((res: any[]) => {
       this.horasProfesional = res;
-      console.log(this.horasProfesional);
+      
     });
+    })
+    
+  }
+
+  horario(){
+    let fecha: RangoFecha = {id:this.restService.profesional.id_profesional,fecha:this.parseCalendar.format(this.model),horaInicio:null,horaFin:null};
+    this.restService.getHorarioprofesionalfecha(fecha).subscribe((res: any[]) => {
+      this.horasProfesional = res;
+     
+    }
+    );
   }
 
 }

@@ -11,13 +11,16 @@ import { RestService } from 'src/app/servicioBackend/rest.service';
 import { HorarioProfesional } from 'src/app/entidades/HorarioProfesional';
 import { Profesional } from 'src/app/entidades/Profesional';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
+import { any } from '@amcharts/amcharts4/.internal/core/utils/Array';
 @Component({
   selector: 'app-calendario',
   templateUrl: './calendario.component.html',
   styleUrls: ['./calendario.component.css']
 })
 export class CalendarioComponent implements OnInit {
-  li:string ='mes';
+  li: string = 'mes';
+  display = 'none';
   calendarEvents = [
     { title: 'event 2', start: '2019-10-17T10:30:00', end: '2019-10-17T11:30:00' }
   ];
@@ -31,7 +34,7 @@ export class CalendarioComponent implements OnInit {
   @ViewChild('calendar', { static: false }) calendarComponent: FullCalendarComponent;
   horasProfesional: HorarioProfesional[] = [];
 
-  constructor(public restService: RestService,private router: Router) { }
+  constructor(public restService: RestService, private router: Router) { }
 
 
 
@@ -43,11 +46,11 @@ export class CalendarioComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(!this.restService.hasRole('ROLE_ESTETI') && !this.restService.hasRole('ROLE_ADMIN') ){
+    if (!this.restService.hasRole('ROLE_ESTETI') && !this.restService.hasRole('ROLE_ADMIN')) {
       this.router.navigate(['login']);
     }
-    this.restService.getProfesional(this.restService.usuario.username).subscribe((res:any) =>{
-      this.restService.profesional =res;
+    this.restService.getProfesional(this.restService.usuario.username).subscribe((res: any) => {
+      this.restService.profesional = res;
       this.reservas(this.restService.profesional);
     })
     this.restService.getListaProfesional().subscribe((res: any[]) => {
@@ -64,17 +67,17 @@ export class CalendarioComponent implements OnInit {
   }
   //[views]="{dayGridMonth:{buttonText: '2 days'}}"
   formatoDia() {
-    this.li='dia';
+    this.li = 'dia';
     let calendar = this.calendarComponent.getApi();
     calendar.changeView('timeGridDay');
   }
   formatoMes() {
-    this.li='mes';
+    this.li = 'mes';
     let calendar = this.calendarComponent.getApi();
     calendar.changeView('dayGridMonth');
   }
   formatoSemana() {
-    this.li='semana';
+    this.li = 'semana';
     let calendar = this.calendarComponent.getApi();
     calendar.changeView('timeGridWeek');
   }
@@ -82,15 +85,15 @@ export class CalendarioComponent implements OnInit {
 
     let calendar = this.calendarComponent.getApi();
     console.log(new Date().toDateString())
-    calendar.addEvent({ title: "event 1", start: '2019-11-18T10:30:00', end: '2019-11-18T22:50:00', description: '2019-10-17', backgroundColor: '#A068F6' ,textColor: 'white'});
+    calendar.addEvent({ title: "event 1", start: '2019-11-18T10:30:00', end: '2019-11-18T22:50:00', description: '2019-10-17', backgroundColor: '#A068F6', textColor: 'white' });
   }
-  reservas(profesional:Profesional) {
+  reservas(profesional: Profesional) {
     //obtener calendario
     let calendar = this.calendarComponent.getApi();
     //llamada para obtener todas las reservas a nombre del profesional
     this.restService.getHorarioprofesional(profesional).subscribe((res: any[]) => {
       this.horasProfesional = res;
-      
+
       let id: number;//obtener id de la reserva
       let evento: Evento; // objeto de tipo evento para agregar al calendario
       for (let i = 0; i <= this.horasProfesional.length; i++) {
@@ -104,7 +107,7 @@ export class CalendarioComponent implements OnInit {
             description: 'reserva'
           }
         }
-        if(i==this.horasProfesional.length){//si ya es el ultimo ciclo agrega el evento
+        if (i == this.horasProfesional.length) {//si ya es el ultimo ciclo agrega el evento
           calendar.addEvent(evento);
           break;
         }
@@ -120,9 +123,30 @@ export class CalendarioComponent implements OnInit {
             description: 'reserva'
           }
         }
-        
+
       }
     });
+
+  }
+  test(event) {
+    let calendar = this.calendarComponent.getApi();
+
+    Swal.fire('Any fool can use a computer' + calendar.select(event.dateStr));
+  }
+  handleDateClick(arg) { // handler method
+    this.display = 'block';
+    //Swal.fire('Any fool can use a computer'+ arg.dateStr);
+  }
+
+
+  openModal() {
+
+    this.display = 'block';
+
+  }
+  onCloseHandled() {
+
+    this.display = 'none';
 
   }
 }

@@ -9,8 +9,8 @@
                         <form [formGroup]="formProduct" (ngSubmit)="saveData()" novalidate enctype="multipart/form-data">
 
                             <div class="row">
-                                <div class="col-md-6">
-                                    <!--Nombre producto-->
+                                <div class="col-md-4">
+                                    <!--Nombre -->
                                     <div class="form-group">
                                         <h6 for="nombre">Nombre Profesional</h6>
                                         <input formControlName="nombre" class="form-control" type="text" placeholder="Ingrese Nombre">
@@ -18,12 +18,21 @@
                             || formProduct.get('nombre').dirty)" class="alert alert-danger">El nombre del profesional es obligatorio
                                         </div>
                                     </div>
-                                    <!--Fin Nombre producto-->
+                                    <!--Fin Nombre -->
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
+                                    <!--Apellido -->
+                                    <h6 for="apellido">Apellido Profesional</h6>
+                                    <input formControlName="apellido" class="form-control" type="text" placeholder="Ingrese apellido">
+                                    <div *ngIf="formProduct.get('apellido').errors && (formProduct.get('apellido').touched 
+                                    || formProduct.get('apellido').dirty)" class="alert alert-danger">El apellido del profesional es obligatorio
+                                    </div>
+                                    <!--Fin Apellido -->
+                                </div>
+                                <div class="col-md-4">
                                     <!-- Subir imagen-->
                                     <div class="form-group">
-                                        <h6 for="imagen">Seleccione una imagen para el producto</h6>
+                                        <h6 for="imagen">Seleccione una imagen para el profesional</h6>
                                         <input (change)="seleccionarFoto($event)" type="file" class="form-control-file">
                                     </div>
                                     <!-- fin Subir imagen-->
@@ -31,35 +40,44 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <!--Seleccionar categoria-->
-                                    <h6 for="apellido">Apellido</h6>
-                                    <input formControlName="apellido" class="form-control" type="text" placeholder="Ingrese apellido">
-                                    <!--Fin seleccionar categoria-->
+                                    <!--RUT -->
+                                    <h6 for="rut">Rut</h6>
+                                    <input formControlName="rut" class="form-control" type="text" placeholder="Ingrese rut">
+                                    <div *ngIf="formProduct.get('rut').errors && (formProduct.get('rut').touched 
+                                    || formProduct.get('rut').dirty)" class="alert alert-danger">El rut del profesional es obligatorio
+                                    </div>
+                                    <!--Fin RUT-->
                                 </div>
                                 <div class="col-md-6">
-                                    <!--Precio producto-->
+                                    <!-- Telefono-->
                                     <div class="form-group">
                                         <h6 for="Telefono">Telefono</h6>
                                         <input formControlName="telefono" type="text" class="form-control" placeholder="Ingrese Telefono">
+                                        <div *ngIf="formProduct.get('telefono').errors && (formProduct.get('telefono').touched 
+                                    || formProduct.get('telefono').dirty)" class="alert alert-danger">El telefono del profesional es obligatorio
+                                        </div>
                                     </div>
-                                    <!--Fin Precio producto-->
+                                    <!--Fin Telefono -->
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-6">
-                                    <!--Seleccionar cantidad personas-->
+                                    <!--Email  -->
                                     <div class="form-group">
                                         <h6 for="Email">Email</h6>
                                         <input formControlName="email" type="text" class="form-control" placeholder="Ingrese el email">
-                                        <!--Fin cantidad personas-->
+                                        <div *ngIf="formProduct.get('email').errors && (formProduct.get('email').touched 
+                                    || formProduct.get('email').dirty)" class="alert alert-danger">El email del profesional es obligatorio
+                                        </div>
+                                        <!--Fin Email -->
                                     </div>
                                 </div>
                                 <div class="col-md-6" *ngIf="!formProduct.getRawValue().id_profesional">
-                                    <!--Seleccionar cantidad personas-->
+                                    <!--Contraseña  -->
                                     <div class="form-group">
                                         <h6 for="contraseña">Contraseña</h6>
-                                        <input formControlName="password" type="text" class="form-control" placeholder="Ingrese una contraseña">
+                                        <input formControlName="password" type="password" class="form-control" placeholder="Ingrese una contraseña">
                                         <!--Fin cantidad personas-->
                                     </div>
                                 </div>

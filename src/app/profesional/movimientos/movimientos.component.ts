@@ -1,7 +1,9 @@
-
-import { MdbTableDirective, MdbTablePaginationComponent } from 'angular-bootstrap-md';
-import { Component, OnInit,ElementRef, ViewChild, HostListener, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
+import { RestService } from 'src/app/servicioBackend/rest.service';
+import { Router } from '@angular/router';
+import { Movimiento } from 'src/app/entidades/Movimiento';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { NgbCalendar, NgbDateStruct, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-movimientos',
@@ -9,99 +11,52 @@ import { Component, OnInit,ElementRef, ViewChild, HostListener, AfterViewInit, C
   styleUrls: ['./movimientos.component.css']
 })
 export class MovimientosComponent implements OnInit {
-  @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
-  @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
-  @ViewChild('row', { static: true }) row: ElementRef;
-  elements: any = [];
-  headElements = ['id', 'first', 'last', 'handle'];
-
-  searchText: string = '';
-  previous: string;
-
-  maxVisibleItems: number = 8;
-  constructor(private cdRef: ChangeDetectorRef) { }
-  @HostListener('input') oninput() {
-    this.mdbTablePagination.searchText = this.searchText;
-  }
+  model:NgbDateStruct;
+  movimientos:Movimiento[]=[];
+  formMovimiento: FormGroup;
+  constructor(public restService: RestService, private router: Router, private formBuilder: FormBuilder, private parseCalendar: NgbDateParserFormatter,
+    private calendar: NgbCalendar) {
+    this.formMovimiento = this.formBuilder.group({
+      id_movimiento: [],
+      nombre: ['', [Validators.required]],
+      descripcion: ['', [Validators.required]],
+      valor: ['', [Validators.required]],
+      fecha: ['', [Validators.required]],
+    });
+    this.model = this.calendar.getToday();
+   }
+ 
   ngOnInit() {
-    for (let i = 1; i <= 25; i++) {
-      this.elements.push({id: i.toString(), first: 'Wpis ' + i, last: 'Last ' + i, handle: 'Handle ' + i});
+    if (!this.restService.hasRole('ROLE_ESTETI') && !this.restService.hasRole('ROLE_ADMIN')) {
+      this.router.navigate(['login']);
     }
+    this.restService.getProfesional(this.restService.usuario.username).subscribe((res: any) => {
+      this.restService.profesional = res;
+      this.restService.getMovimientoProfesional(this.restService.profesional).subscribe((res: any[]) => {
 
-    this.mdbTable.setDataSource(this.elements);
-    this.elements = this.mdbTable.getDataSource();
-    this.previous = this.mdbTable.getDataSource();
+        this.movimientos = res;
+      })
+    },
+    err=>this.movimientos=[])
   }
-  ngAfterViewInit() {
-    this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
-
-    this.mdbTablePagination.calculateFirstItemIndex();
-    this.mdbTablePagination.calculateLastItemIndex();
-    this.cdRef.detectChanges();
+  movimientoEliminar(id:number){
+    this.restService.deleteMovimiento(id).subscribe((res: any[]) => {
+      this.restService.getMovimientoProfesional(this.restService.profesional).subscribe((res: any[]) => {
+        this.movimientos = res;
+      })
+    })
   }
-
-  addNewRow() {
-    this.mdbTable.addRow({
-      id: this.elements.length.toString(),
-      first: 'Wpis ' + this.elements.length,
-      last: 'Last ' + this.elements.length,
-      handle: 'Handle ' + this.elements.length
-    });
-    this.emitDataSourceChange();
+  guardarMovimiento(){
+    let movimiento:Movimiento =this.formMovimiento.value;
+    this.restService.getProfesional(this.restService.usuario.username).subscribe((res: any) => {
+      movimiento.profesional = res;
+      this.restService.saveMovimiento(movimiento).subscribe((res: any[]) => {
+        this.restService.getMovimientoProfesional(this.restService.profesional).subscribe((res: any[]) => {
+          this.movimientos = res;
+        })
+      })
+    })
+    
   }
-
-  addNewRowAfter() {
-    this.mdbTable.addRowAfter(1, {id: '2', first: 'Nowy', last: 'Row', handle: 'Kopytkowy'});
-    this.mdbTable.getDataSource().forEach((el: any, index: any) => {
-      el.id = (index + 1).toString();
-    });
-    this.emitDataSourceChange();
-  }
-
-  removeLastRow() {
-    this.mdbTable.removeLastRow();
-    this.emitDataSourceChange();
-    this.mdbTable.rowRemoved().subscribe((data: any) => {
-      console.log(data);
-    });
-  }
-
-  removeRow() {
-    this.mdbTable.removeRow(1);
-    this.mdbTable.getDataSource().forEach((el: any, index: any) => {
-      el.id = (index + 1).toString();
-    });
-    this.emitDataSourceChange();
-    this.mdbTable.rowRemoved().subscribe((data: any) => {
-      console.log(data);
-    });
-  }
-
-  emitDataSourceChange() {
-    this.mdbTable.dataSourceChange().subscribe((data: any) => {
-      console.log(data);
-    });
-  }
-
-  searchItems() {
-    const prev = this.mdbTable.getDataSource();
-
-    if (!this.searchText) {
-      this.mdbTable.setDataSource(this.previous);
-      this.elements = this.mdbTable.getDataSource();
-    }
-
-    if (this.searchText) {
-      this.elements = this.mdbTable.searchLocalDataBy(this.searchText);
-      this.mdbTable.setDataSource(prev);
-    }
-
-    this.mdbTablePagination.calculateFirstItemIndex();
-    this.mdbTablePagination.calculateLastItemIndex();
-
-    this.mdbTable.searchDataObservable(this.searchText).subscribe(() => {
-      this.mdbTablePagination.calculateFirstItemIndex();
-      this.mdbTablePagination.calculateLastItemIndex();
-    });
-  }
+ 
 }
