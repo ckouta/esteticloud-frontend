@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="col-md-4 d-flex justify-content-end align-self-start">
-                    <button class="btn btn-warning d-flex align-items-center align-self-center" [routerLink]="['registrar']" routerLinkActive="router-link-active" type="button" style="height: 38px;background-color:  #ff8000;">Agregar Movimiento
+                    <button class="btn btn-warning d-flex align-items-center align-self-center" data-toggle="modal" data-target="#modalRegisterForm" routerLinkActive="router-link-active" type="button" style="height: 38px;background-color:  #ff8000;" (click)="vaciar()">Agregar Movimiento
                         <i class="fa fa-plus-circle"></i>
                     </button>
                 </div>
@@ -52,7 +52,7 @@
                                                 <i
                                                     class="far fa-trash-alt d-xl-flex justify-content-xl-center align-items-xl-center"></i>
                                             </button>&nbsp;
-                                            <button type="button" class="btn btn-warning" [routerLink]="['/profesional/registrar/'+movimiento.id_movimiento]">
+                                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalRegisterForm" (click)="setDatosMovimiento(movimiento)">
                                                 <i
                                                     class="fas fa-pencil-alt d-xl-flex justify-content-xl-center align-items-xl-center"></i>
                                             </button>
@@ -67,146 +67,7 @@
         </div>
     </div>
 </body>
-<div>
-    <!-- Modal -->
-    <div *ngIf="eliminar" class="modal fade" id="modalEliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Eliminar Productos</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ¿Estás seguro que deseas eliminar el producto {{eliminar.nombre}} ?
-                </div>
-                <div class="modal-footer">
 
-                    <button type="button" class="btn btn-danger" (click)="deleteProduct(eliminar.id)" [routerLink]="['/administrador/listarProductos']" data-dismiss="modal">Eliminar</button>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- The Modal Editar Producto-->
-<div class="modal" id="modalUpdateProduct" *ngIf="formProduct">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Editar Producto</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                <form [formGroup]="formProduct" (ngSubmit)="saveData()" novalidate>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <!--Nombre producto-->
-                            <div class="form-group">
-                                <h6 for="nombreProducto">Nombre Producto</h6>
-                                <input formControlName="nombre" class="form-control" type="text" placeholder="Ingrese nombre producto">
-                                <div *ngIf="formProduct.get('nombre').errors && (formProduct.get('nombre').touched 
-                  || formProduct.get('nombre').dirty)" class="alert alert-danger">El nombre del producto es obligatorio
-                                </div>
-                            </div>
-                            <!--Fin Nombre producto-->
-                        </div>
-                        <div class="col-md-6">
-                            <!-- Subir imagen-->
-                            <div class="form-group">
-                                <h6 for="imagenProducto">Seleccione una imagen para el producto</h6>
-                                <input formControlName="imagen" type="file" class="form-control-file">
-                            </div>
-                            <!-- fin Subir imagen-->
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <!--Seleccionar categoria-->
-                            <h6>Categoria</h6>
-                            <select formControlName="categoria" class="form-control">
-                                <option selected>Seleccione una categoria</option>
-                                <option>Tortas</option>
-                                <option>Panaderia</option>
-                                <option>Empanadas</option>
-                            </select>
-                            <div *ngIf="formProduct.get('categoria').errors && (formProduct.get('categoria').touched 
-              || formProduct.get('categoria').dirty)" class="alert alert-danger">Ingrese categoria valida.
-                            </div>
-                            <!--Fin seleccionar categoria-->
-                        </div>
-                        <div class="col-md-6">
-                            <!--Precio producto-->
-                            <div class="form-group">
-                                <h6 for="precioProducto">Precio Producto</h6>
-                                <input formControlName="precio" type="number" class="form-control" placeholder="Ingrese precio para el producto">
-                                <div *ngIf="formProduct.get('precio').errors && (formProduct.get('precio').touched 
-          || formProduct.get('precio').dirty)" class="alert alert-danger">El precio del producto no debe ser negativo o ingrese precio.
-                                </div>
-                            </div>
-                            <!--Fin Precio producto-->
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <!--Seleccionar cantidad personas-->
-                            <div class="form-group">
-                                <h6 for="cantidadProducto">Cantidad del producto</h6>
-                                <input formControlName="cantidad_personas" type="number" class="form-control" placeholder="Ingrese la cantidad para el producto">
-                                <div *ngIf="formProduct.get('cantidad_personas').errors && (formProduct.get('cantidad_personas').touched 
-                  || formProduct.get('cantidad_personas').dirty)" class="alert alert-danger">Ingrese la cantidad de personas necesarias.
-                                </div>
-                            </div>
-                            <!--Fin cantidad personas-->
-                        </div>
-                        <div class="col-md-6">
-                            <!--Ingresar tiempo de producción-->
-                            <div class="form-group">
-                                <h6 for="tiempoProduccionProducto">Días de producción del producto</h6>
-                                <input formControlName="tiempo_produccion" type="number" class="form-control" placeholder="Ingrese la cantidad de dias de producción">
-                                <div *ngIf="formProduct.get('tiempo_produccion').errors && (formProduct.get('tiempo_produccion').touched 
-                  || formProduct.get('tiempo_produccion').dirty)" class="alert alert-danger">Es necesario ingresar tiempo de producción.
-                                </div>
-                            </div>
-                            <!--Fin tiempo de producción-->
-                        </div>
-                    </div>
-                    <!--Ingresar Descripción-->
-                    <div class="form-group">
-                        <h6 for="descripcionProducto">Descripción del producto</h6>
-                        <textarea formControlName="descripcion" class="form-control" placeholder="Ingrese una descripción para el producto"></textarea>
-                        <div *ngIf="formProduct.get('descripcion').errors && (formProduct.get('descripcion').touched 
-                  || formProduct.get('descripcion').dirty)" class="alert alert-danger">Es necesario ingresar una descripción.
-                        </div>
-                    </div>
-                    <!-- fin Ingresar Descripción-->
-
-                    <!--Botones-->
-                    <div class="col-md-12" style="text-align: right">
-                        <button type="button" class="btn btn-danger botones" style="background: #ff0000" data-toggle="modal" data-target="#modalSalir" data-dismiss="modal"> Cancelar </button> &nbsp;
-                        <button type="submit" [disabled]="!formProduct.valid" class="btn btn-warning botones" style="background: #ff8800"> Guardar </button>
-                    </div>
-                    <!--Fin Botones-->
-                </form>
-            </div>
-
-            <!-- Modal footer 
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
--->
-            <div class="modal-footer">
-            </div>
-
-        </div>
-    </div>
-</div>
 <div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -242,7 +103,7 @@
                 </form>
             </div>
             <div class="modal-footer d-flex justify-content-center">
-                <button class="btn btn-deep-orange" (click)="guardarMovimiento()">Guardar</button>
+                <button class="btn btn-deep-orange" data-dismiss="modal" aria-label="Close" (click)="guardarMovimiento()">Guardar</button>
             </div>
         </div>
     </div>

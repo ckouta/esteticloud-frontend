@@ -3,6 +3,7 @@ import { estado } from './Estado';
 
 export interface Movimiento {
     id_movimiento: number;
+    nombre:string;
     descripcion:string;
     valor:string;
     fecha:Date;

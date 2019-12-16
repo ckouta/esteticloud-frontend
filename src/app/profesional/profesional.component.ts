@@ -7,8 +7,8 @@ import { RestService } from '../servicioBackend/rest.service';
   styleUrls: ['./profesional.component.css']
 })
 export class ProfesionalComponent implements OnInit {
-
-  constructor(private restService: RestService) { }
+  searchText:String;
+  constructor(public restService: RestService) { }
 
   ngOnInit() {
   }

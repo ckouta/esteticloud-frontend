@@ -35,7 +35,7 @@ export class RestService {
 
   /*Profesional */
   getListaProfesional() {
-    return this.http.get(this.URL + '/profesional/listar').pipe(map((res) => res as Profesional[]));
+    return this.http.get(this.URL + '/profesional/').pipe(map((res) => res as Profesional[]));
   }
   getProfesional(correo: string) {
     return this.http.get(this.URL + '/profesional/' + correo, { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as Profesional));
@@ -59,14 +59,14 @@ export class RestService {
     return this.http.post(this.URL + '/profesional/saveimagen', formData, { headers: httpHeaders });
   }
   updateProfesional(id: number, profesional: Profesional) {
-    return this.http.put(this.URL + '/profesional/update/' + id, profesional, { headers: this.agregarAuthorizationHeader() });
+    return this.http.put(this.URL + '/profesional/' + id, profesional, { headers: this.agregarAuthorizationHeader() });
   }
   deleteProfesional(id: number) {
     return this.http.delete(this.URL + '/profesional/' + id, { headers: this.agregarAuthorizationHeader() });
   }
   /*Cliente*/
   getListaCliente() {
-    return this.http.get(this.URL + '/cliente/listar', { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as Profesional[]));
+    return this.http.get(this.URL + '/cliente/', { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as Profesional[]));
   }
   getCliente(correo: string) {
     return this.http.get(this.URL + '/cliente/' + correo, { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as Cliente));
@@ -78,59 +78,62 @@ export class RestService {
     return this.http.post<Registro[]>(this.URL + '/cliente/usuario', registrar);
   }
   updateCliente(id: number, cliente: Cliente) {
-    return this.http.put(this.URL + '/cliente/update/' + id, cliente, { headers: this.agregarAuthorizationHeader() });
+    return this.http.put(this.URL + '/cliente/' + id, cliente, { headers: this.agregarAuthorizationHeader() });
   }
   /*Movimiento */
   getListaMovimiento() {
-    return this.http.get(this.URL + '/movimiento/listar', { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as Movimiento[]));
+    return this.http.get(this.URL + '/movimiento/', { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as Movimiento[]));
+  }
+  getMovimiento(id:number) {
+    return this.http.get(this.URL + '/movimiento/'+id, { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as Movimiento));
   }
   getMovimientoProfesional(profesional: Profesional) {
-    return this.http.post(this.URL + '/movimiento/listarProfesional' ,profesional, { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as Movimiento[]));
+    return this.http.post(this.URL + '/movimiento/por_profesional' ,profesional, { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as Movimiento[]));
   }
   saveMovimiento(movimiento: Movimiento) {
     return this.http.post<Movimiento[]>(this.URL + '/movimiento/save', movimiento, { headers: this.agregarAuthorizationHeader() });
   }
   updateMovimiento(id: number, movimiento: Movimiento) {
-    return this.http.put(this.URL + '/movimiento/update/' + id, movimiento, { headers: this.agregarAuthorizationHeader() });
+    return this.http.put(this.URL + '/movimiento/' + id, movimiento, { headers: this.agregarAuthorizationHeader() });
   }
   deleteMovimiento(id: number) {
     return this.http.delete(this.URL + '/movimiento/' + id, { headers: this.agregarAuthorizationHeader() });
   }
   /*Reserva actualizar metodos */
   getListaReserva() {
-    return this.http.get(this.URL + '/reserva/listar', { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as Profesional[]));
+    return this.http.get(this.URL + '/reserva/', { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as Profesional[]));
   }
   saveReserva(reserva: Reserva) {
     return this.http.post<Reserva>(this.URL + '/reserva/save', reserva, { headers: this.agregarAuthorizationHeader() });
   }
   getReservaCliente(cliente: Cliente) {
-    return this.http.post(this.URL + '/reserva/listarRC' ,cliente, { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as HorarioProfesional[]));
+    return this.http.post(this.URL + '/reserva/por_cliente' ,cliente, { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as HorarioProfesional[]));
   }
   /*Servicio Ofrecido */
   getListaServicioOfrecido() {
-    return this.http.get(this.URL + '/ps/listar').pipe(map((res) => res as Servicio[]));
+    return this.http.get(this.URL + '/so/').pipe(map((res) => res as Servicio[]));
   }
   saveServicioOfrecido(servicioOfrecido: ServicioOfrecido) {
-    return this.http.post<Servicio>(this.URL + '/ps/save', servicioOfrecido, { headers: this.agregarAuthorizationHeader() });
+    return this.http.post<Servicio>(this.URL + '/so/save', servicioOfrecido, { headers: this.agregarAuthorizationHeader() });
   }
   deleteServicioOfrecido(id: number) {
-    return this.http.delete(this.URL + '/ps/' + id, { headers: this.agregarAuthorizationHeader() });
+    return this.http.delete(this.URL + '/so/' + id, { headers: this.agregarAuthorizationHeader() });
   }
   getListaServicioOfrecidoporProfesional(profesional: Profesional) {
-    return this.http.post(this.URL + '/ps/listarPS', profesional).pipe(map((res) => res as Servicio[]));
+    return this.http.post(this.URL + '/so/por_profesional', profesional).pipe(map((res) => res as Servicio[]));
   }
   getListaServicioOfrecidoNoASignadoProfesional(profesional: Profesional) {
-    return this.http.post(this.URL + '/ps/listarSNO', profesional, { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as Servicio[]));
+    return this.http.post(this.URL + '/so/sin_profesional', profesional, { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as Servicio[]));
   }
   getListaServicioOfrecidoporServicio(servicio: Servicio) {
-    return this.http.post(this.URL + '/ps/listarSP', servicio).pipe(map((res) => res as Profesional[]));
+    return this.http.post(this.URL + '/so/profesional', servicio).pipe(map((res) => res as Profesional[]));
   }
   /*Servicio */
   getListaServicio() {
-    return this.http.get(this.URL + '/servicio/listar').pipe(map((res) => res as Servicio[]));
+    return this.http.get(this.URL + '/servicio/').pipe(map((res) => res as Servicio[]));
   }
   getServicio(id: number) {
-    return this.http.get(this.URL + '/servicio/servicio/' + id).pipe(map((res) => res as Servicio));
+    return this.http.get(this.URL + '/servicio/' + id).pipe(map((res) => res as Servicio));
   }
   saveServicio(servicio: Servicio) {
     return this.http.post<Servicio>(this.URL + '/servicio/save', servicio, { headers: this.agregarAuthorizationHeader() });
@@ -148,26 +151,26 @@ export class RestService {
     return this.http.post(this.URL + '/servicio/saveimagen', formData, { headers: httpHeaders });
   }
   updateServicio(id: number, servicio: Servicio) {
-    return this.http.put(this.URL + '/servicio/update/' + id, servicio, { headers: this.agregarAuthorizationHeader() });
+    return this.http.put(this.URL + '/servicio/' + id, servicio, { headers: this.agregarAuthorizationHeader() });
   }
   /*Horario */
   getListabloques() {
-    return this.http.get(this.URL + '/horario/listarbloque', { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as Bloque[]));
+    return this.http.get(this.URL + '/bloque/', { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as Bloque[]));
   }
   saveHorario(rangoFecha: RangoFecha) {
-    return this.http.post<HorarioProfesional[]>(this.URL + '/horarioprofesional/save', rangoFecha, { headers: this.agregarAuthorizationHeader() });
+    return this.http.post<HorarioProfesional[]>(this.URL + '/horario/save', rangoFecha, { headers: this.agregarAuthorizationHeader() });
   }
   getHorarioprofesional(profesional: Profesional) {
-    return this.http.post<HorarioProfesional[]>(this.URL + '/horarioprofesional/lista', profesional, { headers: this.agregarAuthorizationHeader() });
+    return this.http.post<HorarioProfesional[]>(this.URL + '/horario/listaHoras', profesional, { headers: this.agregarAuthorizationHeader() });
   }
   getHorarioReserva(reserva: Reserva) {
-    return this.http.post<HorarioProfesional>(this.URL + '/horarioprofesional/hora', reserva, { headers: this.agregarAuthorizationHeader() });
+    return this.http.post<HorarioProfesional>(this.URL + '/horario/hora', reserva, { headers: this.agregarAuthorizationHeader() });
   }
   getHorarioprofesionalfecha(rangoFecha: RangoFecha) {
-    return this.http.post<HorarioProfesional[]>(this.URL + '/horarioprofesional/listafecha', rangoFecha, { headers: this.agregarAuthorizationHeader() });
+    return this.http.post<HorarioProfesional[]>(this.URL + '/horario/listafecha', rangoFecha, { headers: this.agregarAuthorizationHeader() });
   }
   updateHorarioReserva(id: number, reserva: Reserva) {
-    return this.http.put(this.URL + '/horarioprofesional/reservaupdate/' + id, reserva, { headers: this.agregarAuthorizationHeader() });
+    return this.http.put(this.URL + '/horario/reserva/' + id, reserva, { headers: this.agregarAuthorizationHeader() });
   }
 
   /*Seguridad*/

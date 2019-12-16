@@ -7,7 +7,7 @@ import { RestService } from 'src/app/servicioBackend/rest.service';
   styleUrls: ['./equipo.component.css']
 })
 export class EquipoComponent implements OnInit {
-
+  searchText:string;
   constructor( public restService: RestService) { }
 
   ngOnInit() {

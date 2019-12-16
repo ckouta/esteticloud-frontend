@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./listar-profesionales.component.css']
 })
 export class ListarProfesionalesComponent implements OnInit {
-
+  searchText:string;
   
   constructor( public restService: RestService ) { }
 

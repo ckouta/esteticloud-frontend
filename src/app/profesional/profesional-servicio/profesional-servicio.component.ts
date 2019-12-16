@@ -12,7 +12,7 @@ import { ServicioOfrecido } from 'src/app/entidades/ServicioOfrecido';
   styleUrls: ['./profesional-servicio.component.css']
 })
 export class ProfesionalServicioComponent implements OnInit {
-
+  searchText:string;
   serviciosOfrecido: ServicioOfrecido[] = [];
   serviciosNoOfrecido: Servicio[] = [];
   constructor(public restService: RestService, private router: Router) { }

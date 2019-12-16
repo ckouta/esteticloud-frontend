@@ -11,8 +11,9 @@ import { NgbCalendar, NgbDateStruct, NgbDateParserFormatter } from '@ng-bootstra
   styleUrls: ['./movimientos.component.css']
 })
 export class MovimientosComponent implements OnInit {
-  model:NgbDateStruct;
-  movimientos:Movimiento[]=[];
+  searchText:string;
+  model: NgbDateStruct;
+  movimientos: Movimiento[] = [];
   formMovimiento: FormGroup;
   constructor(public restService: RestService, private router: Router, private formBuilder: FormBuilder, private parseCalendar: NgbDateParserFormatter,
     private calendar: NgbCalendar) {
@@ -24,8 +25,8 @@ export class MovimientosComponent implements OnInit {
       fecha: ['', [Validators.required]],
     });
     this.model = this.calendar.getToday();
-   }
- 
+  }
+
   ngOnInit() {
     if (!this.restService.hasRole('ROLE_ESTETI') && !this.restService.hasRole('ROLE_ADMIN')) {
       this.router.navigate(['login']);
@@ -37,17 +38,17 @@ export class MovimientosComponent implements OnInit {
         this.movimientos = res;
       })
     },
-    err=>this.movimientos=[])
+      err => this.movimientos = [])
   }
-  movimientoEliminar(id:number){
+  movimientoEliminar(id: number) {
     this.restService.deleteMovimiento(id).subscribe((res: any[]) => {
       this.restService.getMovimientoProfesional(this.restService.profesional).subscribe((res: any[]) => {
         this.movimientos = res;
       })
     })
   }
-  guardarMovimiento(){
-    let movimiento:Movimiento =this.formMovimiento.value;
+  guardarMovimiento() {
+    let movimiento: Movimiento = this.formMovimiento.value;
     this.restService.getProfesional(this.restService.usuario.username).subscribe((res: any) => {
       movimiento.profesional = res;
       this.restService.saveMovimiento(movimiento).subscribe((res: any[]) => {
@@ -56,7 +57,26 @@ export class MovimientosComponent implements OnInit {
         })
       })
     })
-    
+
   }
- 
+  setDatosMovimiento(movimiento: Movimiento) {
+    if(movimiento != null){
+      this.formMovimiento.setValue({
+        id_movimiento: movimiento.id_movimiento,
+        nombre: movimiento.nombre,
+        descripcion: movimiento.descripcion,
+        valor: movimiento.valor,
+        fecha: movimiento.fecha,
+      })
+    }
+  }
+  vaciar(){
+    this.formMovimiento = this.formBuilder.group({
+      id_movimiento: [],
+      nombre: ['', [Validators.required]],
+      descripcion: ['', [Validators.required]],
+      valor: ['', [Validators.required]],
+      fecha: ['', [Validators.required]],
+    });
+  }
 }

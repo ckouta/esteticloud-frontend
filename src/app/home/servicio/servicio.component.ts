@@ -9,7 +9,7 @@ import { RestService } from 'src/app/servicioBackend/rest.service';
 })
 
 export class ServicioComponent implements OnInit{
-
+  searchText:string;
   constructor(public restService: RestService) { }
 
   ngOnInit() {
