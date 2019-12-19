@@ -13,6 +13,7 @@ import { HorarioPosible } from 'src/app/entidades/HorarioPosible';
 import { Router } from '@angular/router';
 import { Reserva } from 'src/app/entidades/Reserva';
 import { element } from 'protractor';
+import { number } from '@amcharts/amcharts4/core';
 
 @Component({
   selector: 'app-reserva',
@@ -20,6 +21,10 @@ import { element } from 'protractor';
   styleUrls: ['./reserva.component.css']
 })
 export class ReservaComponent implements OnInit, OnChanges {
+  isDisabled;
+  //date.day >= 3 && date.day <= 7  ||  date.day >= 9 && date.day <= 13 
+  
+  isWeekend = (date: NgbDate) =>  this.calendar.getWeekday(date) >= 6;
   calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
   calendarWeekends = true;
   arreglo: String[] = ["", "current", "done", "done", "done"];
@@ -40,6 +45,8 @@ export class ReservaComponent implements OnInit, OnChanges {
     private router: Router,
     private parseCalendar: NgbDateParserFormatter) {
     this.model = this.calendar.getToday();
+      this.isDisabled = (date: NgbDate, current: {month: number}) => {
+        current.month == 11 && date.day == 3};
 
   }
 

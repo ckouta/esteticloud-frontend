@@ -22,7 +22,7 @@ import { RegistrarHorarioComponent } from './profesional/horario/registrar-horar
 import { RegistrarComponent } from './registrar/registrar.component';
 import { InicioProfesionalComponent } from './profesional/inicio-profesional/inicio-profesional.component';
 import { ClienteReservaComponent } from './home/cliente-reserva/cliente-reserva.component';
-
+import { ReportesComponent } from './profesional/reportes/reportes.component';
 
 const routes: Routes = [
   {path:'',redirectTo:'/home', pathMatch:'full'},
@@ -72,6 +72,8 @@ const routes: Routes = [
     component:ListaHorarioComponent},
     {path:'horario/registrar',
     component:RegistrarHorarioComponent},
+    {path:'reportes',
+    component:ReportesComponent}
     ]}
 ]
 

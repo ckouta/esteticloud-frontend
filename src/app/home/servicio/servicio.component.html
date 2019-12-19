@@ -15,11 +15,10 @@
         </div>
         <div class="form-group">
             <label for="sel1">Ordenar por:</label>
-            <select class="form-control" id="sel1">
-                <option>Precio:Mayor a Menor</option>
-                <option>Precio:Menor a Mayor</option>
-                <option>Ofertas</option>
-                <option>4</option>
+            <select [(ngModel)]="servicio" class="form-control" id="sel1" (ngModelChange)="ordenar()">
+                <option [ngValue]="0">Nombre del servicio</option>
+                <option [ngValue]="1">Precio: mayor a menor</option>
+                <option [ngValue]="2"> Precio: menor a mayor</option>
             </select>
         </div>
 
@@ -29,11 +28,11 @@
             <div class="col-md-4" *ngFor="let servicio of restService.listaServicio | filter: searchText" style="margin-bottom: 20px;">
                 <div class="card-deck">
                     <div class="card">
-                        <img class="card-img-top" src="http://localhost:8080/servicio/uploads/img/{{servicio.foto}}" alt="Card image cap">
+                        <img class="card-img-top" src="http://parra.chillan.ubiobio.cl:8080/alvaro.castillo1501/servicio/uploads/img/{{servicio.foto}}" alt="Card image cap" style="height: 170px;">
                         <div class="card-body">
                             <h5 class="card-title" style="height: 50px;">{{servicio.nombre}}</h5>
                             <p class="card-text" style="overflow: hidden;height: 100px;"> {{servicio.descripcion }}</p>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                            <p class="card-text"><small class="text-muted">Valor: ${{servicio.precio }}</small></p>
                         </div>
                     </div>
                 </div>

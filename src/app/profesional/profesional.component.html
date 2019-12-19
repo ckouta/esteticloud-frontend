@@ -5,13 +5,13 @@
     </button>
     <div class="collapse navbar-collapse " id="navbarNav">
         <ul class="navbar-nav m-auto">
-            <li class="nav-item" routerLinkActive="active">
+            <li class="nav-item" routerLinkActive="active" *ngIf="restService.hasRole('ROLE_ESTETI')">
                 <a [routerLink]="['/profesional/reserva']" routerLinkActive="active" class="nav-link"> <i class="fas fa-calendar-alt"></i>Reservas <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item" routerLinkActive="active" *ngIf="restService.hasRole('ROLE_ESTETI')">
                 <a [routerLink]="['/profesional/movimientos']" class="nav-link"><i class="fas fa-hand-holding-usd"></i>Movimientos</a>
             </li>
-            <li class="nav-item" routerLinkActive="active" *ngIf="restService.hasRole('ROLE_ADMIN')">
+            <li class="nav-item" routerLinkActive="active" *ngIf="restService.hasRole('ROLE_ESTETI')">
                 <a [routerLink]="['/profesional/clientes']" class="nav-link"><i class="fas fa-user"></i>Clientes</a>
             </li>
             <li class="nav-item" routerLinkActive="active" *ngIf="restService.hasRole('ROLE_ESTETI')">
@@ -22,6 +22,9 @@
             </li>
             <li class="nav-item" routerLinkActive="active" *ngIf="restService.hasRole('ROLE_ADMIN')">
                 <a [routerLink]="['/profesional/profesional']" class="nav-link"><i class="fas fa-user-tie"></i>Profesional</a>
+            </li>
+            <li class="nav-item" routerLinkActive="active" *ngIf="restService.hasRole('ROLE_ADMIN')">
+                <a [routerLink]="['/profesional/reportes']" class="nav-link"><i class="far fa-chart-bar"></i>Reportes</a>
             </li>
             <li class="nav-item">
                 <a [routerLink]="['']" (click)="cerrarSesion()" class="nav-link"><i class="fas fa-sign-out-alt"></i>Cerrar Sesión</a>

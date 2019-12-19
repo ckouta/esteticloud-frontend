@@ -21,7 +21,7 @@ import { Movimiento } from '../entidades/Movimiento';
 })
 export class RestService {
 
-  private URL = 'http://localhost:8080';
+  private URL = 'http://parra.chillan.ubiobio.cl:8080/alvaro.castillo1501';
   listaProfesional: Profesional[];
   listaServicio: Servicio[];
   listaBloque: Bloque[];
@@ -38,7 +38,7 @@ export class RestService {
     return this.http.get(this.URL + '/profesional/').pipe(map((res) => res as Profesional[]));
   }
   getProfesional(correo: string) {
-    return this.http.get(this.URL + '/profesional/' + correo, { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as Profesional));
+    return this.http.get(this.URL + '/profesional/p/' + correo, { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as Profesional));
   }
   saveProfesional(profesional: Profesional) {
     return this.http.post<Profesional>(this.URL + '/profesional/save', profesional, { headers: this.agregarAuthorizationHeader() });
@@ -66,7 +66,7 @@ export class RestService {
   }
   /*Cliente*/
   getListaCliente() {
-    return this.http.get(this.URL + '/cliente/', { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as Profesional[]));
+    return this.http.get(this.URL + '/cliente/', { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as Cliente[]));
   }
   getCliente(correo: string) {
     return this.http.get(this.URL + '/cliente/' + correo, { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as Cliente));
@@ -107,7 +107,7 @@ export class RestService {
     return this.http.post<Reserva>(this.URL + '/reserva/save', reserva, { headers: this.agregarAuthorizationHeader() });
   }
   getReservaCliente(cliente: Cliente) {
-    return this.http.post(this.URL + '/reserva/por_cliente' ,cliente, { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as HorarioProfesional[]));
+    return this.http.post(this.URL + '/reserva/listarRC' ,cliente, { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as HorarioProfesional[]));
   }
   /*Servicio Ofrecido */
   getListaServicioOfrecido() {

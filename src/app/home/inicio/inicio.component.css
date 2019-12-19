@@ -1,9 +1,3 @@
-.header {
-    background: url(/../../../assets/chica_camilla.jpg) no-repeat center;
-    background-size: cover;
-    min-height: 55vh;
-}
-
 .row {
     display: flex;
     justify-content: center;

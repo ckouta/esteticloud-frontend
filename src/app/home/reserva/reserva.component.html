@@ -43,7 +43,7 @@
                     <div class="list-group" *ngFor="let servicio of listServicios">
                         <a class="list-group-item list-group-item-action ">
                             <div class="media">
-                                <img src="http://localhost:8080/servicio/uploads/img/{{servicio.foto}}" class="align-self-center mr-3" style="width: 80px;height:80px;">
+                                <img src="http://parra.chillan.ubiobio.cl:8080/alvaro.castillo1501/servicio/uploads/img/{{servicio.foto}}" class="align-self-center mr-3" style="width: 80px;height:80px;">
                                 <div class="media-body">
                                     <h5 class="mt-0">{{servicio.nombre}}</h5>
                                     <p> {{servicio.descripcion}}</p>
@@ -66,7 +66,7 @@
 
             </div>
             <div class="col-3" style="margin-bottom: 30px; ">
-                <ngb-datepicker #dp [(ngModel)]="model" (select)="Select()"></ngb-datepicker>
+                <ngb-datepicker #dp [(ngModel)]="model" (select)="Select()" [minDate]="{year: 2019, month: 10, day: 1}" [maxDate]="{year: 2048, month: 12, day: 31}" [markDisabled]="isDisabled" [dayTemplate]="customDay"></ngb-datepicker>
 
 
             </div>
@@ -88,18 +88,30 @@
         </div>
     </div>
     <div class="tab-pane fade" id="pills-contacto" role="tabpanel" aria-labelledby="pills-contact-tab">
-        <div *ngIf="reserva">
-            <div class="z-depth-1" style="margin: 30px;text-align: center;">
-                <h1>Reserva Realizada con Exito</h1>
-                <h2>Detalles de la reserva</h2>
-                <h5>Nombre del servicio: {{reserva.servicio.nombre}}</h5>
-                <h5>Duración del servicio: {{reserva.servicio.duracion}}</h5>
-                <h5>Precio del servicio: {{reserva.servicio.precio}}</h5>
-                <h5>Nombre del cliente: {{reserva.cliente.nombre}} {{reserva.cliente.apellido}}</h5>
-                <h5>Correo: {{reserva.cliente.email}}</h5>
-                <h5>Fecha: {{hora.horarioProfesional[0].fecha}}</h5>
-                <h5>Nombre del Profesional: {{hora.horarioProfesional[0].profesional.nombre}} {{hora.horarioProfesional[0].profesional.apellido}}</h5>
-                <h5>Hora de Atencion: {{hora.horarioProfesional[0].bloque_horario.horaInicio}}</h5>
+        <div *ngIf="reserva" style="display: flex;justify-content: center;">
+            <div class="z-depth-1" style="margin: 30px;padding: 20px;">
+                <div style="text-align: center;">
+                    <img src="assets/logo.jpg" style="width: 300px;">
+                    <hr>
+                </div>
+                <div>
+                    <h1>¡Reserva Realizada con Exito!</h1>
+                    &nbsp;
+                    <h2>Detalles de la reserva</h2>
+                    &nbsp;
+                    <h5>Nombre del servicio : {{reserva.servicio.nombre}}</h5>
+                    <h5>Duración del servicio : {{reserva.servicio.duracion}} Minutos</h5>
+                    <h5>Precio del servicio : {{reserva.servicio.precio}}</h5>
+                    <h5>Nombre del cliente : {{reserva.cliente.nombre}} {{reserva.cliente.apellido}}</h5>
+                    <h5>Correo : {{reserva.cliente.email}}</h5>
+                    <h5>Fecha : {{hora.horarioProfesional[0].fecha}}</h5>
+                    <h5>Nombre del Profesional : {{hora.horarioProfesional[0].profesional.nombre}} {{hora.horarioProfesional[0].profesional.apellido}}</h5>
+                    <h5>Hora de Atención : {{hora.horarioProfesional[0].bloque_horario.horaInicio}}</h5>
+                </div>
+                <hr>
+                <div style="width: 450px; text-align: center;">
+                    <p>Para poder hacer valido necesita imprimir esta boleta para una mejor interacción y nose con que mas rellenar para que quede super largo este documento</p>
+                </div>
             </div>
 
         </div>
@@ -107,3 +119,8 @@
 
     </div>
 </div>
+<ng-template #customDay let-date let-currentMonth="currentMonth" let-selected="selected" let-disabled="disabled" let-focused="focused">
+    <span class="custom-day" [class.weekend]="isWeekend(date)" [class.focused]="focused" [class.bg-primary]="selected" [class.hidden]="date.month !== currentMonth" [class.text-muted]="disabled">
+      {{ date.day }}
+    </span>
+</ng-template>

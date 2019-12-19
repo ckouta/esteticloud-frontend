@@ -1,1 +1,71 @@
-<p>clientes works!</p>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb" style="margin: 0;">
+        <li class="breadcrumb-item "><a>Inicio</a></li>
+        <li class="breadcrumb-item active"><a>Cliente</a></li>
+    </ol>
+</nav>
+<br>
+
+<body>
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h2 style="width: 343px;">Lista de Clientes</h2>
+                    <br>
+                </div>
+                <div class="col-md-4 d-flex justify-content-end align-self-start">
+                    <div class="md-form" style="width: 100%;">
+                        <mdb-icon fas icon="search"></mdb-icon>
+                        <input type="search" [(ngModel)]="searchText" placeholder="Busca por su nombre" width="100%">
+                    </div>
+                </div>
+                <div class="col-md-4 d-flex justify-content-end align-self-start">
+                    <button class="btn btn-warning d-flex align-items-center align-self-center" data-toggle="modal" data-target="#modalRegisterForm" routerLinkActive="router-link-active" type="button" style="height: 38px;background-color:  #ff8000;">Agregar Cliente
+                        <i class="fa fa-plus-circle"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table mdbTable>
+                            <thead>
+                                <tr style="text-align: center">
+                                    <th style="vertical-align: middle">Nombre</th>
+                                    <th style="vertical-align: middle">Apellido</th>
+                                    <th style="vertical-align: middle">Telefono</th>
+                                    <th style="vertical-align: middle">Email</th>
+                                    <th style="vertical-align: middle">Rut</th>
+                                    <th style="vertical-align: middle">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let client of cliente | filter: searchText">
+                                <tr style="text-align: center">
+
+                                    <td style="vertical-align: middle">{{client.nombre }}</td>
+                                    <td style="vertical-align: middle">{{client.apellido}}</td>
+                                    <td style="vertical-align: middle">{{client.telefono}}</td>
+                                    <td style="vertical-align: middle">{{client.email}}</td>
+                                    <td style="vertical-align: middle">{{client.rut}}</td>
+                                    <td style="vertical-align: middle">
+                                        <div>
+                                            <button type="button" class="btn btn-danger">
+                                                <i
+                                                    class="far fa-trash-alt d-xl-flex justify-content-xl-center align-items-xl-center"></i>
+                                            </button>&nbsp;
+                                            <button type="button" class="btn btn-warning">
+                                                <i
+                                                    class="fas fa-pencil-alt d-xl-flex justify-content-xl-center align-items-xl-center"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

@@ -31,6 +31,7 @@ import { RegistrarComponent } from './registrar/registrar.component';
 import { FilterPipe } from './pipe/search.pipe';
 import { InicioProfesionalComponent } from './profesional/inicio-profesional/inicio-profesional.component';
 import { ClienteReservaComponent } from './home/cliente-reserva/cliente-reserva.component';
+import { ReportesComponent } from './profesional/reportes/reportes.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { ClienteReservaComponent } from './home/cliente-reserva/cliente-reserva.
     FilterPipe,
     InicioProfesionalComponent,
     ClienteReservaComponent,
+    ReportesComponent,
     
     
   ],
