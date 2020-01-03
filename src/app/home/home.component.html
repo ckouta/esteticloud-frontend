@@ -4,8 +4,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <li class="">
-        <a data-toggle="modal" data-target="#modalLoginForm" (click)="abrirmodal()" class="navbar-tile" title="Ingresa"><i
-            class="fas fa-user-circle fa-fw"></i> Ingresa</a>
+        <a data-toggle="modal" data-target="#modalLoginForm" (click)="abrirmodal()" class="navbar-tile" title="Ingresa"><i class="fas fa-user-circle fa-fw"></i> Ingresa</a>
         <a [routerLink]="['/login']" class="navbar-tile" title="Portal Profesionales">Portal Profesionales</a>
     </li>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -27,12 +26,11 @@
 </nav>
 <!--Fin navbar Responsive-->
 <!-- Navbar Superior-->
-<nav class="navbar-top" style="background-color: black;padding-right: 20px">
+<nav class="navbar-top" style="background-color: #240a29;padding-right: 20px">
     <ul class="">
 
         <li class="" *ngIf="!restService.hasRole('ROLE_CLIENT')">
-            <a data-toggle="modal" data-target="#modalLoginForm" (click)="abrirmodal()" class="navbar-tile" title="Ingresa"><i
-                    class="fas fa-user-circle fa-fw"></i> Ingresa</a>
+            <a data-toggle="modal" data-target="#modalLoginForm" (click)="abrirmodal()" class="navbar-tile" title="Ingresa"><i class="fas fa-user-circle fa-fw"></i> Ingresa</a>
         </li>
 
         <li class="" id="espacio" *ngIf="!restService.hasRole('ROLE_CLIENT')"></li>
@@ -53,8 +51,8 @@
         <li class="" *ngIf="restService.hasRole('ROLE_CLIENT')">
             <div class="btn-group" mdbDropdown>
                 <button mdbDropdownToggle type="button" mdbBtn color="secondary" class="dropdown-toggle waves-light" mdbWavesEffect>
-                          Mi cuenta
-                        </button>
+                    Mi cuenta
+                </button>
 
                 <div class="dropdown-menu dropdown-secondary" style="background-color: #aa66cc;">
                     <a class="dropdown-item" (click)="cerrarSesion()">Cerrar Sesión</a>
@@ -209,7 +207,7 @@
 
     <!-- Copyright -->
     <div class="footer-copyright text-center py-3">© 2019:EstetiCloud
-        <a>  Álvaro Castillo - Francisca Palma</a>
+        <a> Álvaro Castillo - Francisca Palma</a>
     </div>
     <!-- Copyright -->
 
@@ -222,23 +220,26 @@
             <div class="modal-header text-center">
                 <h4 class="modal-title w-100 font-weight-bold">Inicia Sesión</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body mx-3">
-                <div class="md-form mb-5">
-                    <i class="fas fa-envelope prefix grey-text"></i>
-                    <input [(ngModel)]="usuario.username" type="email" id="defaultForm-email" class="form-control validate">
-                    <label data-error="wrong" data-success="right" for="defaultForm-email">Ingresa tu email</label>
-                    <div class="md-form mb-4">
-                        <i class="fas fa-lock prefix grey-text"></i>
-                        <input [(ngModel)]="usuario.password" type="password" id="defaultForm-pass" class="form-control validate">
-                        <label data-error="wrong" data-success="right" for="defaultForm-pass">Ingresa tu contraseña</label>
-                        <div class="modal-footer d-flex justify-content-center">
-                            <button (click)="login()" class="btn btn-default">Iniciar Sesión</button>
+                <form method="POST">
+                    <div class="md-form mb-5">
+                        <i class="fas fa-envelope prefix grey-text"></i>
+                        <input [(ngModel)]="usuario.username" type="email" id="defaultForm-email" class="form-control validate" name="username" autofocus required>
+                        <label data-error="wrong" data-success="right" for="defaultForm-email">Ingresa tu email</label>
+                        <div class="md-form mb-4">
+                            <i class="fas fa-lock prefix grey-text"></i>
+                            <input [(ngModel)]="usuario.password" type="password" id="defaultForm-pass" class="form-control validate" name="password" required>
+                            <label data-error="wrong" data-success="right" for="defaultForm-pass">Ingresa tu
+                                contraseña</label>
+                            <div class="modal-footer d-flex justify-content-center">
+                                <button (click)="login()" class="btn btn-default">Iniciar Sesión</button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>

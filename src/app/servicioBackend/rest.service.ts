@@ -14,6 +14,7 @@ import { Cliente } from '../entidades/Cliente';
 import { HorarioProfesional } from '../entidades/HorarioProfesional';
 import { ServicioOfrecido } from '../entidades/ServicioOfrecido';
 import { Movimiento } from '../entidades/Movimiento';
+import { IntervaloFecha } from '../entidades/IntervaloFecha';
 
 
 @Injectable({
@@ -25,6 +26,7 @@ export class RestService {
   listaProfesional: Profesional[];
   listaServicio: Servicio[];
   listaBloque: Bloque[];
+  reservas:[];
   cliente: Cliente;
   profesional: Profesional;
   private _usuario: Usuario;
@@ -37,7 +39,10 @@ export class RestService {
   getListaProfesional() {
     return this.http.get(this.URL + '/profesional/').pipe(map((res) => res as Profesional[]));
   }
-  getProfesional(correo: string) {
+  getProfesional(id: number) {
+    return this.http.get(this.URL + '/profesional/' + id, { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as Profesional));
+  }
+  getProfesionalCorreo(correo: string) {
     return this.http.get(this.URL + '/profesional/p/' + correo, { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as Profesional));
   }
   saveProfesional(profesional: Profesional) {
@@ -172,7 +177,23 @@ export class RestService {
   updateHorarioReserva(id: number, reserva: Reserva) {
     return this.http.put(this.URL + '/horario/reserva/' + id, reserva, { headers: this.agregarAuthorizationHeader() });
   }
+  /*Reportes */
 
+  getTopServicios(fechas: IntervaloFecha) {
+    return this.http.post(this.URL + '/horario/topServicio', fechas, { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as object[]));
+  }
+  getTopReservas(fechas: IntervaloFecha) {
+    return this.http.post(this.URL + '/horario/topReservas', fechas, { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as object[]));
+  }
+  getTopClientes(fechas: IntervaloFecha) {
+    return this.http.post(this.URL + '/horario/topCliente', fechas, { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as object[]));
+  }
+  getTopMovimientos(fechas: IntervaloFecha) {
+    return this.http.post(this.URL + '/movimiento/fechas', fechas, { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as object[]));
+  }
+  getTopProfesionales(fechas: IntervaloFecha) {
+    return this.http.post(this.URL + '/horario/topProfesional', fechas, { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as object[]));
+  }
   /*Seguridad*/
   private isNOAutorizado(e): boolean {
     if (e.status == 401 || e.status == 403) {

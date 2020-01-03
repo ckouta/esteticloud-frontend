@@ -1,1 +1,233 @@
-<p>reportes works!</p>
+<nav aria-label="breadcrumb z-depth-1">
+    <ol class="breadcrumb" style="margin: 0;">
+        <li class="breadcrumb-item "><a style="display: inline;padding: 0;" [routerLink]="['/profesional']"> Inicio</a>
+        </li>
+        <li class="breadcrumb-item active"><a style="display: inline;padding: 0;">Reporte</a></li>
+    </ol>
+</nav>
+<div class="row" style="margin: 0px;">
+    <div class="col-2" style="padding: 0px;">
+        <ul style="padding-top: 40px;display: block;" class="nav nav-pills menu z-depth-3 " role="tablist">
+            <li>
+                <a class="active" (click)="tab('Clientes')" href="#Clientes" role="tab" data-toggle="tab">
+                    <i class="fas fa-male"></i> Reporte de Clientes </a>
+            </li>
+            <li>
+                <a href="#Reservas" (click)="tab('Reservas')" role="tab" data-toggle="tab"><i
+                        class="far fa-calendar-alt"></i> Reporte de Reservas </a>
+            </li>
+            <li>
+                <a href="#Servicios" (click)="tab('Servicios')" role="tab" data-toggle="tab">
+                    <i class="fas fa-concierge-bell"></i> Reporte de Servicios </a>
+            </li>
+            <li>
+                <a href="#Movimientos" (click)="tab('Movimientos')" role="tab" data-toggle="tab">
+                    <i class="fas fa-dollar-sign"></i> Reportes Monetarios </a>
+            </li>
+
+        </ul>
+    </div>
+    <div class="col-10">
+        <div class="album py-5 z-depth-1" align="center">
+            <div>
+                <h2>Reportes de EstetiCloud</h2>
+                <br>
+                <p>Por rango de Fechas</p>
+                <div style="display: inline-flex;margin-bottom: 10px;">
+
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <div class="input-group" style="padding-right: 40px;">
+                                <h4 style="margin: 0px;">Desde: </h4>
+                                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d1="ngbDatepicker">
+                                <div class="input-group-append">
+                                    <button class="" (click)="d1.toggle()" type="button">
+                                        <mdb-icon far icon="calendar-alt" class="cyan-text" size="lg"></mdb-icon>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <h4 style="margin: 0px;">Hasta: </h4>
+                                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model2" ngbDatepicker #d2="ngbDatepicker">
+                                <div class="input-group-append">
+                                    <button class="" (click)="d2.toggle()" type="button">
+                                        <mdb-icon far icon="calendar-alt" class="cyan-text" size="lg"></mdb-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div align="right" style="padding-right: 40px;">
+                    <button type="button" class="btn btn-info" (click)="generarReporte()">Generar Reporte</button>
+                    <button (click)="generarPDF()" [disabled]="!show" class="btn btn-info">Crear PDF</button>
+                </div>
+                <hr>
+
+
+            </div>
+            <div class="container" #contenido>
+                <!--Contenido paneles -->
+                <div class="tab-content">
+                    <!--Panel Reporte de servicios -->
+                    <div role="tabpanel" class="tab-pane fade" id="Servicios">
+                        <h2>Reporte de servicios</h2>
+                        <br>
+                        <p><b>Grafico de Servicios solicitados</b></p>
+                        <div class="row">
+                            <div class="col-12">
+                                <div id="chartdiv" style="width: 100%;height: 170px;" class="graph"></div>
+                            </div>
+
+                        </div>
+                        <br>
+                        <p><b>Datos de Servicios solicitados</b></p>
+
+                        <div class="table-responsive">
+                            <table mdbTable>
+                                <thead>
+                                    <tr style="text-align: center">
+                                        <th style="vertical-align: middle">Nombre</th>
+                                        <th style="vertical-align: middle">Descripción</th>
+                                        <th style="vertical-align: middle">Solicitado</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let servicio of servicios">
+                                    <tr style="text-align: center">
+                                        <td style="vertical-align: middle">{{servicio[0].nombre}}</td>
+                                        <td style="vertical-align: middle">{{servicio[0].descripcion}}</td>
+                                        <td style="vertical-align: middle">{{servicio[1]}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--Fin panel de Servicios-->
+                    <!--panel de Reservas-->
+                    <div role="tabpanel" class="tab-pane fade" id="Reservas">
+                        <h2>Reporte de Reservas</h2>
+                        <br>
+                        <p><b>Grafico de Reservas solicitadas</b></p>
+                        <div class="row">
+                            <div class="col-12">
+                                <div id="chartdiv3" style="width: 100%;height: 170px;" class="graph"></div>
+                            </div>
+
+                        </div>
+                        <br>
+                        <p><b>Datos de Reservas solicitadas</b></p>
+
+                        <div class="table-responsive">
+                            <table mdbTable>
+                                <thead>
+                                    <tr style="text-align: center">
+                                        <th style="vertical-align: middle">Fecha</th>
+                                        <th style="vertical-align: middle">Cliente</th>
+                                        <th style="vertical-align: middle">Servicio Solicitado</th>
+                                        <th style="vertical-align: middle">Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let reserva of reservas | slice:0:15; let ind=index;">
+                                    <tr style="text-align: center">
+                                        <td style="vertical-align: middle">{{reserva[1]}}</td>
+                                        <td style="vertical-align: middle">{{reserva[0].cliente.nombre}}</td>
+                                        <td style="vertical-align: middle">{{reserva[0].servicio.nombre}}</td>
+                                        <td style="vertical-align: middle">{{reserva[0].estado_reserva.nombre}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- Fin panel de Reservas-->
+                    <!--panel de Clientes-->
+                    <div role="tabpanel" class="tab-pane fade show active" id="Clientes">
+                        <h2>Reporte de Clientes</h2>
+                        <br>
+                        <p><b>Grafico de Clientes solicitados</b></p>
+                        <div class="row">
+                            <div class="col-12">
+                                <div id="chartdiv2" style="width: 100%;height: 170px;" class="graph"></div>
+                            </div>
+
+                        </div>
+                        <br>
+                        <p><b>Datos de Clientes solicitados</b></p>
+
+                        <div class="table-responsive">
+                            <table mdbTable>
+                                <thead>
+                                    <tr style="text-align: center">
+                                        <th style="vertical-align: middle">Nombre</th>
+                                        <th style="vertical-align: middle">Teléfono</th>
+                                        <th style="vertical-align: middle">Correo</th>
+                                        <th style="vertical-align: middle">N° Servicios solicitados</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let cliente of clientes">
+                                    <tr style="text-align: center">
+                                        <td style="vertical-align: middle">{{cliente[0].nombre}} {{cliente[0].apellido}}</td>
+                                        <td style="vertical-align: middle">{{cliente[0].telefono}}</td>
+                                        <td style="vertical-align: middle">{{cliente[0].email}}</td>
+                                        <td style="vertical-align: middle">{{cliente[1]}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--Fin panel de Clientes-->
+                    <!--panel de Movimientos-->
+                    <div role="tabpanel" class="tab-pane fade" id="Movimientos">
+                        <h2>Reporte Monetario</h2>
+                        <br>
+                        <p><b>Grafico Monetario</b></p>
+                        <div class="row">
+                            <div class="col-12">
+                                <div id="chartdiv4" style="width: 100%;height: 170px;" class="graph"></div>
+                            </div>
+
+                        </div>
+                        <br>
+                        <p><b>Datos de Monetarios</b></p>
+
+                        <div class="table-responsive">
+                            <table mdbTable>
+                                <thead>
+                                    <tr style="text-align: center">
+                                        <th style="vertical-align: middle">Fecha</th>
+                                        <th style="vertical-align: middle">Nombre monetario</th>
+                                        <th style="vertical-align: middle">Nombre Profesional</th>
+                                        <th style="vertical-align: middle">Ingreso</th>
+                                        <th style="vertical-align: middle">Gasto</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let movimiento of movimientos">
+                                    <tr style="text-align: center">
+                                        <td style="vertical-align: middle">{{movimiento.fecha}}</td>
+                                        <td style="vertical-align: middle">{{movimiento.nombre}}</td>
+                                        <td style="vertical-align: middle">{{movimiento.profesional.nombre}}</td>
+                                        <td style="vertical-align: middle">
+                                            <div *ngIf="movimiento.valor>=0">{{ movimiento.valor}}</div>
+                                        </td>
+                                        <td style="vertical-align: middle">
+                                            <div *ngIf="movimiento.valor<0">{{movimiento.valor}}</div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <br>
+                        <div align="right" style="padding-right: 40px;">
+                            <h5>Ingresos Totales :{{ingresos}}</h5>
+                            <h5>Gastos Totales :{{egresos}}</h5>
+                            <h5>Total Ganancias :{{total}}</h5>
+                        </div>
+                    </div>
+                    <!--Fin panel de Movimientos-->
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>

@@ -10,7 +10,7 @@
         </mdb-card-body>
     </mdb-card>
 </div>
-<div class="row">
+<div class="row" *ngIf="restService.hasRole('ROLE_ADMIN')">
     <div class="col-7 z-depth-1">
         <div id="chartdiv2" style="width: 100%;height: 300px;"></div>
     </div>

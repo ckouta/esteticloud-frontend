@@ -32,7 +32,6 @@ import { FilterPipe } from './pipe/search.pipe';
 import { InicioProfesionalComponent } from './profesional/inicio-profesional/inicio-profesional.component';
 import { ClienteReservaComponent } from './home/cliente-reserva/cliente-reserva.component';
 import { ReportesComponent } from './profesional/reportes/reportes.component';
-
 @NgModule({
   declarations: [
     AppComponent,

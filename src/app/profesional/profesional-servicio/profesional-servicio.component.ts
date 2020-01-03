@@ -21,7 +21,7 @@ export class ProfesionalServicioComponent implements OnInit {
     if (!this.restService.hasRole('ROLE_ESTETI') && !this.restService.hasRole('ROLE_ADMIN')) {
       this.router.navigate(['login']);
     }
-    this.restService.getProfesional(this.restService.usuario.username).subscribe((res: any) => {
+    this.restService.getProfesionalCorreo(this.restService.usuario.username).subscribe((res: any) => {
       this.restService.profesional = res;
       this.restService.getListaServicioOfrecidoporProfesional(this.restService.profesional).subscribe((res: any[]) => {
 

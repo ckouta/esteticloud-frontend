@@ -3,26 +3,25 @@ ul {
     margin: 0;
     padding: 0;
     width: 100%;
-    background-color: #f1f1f1;
+    background-color: #6f42c1;
     height: 100%;
     overflow: auto;
 }
 
-li a {
+.menu li a {
     display: block;
-    color: #000;
+    color: rgba(255, 255, 255, 0.75);
     padding: 8px 16px;
     text-decoration: none;
 }
 
-li a.active {
-    background-color: #4CAF50;
-    color: white;
+.menu li a.active {
+    background-color: rgba(19, 22, 19, 0.562);
+    color: rgba(255, 255, 255, 0.75);
 }
 
-li a:hover:not(.active) {
-    background-color: #555;
-    color: white;
+.menu li a:hover:not(.active) {
+    background-color: rgba(46, 43, 43, 0.397);
 }
 
 .botonformato {

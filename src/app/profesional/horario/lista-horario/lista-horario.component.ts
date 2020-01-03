@@ -23,7 +23,7 @@ export class ListaHorarioComponent implements OnInit {
   
 
   ngOnInit() {
-    this.restService.getProfesional(this.restService.usuario.username).subscribe((res: any) => {
+    this.restService.getProfesionalCorreo(this.restService.usuario.username).subscribe((res: any) => {
       this.restService.profesional = res;
       let fecha: RangoFecha = {id:this.restService.profesional.id_profesional,fecha:this.parseCalendar.format(this.model),horaInicio:null,horaFin:null};
     this.restService.getHorarioprofesionalfecha(fecha).subscribe((res: any[]) => {

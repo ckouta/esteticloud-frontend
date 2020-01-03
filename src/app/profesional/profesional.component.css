@@ -5,6 +5,8 @@ li {
 li a {
     display: grid !important;
     text-align: center;
+    color: rgba(255, 255, 255, 0.75);
+    padding-bottom: 0;
 }
 
 .row {
@@ -13,4 +15,28 @@ li a {
 
 .col {
     padding: 0;
+}
+
+.btn-light {
+    background-color: #ffffff!important;
+    color: #000;
+}
+
+.bg-primary,
+.bg-primary:not([disable]) {
+    background-color: #4285f4!important;
+}
+
+.ngb-dp-arrow-btn {
+    padding: 0 .25rem !important;
+    margin: 0 .5rem!important;
+    border: none!important;
+    background-color: transparent!important;
+    z-index: 1!important;
+}
+
+button span {
+    /*overwriting*/
+    color: white;
+    font-size: 25px;
 }

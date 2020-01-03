@@ -1,6 +1,7 @@
-<nav aria-label="breadcrumb">
+<nav aria-label="breadcrumb z-depth-1">
     <ol class="breadcrumb" style="margin: 0;">
-        <li class="breadcrumb-item "><a style="display: inline;padding: 0;"> Inicio</a></li>
+        <li class="breadcrumb-item "><a style="display: inline;padding: 0;" [routerLink]="['/profesional']"> Inicio</a>
+        </li>
         <li class="breadcrumb-item active"><a style="display: inline;padding: 0;">Reserva</a></li>
     </ol>
 </nav>
@@ -20,31 +21,34 @@
         </label>
     </div>
 </div>
-<div class="row">
-    <div class="col-3">
-        <ul style="padding-top: 40px;">
+<div class="row" style="margin: 0px;">
+    <div class="col-2" style="padding: 0px;">
+        <ul style="padding-top: 40px;" class="menu z-depth-3">
             <li>
-                <a (click)="formatoMes()" [ngClass]="{active: li=='mes'}" class="active"><i class="far fa-calendar-alt"></i>Mes </a>
+                <a (click)="formatoMes()" [ngClass]="{active: li=='mes'}" class="active"><i
+                        class="far fa-calendar-alt"></i> Mes </a>
             </li>
             <li>
-                <a (click)="formatoSemana()" [ngClass]="{active: li=='semana'}"><i class="far fa-calendar-alt"></i>   Semana </a>
+                <a (click)="formatoSemana()" [ngClass]="{active: li=='semana'}"><i class="far fa-calendar-alt"></i>
+                    Semana </a>
             </li>
             <li>
-                <a (click)="formatoDia()" [ngClass]="{active: li=='dia'}"><i class="far fa-calendar-alt"></i>   Día </a>
+                <a (click)="formatoDia()" [ngClass]="{active: li=='dia'}"><i class="far fa-calendar-alt"></i> Día </a>
             </li>
             <li>
-                <a (click)="AgregarEvento()" [ngClass]="{active: li=='reserva'}"><i class="far fa-calendar-alt"></i> Agregar Reserva </a>
+                <a (click)="openModal()" [ngClass]="{active: li=='reserva'}"><i class="far fa-calendar-alt"></i>
+                    Agregar Reserva </a>
             </li>
 
         </ul>
     </div>
     <div class="col-1"></div>
-    <div class="col-7">
+    <div class="col-9">
         <div style="padding: 15px;">
-            <full-calendar #calendar defaultView="dayGridMonth" selectable="true" (dateClick)="handleDateClick($event)" dateClick="test()" [plugins]="calendarPlugins" [events]="calendarEvents" [header]="{
+            <full-calendar #calendar defaultView="dayGridMonth" selectable="true" [plugins]="calendarPlugins" [events]="calendarEvents" [header]="{
                 left: 'title',
                 right: 'prev,next'
-              }" [weekends]="calendarWeekends" locale="es-us"></full-calendar>
+              }" [weekends]="calendarWeekends" locale="es-us" (dateClick)="handleDateClick($event)" [height]="500"></full-calendar>
         </div>
     </div>
 </div>
@@ -53,18 +57,41 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
+                <h5 class="modal-title">Registrar Reserva</h5>
                 <button type="button" class="close" data-dismiss="modal" (click)="onCloseHandled()" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
-                <p>Modal body text goes here.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="onCloseHandled()">Close</button>
+                <div class="">
+                    <label>Cliente:</label>
+                    <select [(ngModel)]="cliente" id="exampleFormControlSelect1" class="form-control">
+                        <option [ngValue]="0"> Ninguno Seleccionado</option>
+                        <option *ngFor="let cliente of listaClientes" [ngValue]="cliente"> {{cliente.nombre}}</option>
+                    </select>
+                </div>
+                <div class="">
+                    <label for="exampleForm2">Fecha:</label>
+                    <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" (click)="d.toggle()" (change)="Select()" ngbDatepicker #d="ngbDatepicker">
+                </div>
+                <div class="">
+                    <label>Hora:</label>
+                    <select [(ngModel)]="hora" id="horario" class="form-control">
+                        <option  [ngValue]="0" > Ninguno Seleccionado</option>
+                        <option *ngFor="let horas of bloquesPosibles"  [ngValue]="horas"> Hora de Inicio:{{horas.horaInicio}} Hora de Fin:{{horas.horaFin}}</option>                       
+                    </select>
+                    <div class="">
+                        <label>Servicio:</label>
+                        <select [(ngModel)]="servicio" id="exampleFormControlSelect1" (change)="Select()" class="form-control">
+                        <option [ngValue]="0"> Ninguno Seleccionado</option>
+                        <option *ngFor="let servicio of listaServicios" [ngValue]="servicio"> {{servicio.nombre}}</option>
+                    </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="onCloseHandled()">Cancelar</button>
+                </div>
             </div>
         </div>
     </div>
-</div>

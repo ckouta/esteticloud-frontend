@@ -31,7 +31,7 @@ export class MovimientosComponent implements OnInit {
     if (!this.restService.hasRole('ROLE_ESTETI') && !this.restService.hasRole('ROLE_ADMIN')) {
       this.router.navigate(['login']);
     }
-    this.restService.getProfesional(this.restService.usuario.username).subscribe((res: any) => {
+    this.restService.getProfesionalCorreo(this.restService.usuario.username).subscribe((res: any) => {
       this.restService.profesional = res;
       this.restService.getMovimientoProfesional(this.restService.profesional).subscribe((res: any[]) => {
 
@@ -49,7 +49,7 @@ export class MovimientosComponent implements OnInit {
   }
   guardarMovimiento() {
     let movimiento: Movimiento = this.formMovimiento.value;
-    this.restService.getProfesional(this.restService.usuario.username).subscribe((res: any) => {
+    this.restService.getProfesionalCorreo(this.restService.usuario.username).subscribe((res: any) => {
       movimiento.profesional = res;
       this.restService.saveMovimiento(movimiento).subscribe((res: any[]) => {
         this.restService.getMovimientoProfesional(this.restService.profesional).subscribe((res: any[]) => {

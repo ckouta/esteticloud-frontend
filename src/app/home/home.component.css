@@ -44,7 +44,7 @@
 }
 
 a:hover {
-    color: blue !important;
+    color: #BAC1C8 !important;
 }
 
 span {
@@ -104,7 +104,7 @@ a.nav-link {
     font-weight: 500;
     cursor: pointer;
     position: relative;
-    color: blueviolet !important;
+    color: #240a29 !important;
 }
 
 @keyframes FadeIn {

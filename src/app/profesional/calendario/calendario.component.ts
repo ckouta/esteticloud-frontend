@@ -13,6 +13,11 @@ import { Profesional } from 'src/app/entidades/Profesional';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { any } from '@amcharts/amcharts4/.internal/core/utils/Array';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgbCalendar, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { Cliente } from 'src/app/entidades/Cliente';
+import { Servicio } from 'src/app/entidades/Servicio';
+import { HorarioPosible } from 'src/app/entidades/HorarioPosible';
 @Component({
   selector: 'app-calendario',
   templateUrl: './calendario.component.html',
@@ -21,6 +26,7 @@ import { any } from '@amcharts/amcharts4/.internal/core/utils/Array';
 export class CalendarioComponent implements OnInit {
   li: string = 'mes';
   display = 'none';
+  
   calendarEvents = [
     { title: 'event 2', start: '2019-10-17T10:30:00', end: '2019-10-17T11:30:00' }
   ];
@@ -33,8 +39,20 @@ export class CalendarioComponent implements OnInit {
 
   @ViewChild('calendar', { static: false }) calendarComponent: FullCalendarComponent;
   horasProfesional: HorarioProfesional[] = [];
+  listaHoras: HorarioProfesional[] = [];
+  listaServicios: Servicio [] = [];
+  servicio:any = 0;
+  formReserva: FormGroup;
+  model: NgbDateStruct;
+  hora:any = 0;
+  listaClientes: Cliente[] = [];
+  cliente:any = 0;
+  bloquesPosibles: HorarioPosible[] = [];
 
-  constructor(public restService: RestService, private router: Router) { }
+  constructor(public restService: RestService, private router: Router, private formBuilder: FormBuilder, private parseCalendar: NgbDateParserFormatter,
+    private calendar: NgbCalendar) { 
+      this.model = this.calendar.getToday();
+    }
 
 
 
@@ -49,12 +67,15 @@ export class CalendarioComponent implements OnInit {
     if (!this.restService.hasRole('ROLE_ESTETI') && !this.restService.hasRole('ROLE_ADMIN')) {
       this.router.navigate(['login']);
     }
-    this.restService.getProfesional(this.restService.usuario.username).subscribe((res: any) => {
+    this.restService.getProfesionalCorreo(this.restService.usuario.username).subscribe((res: any) => {
       this.restService.profesional = res;
       this.reservas(this.restService.profesional);
     })
-    this.restService.getListaProfesional().subscribe((res: any[]) => {
-      this.restService.listaProfesional = res;
+    this.restService.getListaCliente().subscribe((res: any[]) => {
+      this.listaClientes = res;
+    });
+    this.restService.getListaServicio().subscribe((res: any[]) => {
+      this.listaServicios = res;
     });
   }
   calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
@@ -128,13 +149,13 @@ export class CalendarioComponent implements OnInit {
     });
 
   }
-  test(event) {
-    let calendar = this.calendarComponent.getApi();
-
-    Swal.fire('Any fool can use a computer' + calendar.select(event.dateStr));
-  }
   handleDateClick(arg) { // handler method
     this.display = 'block';
+    let calendar = this.calendarComponent.getApi();
+
+    console.log(arg);
+    console.log(arg.dateStr);
+    console.log(arg.date.getFullYear());
     //Swal.fire('Any fool can use a computer'+ arg.dateStr);
   }
 
@@ -148,5 +169,38 @@ export class CalendarioComponent implements OnInit {
 
     this.display = 'none';
 
+  }
+  Select() {
+    this.bloquesPosibles = [];
+
+      let fecha: RangoFecha = { id: this.restService.profesional.id_profesional, fecha: this.parseCalendar.format(this.model), horaInicio: null, horaFin: null };
+      this.restService.getHorarioprofesionalfecha(fecha).subscribe((res: any[]) => {
+        this.listaHoras = res;
+        this.bloquesHorario();
+      });
+    
+  }
+  bloquesHorario() {
+    let valor: number = this.servicio.duracion / 10;
+    for (let i = 0; i <= this.listaHoras.length - valor; i++) {
+      let bloque: HorarioPosible = {
+        horaInicio: this.listaHoras[i].bloque_horario.horaInicio,
+        horaFin: null,
+        horarioProfesional: [],
+      }
+      for (let j = 0; j < valor; j++) {
+        if (this.listaHoras[i + j].reserva != null) {
+          break;
+        }
+        if (this.listaHoras[i + j + 1] == null || this.listaHoras[i + j].bloque_horario.horaFin != this.listaHoras[i + j + 1].bloque_horario.horaInicio) {
+          break;
+        }
+        bloque.horarioProfesional.push(this.listaHoras[i + j]);
+        if (j + 1 == valor - 1) {
+          bloque.horaFin = this.listaHoras[i + j + 1].bloque_horario.horaFin;
+          this.bloquesPosibles.push(bloque);
+        }
+      }
+    }
   }
 }

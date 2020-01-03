@@ -1,0 +1,57 @@
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: #6f42c1;
+    height: 100%;
+    overflow: auto;
+}
+
+.menu li a {
+    display: block;
+    color: rgba(255, 255, 255, 0.75);
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.menu li a.active {
+    background-color: rgba(19, 22, 19, 0.562);
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.menu li a:hover:not(.active) {
+    background-color: rgba(46, 43, 43, 0.397);
+}
+
+.botonformato {
+    background-color: Transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    width: 100%;
+    padding: 10px;
+}
+
+.app-top {
+    margin: 0 0 3em;
+}
+
+.app-calendar {
+    margin: 0 auto;
+    max-width: 900px;
+}
+
+label {
+    padding: 0;
+}
+
+.breadcrumb {
+    margin: 0;
+}
+
+.amcharts-amexport-item:hover,
+.amcharts-amexport-item.active {
+    background-color: #6f42c1;
+}

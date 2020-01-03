@@ -42,19 +42,22 @@ export class RegistrarProfesionalesComponent implements OnInit {
 
   ngOnInit() {
     if (this.rutaActiva.snapshot.params.id != null) {
-      this.ProfesionalActualizar = this.restService.listaProfesional[this.rutaActiva.snapshot.params.id - 1];
-      this.formProduct.setValue({
-        id_profesional: this.ProfesionalActualizar.id_profesional,
-        nombre: this.ProfesionalActualizar.nombre,
-        apellido: this.ProfesionalActualizar.apellido,
-        telefono: this.ProfesionalActualizar.telefono,
-        email: this.ProfesionalActualizar.email,
-        estado: '',
-        descripcion: '',
-        password: ''
-
-      });
-      console.log(this.ProfesionalActualizar)
+       this.restService.getProfesional(this.rutaActiva.snapshot.params.id).subscribe((res: any) => {
+        this.ProfesionalActualizar = res;
+        this.formProduct.setValue({
+          id_profesional: this.ProfesionalActualizar.id_profesional,
+          nombre: this.ProfesionalActualizar.nombre,
+          apellido: this.ProfesionalActualizar.apellido,
+          telefono: this.ProfesionalActualizar.telefono,
+          email: this.ProfesionalActualizar.email,
+          rut: this.ProfesionalActualizar.rut,
+          estado: res.estado_profesional,
+          descripcion: this.ProfesionalActualizar.descripcion,
+          password: ''
+  
+        });
+        console.log(this.ProfesionalActualizar)
+      })
     }
 
   }
