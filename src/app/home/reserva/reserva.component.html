@@ -79,11 +79,11 @@
                         <option *ngFor="let profesional of listProfesionales"  [ngValue]="profesional"> {{profesional.nombre}}</option>                       
                     </select>
                 <h3>Horarios</h3>
-                <select [(ngModel)]="hora" class="form-control" id="horario" style="margin-top: 5%;">
+                <select [(ngModel)]="hora" class="form-control" id="horario" style="margin-top: 5%; margin-bottom: 20px;">
                     <option  [ngValue]="0" > Ninguno Seleccionado</option>
                     <option *ngFor="let horas of bloquesPosibles"  [ngValue]="horas"> Hora de Inicio:{{horas.horaInicio}} Hora de Fin:{{horas.horaFin}}</option>                       
                 </select>
-                <a class="btn btn-outline-success btn-lg btn-block" (click)="save()" id="pills-contact-tab" data-toggle="pill" href="#pills-contacto" role="tab" aria-controls="pills-contacto" aria-selected="true">Confirmar</a>
+                <a class="btn btn-outline-success btn-lg btn-block" (click)="save()" id="pills-contact-tab" data-toggle="pill" href="#pills-contacto" role="tab" aria-controls="pills-contacto" aria-selected="true" *ngIf="hora !=0">Confirmar</a>
             </div>
         </div>
     </div>

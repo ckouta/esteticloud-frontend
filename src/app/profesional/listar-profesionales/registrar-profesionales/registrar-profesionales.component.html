@@ -1,5 +1,15 @@
+<nav aria-label="breadcrumb z-depth-1">
+    <ol class="breadcrumb" style="margin: 0;">
+        <li class="breadcrumb-item "><a style="display: inline;padding: 0;" [routerLink]="['/profesional']"> Inicio</a>
+        </li>
+        <li class="breadcrumb-item active"><a style="display: inline;padding: 0;" [routerLink]="['/profesional/profesional']">Profesional</a></li>
+        <li class="breadcrumb-item active"><a style="display: inline;padding: 0;">Registrar</a></li>
+    </ol>
+</nav>
+<br>
 <div class="container">
-    <h2>Formulario </h2>
+    <h2 *ngIf="!show">Formulario Profesional</h2>
+    <h2 *ngIf="show">Detalle Profesional </h2>
     <hr>
     <div class="row">
         <div class="col-md-12">
@@ -31,9 +41,13 @@
                                 </div>
                                 <div class="col-md-4">
                                     <!-- Subir imagen-->
-                                    <div class="form-group">
+                                    <div class="form-group" *ngIf="!show">
                                         <h6 for="imagen">Seleccione una imagen para el profesional</h6>
                                         <input (change)="seleccionarFoto($event)" type="file" class="form-control-file">
+                                    </div>
+                                    <div *ngIf="show" style="padding: auto;">
+                                        <h6 for="imagen">Imagen</h6>
+                                        <img src="http://parra.chillan.ubiobio.cl:8080/alvaro.castillo1501/servicio/uploads/img/{{ProfesionalActualizar.foto}}" style="height: 100px;">
                                     </div>
                                     <!-- fin Subir imagen-->
                                 </div>
@@ -51,7 +65,7 @@
                                 <div class="col-md-6">
                                     <!-- Telefono-->
                                     <div class="form-group">
-                                        <h6 for="Telefono">Telefono</h6>
+                                        <h6 for="Telefono">Teléfono</h6>
                                         <input formControlName="telefono" type="text" class="form-control" placeholder="Ingrese Telefono">
                                         <div *ngIf="formProduct.get('telefono').errors && (formProduct.get('telefono').touched 
                                     || formProduct.get('telefono').dirty)" class="alert alert-danger">El telefono del profesional es obligatorio
@@ -93,9 +107,12 @@
                             <!-- fin Ingresar Descripción-->
 
                             <!--Botones-->
-                            <div class="col-md-12" style="text-align: right">
+                            <div class="col-md-12" style="text-align: right" *ngIf="!show">
                                 <button type="button" class="btn btn-danger botones" style="background: #ff0000" data-toggle="modal" data-target="#modalSalir"> Cancelar </button> &nbsp;
                                 <button type="submit" class="btn btn-warning botones" style="background: #ff8800"> Guardar </button>
+                            </div>
+                            <div class="col-md-12" style="text-align: right" *ngIf="show">
+                                <button class="btn btn-warning botones" style="background: #ff8800" [routerLink]="['/profesional/profesional']"> Volver </button>
                             </div>
 
                             <!--Fin Botones-->

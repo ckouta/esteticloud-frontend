@@ -1,7 +1,8 @@
-<nav aria-label="breadcrumb">
+<nav aria-label="breadcrumb z-depth-1">
     <ol class="breadcrumb" style="margin: 0;">
-        <li class="breadcrumb-item "><a>Inicio</a></li>
-        <li class="breadcrumb-item active"><a>Cliente</a></li>
+        <li class="breadcrumb-item "><a style="display: inline;padding: 0;" [routerLink]="['/profesional']"> Inicio</a>
+        </li>
+        <li class="breadcrumb-item active"><a style="display: inline;padding: 0;">Cliente</a></li>
     </ol>
 </nav>
 <br>
@@ -21,7 +22,7 @@
                     </div>
                 </div>
                 <div class="col-md-4 d-flex justify-content-end align-self-start">
-                    <button class="btn btn-warning d-flex align-items-center align-self-center" data-toggle="modal" data-target="#modalRegisterForm" routerLinkActive="router-link-active" type="button" style="height: 38px;background-color:  #ff8000;">Agregar Cliente
+                    <button class="btn btn-warning d-flex align-items-center align-self-center" data-toggle="modal" data-target="#modalRegisterForm" routerLinkActive="router-link-active" type="button" style="height: 38px;background-color:  #ff8000;" [routerLink]="['/profesional/clientes/registrar']">Agregar Cliente
                         <i class="fa fa-plus-circle"></i>
                     </button>
                 </div>
@@ -50,11 +51,14 @@
                                     <td style="vertical-align: middle">{{client.rut}}</td>
                                     <td style="vertical-align: middle">
                                         <div>
-                                            <button type="button" class="btn btn-danger">
+                                            <button type="button" class="btn btn-success" [routerLink]="['registrar/'+client.email]" [queryParams]="{ ver: true }">
+                                                <i class="far fa-eye d-xl-flex justify-content-xl-center align-items-xl-center"></i>
+                                            </button>&nbsp;
+                                            <button type="button" class="btn btn-danger" (click)="clienteEliminar(client.id_cliente)">
                                                 <i
                                                     class="far fa-trash-alt d-xl-flex justify-content-xl-center align-items-xl-center"></i>
                                             </button>&nbsp;
-                                            <button type="button" class="btn btn-warning">
+                                            <button type="button" class="btn btn-warning" [routerLink]="['registrar/'+client.email]">
                                                 <i
                                                     class="fas fa-pencil-alt d-xl-flex justify-content-xl-center align-items-xl-center"></i>
                                             </button>

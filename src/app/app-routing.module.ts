@@ -60,6 +60,8 @@ const routes: Routes = [
     component:ClientesComponent},
     {path:'clientes/registrar',
     component:RegistrarClientesComponent},
+    {path:'clientes/registrar/:id',
+    component:RegistrarClientesComponent},
     {path:'servicios',
     component:ProfesionalServicioComponent},
     {path:'servicios/registrar',

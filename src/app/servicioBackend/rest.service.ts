@@ -83,7 +83,10 @@ export class RestService {
     return this.http.post<Registro[]>(this.URL + '/cliente/usuario', registrar);
   }
   updateCliente(id: number, cliente: Cliente) {
-    return this.http.put(this.URL + '/cliente/' + id, cliente, { headers: this.agregarAuthorizationHeader() });
+    return this.http.put(this.URL + '/cliente/update/' + id, cliente, { headers: this.agregarAuthorizationHeader() });
+  }
+  deleteCliente(id: number) {
+    return this.http.delete(this.URL + '/cliente/delete/' + id, { headers: this.agregarAuthorizationHeader() });
   }
   /*Movimiento */
   getListaMovimiento() {
@@ -176,6 +179,9 @@ export class RestService {
   }
   updateHorarioReserva(id: number, reserva: Reserva) {
     return this.http.put(this.URL + '/horario/reserva/' + id, reserva, { headers: this.agregarAuthorizationHeader() });
+  }
+  deleteHorario(id: number) {
+    return this.http.delete(this.URL + '/horario/' + id, { headers: this.agregarAuthorizationHeader() });
   }
   /*Reportes */
 

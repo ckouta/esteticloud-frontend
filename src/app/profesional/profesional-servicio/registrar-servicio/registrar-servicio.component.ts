@@ -14,24 +14,33 @@ export class RegistrarServicioComponent implements OnInit {
   formServicio: FormGroup;
   servicioActualizar: Servicio;
   fotoSeleccionada: File;
+  show:boolean=false;
   constructor(private router: Router,
     public restService: RestService,
     private formBuilder: FormBuilder,
     private rutaActiva: ActivatedRoute) {
-    this.formServicio = this.formBuilder.group({
-      id_servicio: [],
-      nombre: ['', [Validators.required]],
-      duracion: ['', [Validators.required]],
-      precio: ['', [Validators.required]],
-      descripcion: ['', [Validators.required]],
-    });
+    
   }
 
   ngOnInit() {
+    this.rutaActiva.queryParams.subscribe(params => {
+      let dato = params['ver'];
+      if(dato=="true"){
+        this.show= true;
+      }
+    });
+    this.formServicio = this.formBuilder.group({
+      id_servicio: [],
+      nombre: [{value: '', disabled: this.show}, [Validators.required]],
+      duracion: [{value: '', disabled: this.show}, [Validators.required]],
+      precio: [{value: '', disabled: this.show}, [Validators.required]],
+      descripcion: [{value: '', disabled: this.show}, [Validators.required]],
+    });
     if (this.rutaActiva.snapshot.params.id != null) {
       this.restService.getServicio(this.rutaActiva.snapshot.params.id).subscribe((res => {
 
         this.servicioActualizar = res;
+
         this.formServicio.setValue({
           id_servicio: this.servicioActualizar.id_servicio,
           nombre: this.servicioActualizar.nombre,

@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Cliente } from '../entidades/Cliente';
 import { Usuario } from '../entidades/Usuario';
 import { Registro } from '../entidades/Registro';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-registrar',
@@ -13,14 +14,14 @@ import { Registro } from '../entidades/Registro';
 })
 export class RegistrarComponent implements OnInit {
   formCliente: FormGroup;
-  usuario:Usuario;
+  usuario: Usuario;
   registrar: Registro;
   constructor(private router: Router,
     public restService: RestService,
     private formBuilder: FormBuilder,
-    private rutaActiva: ActivatedRoute) { 
+    private rutaActiva: ActivatedRoute) {
     this.formCliente = this.formBuilder.group({
-      nombre:  ['', [Validators.required]],
+      nombre: ['', [Validators.required]],
       apellido: ['', [Validators.required]],
       telefono: ['', [Validators.required]],
       email: ['', [Validators.required]],
@@ -33,20 +34,20 @@ export class RegistrarComponent implements OnInit {
 
   ngOnInit() {
   }
-  saveData(){
+  saveData() {
     console.log(this.formCliente.value);
-    let cliente: Cliente =this.formCliente.value;
-    this.usuario.username= cliente.email;
-    this.usuario.password=this.formCliente.get("password").value;
-    this.registrar.cliente=cliente;
-    this.registrar.usuario=this.usuario;
+    let cliente: Cliente = this.formCliente.value;
+    this.usuario.username = cliente.email;
+    this.usuario.password = this.formCliente.get("password").value;
+    this.registrar.cliente = cliente;
+    this.registrar.usuario = this.usuario;
     console.log(this.registrar);
     this.restService.saveClienteUsuario(this.registrar).subscribe(() => {
-      return this.restService.getListaProfesional().subscribe((res: any[]) =>{
-        this.restService.listaProfesional=res;
-      },
-      err => console.log(err));
-   })
- 
+      Swal.fire('Solicitud aceptada', 'Se a registrado correctamente', 'success');
+      return this.router.navigate([''])
+
+    }, err =>{
+      Swal.fire('Solicitud rechazada', 'Hay errores al momento de generar la solicitud', 'error');
+    })
   }
 }

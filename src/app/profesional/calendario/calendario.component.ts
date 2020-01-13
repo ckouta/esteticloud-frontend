@@ -18,6 +18,7 @@ import { NgbCalendar, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstra
 import { Cliente } from 'src/app/entidades/Cliente';
 import { Servicio } from 'src/app/entidades/Servicio';
 import { HorarioPosible } from 'src/app/entidades/HorarioPosible';
+import { Reserva } from 'src/app/entidades/Reserva';
 @Component({
   selector: 'app-calendario',
   templateUrl: './calendario.component.html',
@@ -48,6 +49,7 @@ export class CalendarioComponent implements OnInit {
   listaClientes: Cliente[] = [];
   cliente:any = 0;
   bloquesPosibles: HorarioPosible[] = [];
+  reserva: Reserva;
 
   constructor(public restService: RestService, private router: Router, private formBuilder: FormBuilder, private parseCalendar: NgbDateParserFormatter,
     private calendar: NgbCalendar) { 
@@ -141,7 +143,18 @@ export class CalendarioComponent implements OnInit {
             title: this.horasProfesional[i].reserva.cliente.nombre,
             start: this.horasProfesional[i].fecha + "T" + this.horasProfesional[i].bloque_horario.horaInicio,
             end: this.horasProfesional[i].fecha + "T" + this.horasProfesional[i].bloque_horario.horaFin,
-            description: 'reserva'
+            description: ' <ul class="navbar-nav m-auto">' +
+            '<li class="nav-item" > ' +
+            'Nombre cliente: '+this.horasProfesional[i].reserva.cliente.nombre+' '+this.horasProfesional[i].reserva.cliente.apellido+'</li>' +
+            '<li class="nav-item" > ' +
+            'Rut: '+this.horasProfesional[i].reserva.cliente.rut+'</li>'+
+            '<li class="nav-item" > ' +
+            'Servicio: '+this.horasProfesional[i].reserva.servicio.nombre+'</li>'+
+            '<li class="nav-item" > ' +
+            'Fecha: '+this.horasProfesional[i].fecha +'</li>'+
+            '<li class="nav-item" > ' +
+            'Hora de inicio: '+this.horasProfesional[i].bloque_horario.horaInicio+'</li>'+
+            '</ul>'
           }
         }
 
@@ -151,13 +164,19 @@ export class CalendarioComponent implements OnInit {
   }
   handleDateClick(arg) { // handler method
     this.display = 'block';
-    let calendar = this.calendarComponent.getApi();
-
-    console.log(arg);
-    console.log(arg.dateStr);
-    console.log(arg.date.getFullYear());
-    //Swal.fire('Any fool can use a computer'+ arg.dateStr);
+    this.model = this.parseCalendar.parse(arg.dateStr);
+    console.log(arg.event);
   }
+  handleEventClick(arg) { // handler method
+    console.log(arg.event);
+    console.log(arg.event.extendedProps);
+    Swal.fire({
+      title: '<strong>Reserva</strong>',
+      icon: 'info',
+      html: arg.event.extendedProps.description   
+    })
+  }
+
 
 
   openModal() {
@@ -202,5 +221,24 @@ export class CalendarioComponent implements OnInit {
         }
       }
     }
+  }
+  save() {
+ 
+
+      this.reserva = {
+        id_reserva: null,
+        cliente: this.cliente,
+        servicio: this.servicio,
+        estado_reserva: null
+      }
+      this.restService.saveReserva(this.reserva).subscribe(res => {
+        this.reserva = res;
+        this.hora.horarioProfesional.forEach(element => {
+          this.restService.updateHorarioReserva(element.id_horarioProfesional, res).subscribe(res => {
+            console.log(res);
+          })
+        });
+      })
+
   }
 }

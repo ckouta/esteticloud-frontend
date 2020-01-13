@@ -228,11 +228,11 @@
                     <div class="md-form mb-5">
                         <i class="fas fa-envelope prefix grey-text"></i>
                         <input [(ngModel)]="usuario.username" type="email" id="defaultForm-email" class="form-control validate" name="username" autofocus required>
-                        <label data-error="wrong" data-success="right" for="defaultForm-email">Ingresa tu email</label>
+                        <label data-error="error" data-success="correcto" for="defaultForm-email">Ingresa tu email</label>
                         <div class="md-form mb-4">
                             <i class="fas fa-lock prefix grey-text"></i>
                             <input [(ngModel)]="usuario.password" type="password" id="defaultForm-pass" class="form-control validate" name="password" required>
-                            <label data-error="wrong" data-success="right" for="defaultForm-pass">Ingresa tu
+                            <label data-error="error" data-success="correcto" for="defaultForm-pass">Ingresa tu
                                 contraseña</label>
                             <div class="modal-footer d-flex justify-content-center">
                                 <button (click)="login()" class="btn btn-default">Iniciar Sesión</button>

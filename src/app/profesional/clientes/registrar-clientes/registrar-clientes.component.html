@@ -1,1 +1,117 @@
-<p>registrar-clientes works!</p>
+<nav aria-label="breadcrumb z-depth-1">
+    <ol class="breadcrumb" style="margin: 0;">
+        <li class="breadcrumb-item "><a style="display: inline;padding: 0;" [routerLink]="['/profesional']"> Inicio</a>
+        </li>
+        <li class="breadcrumb-item active"><a style="display: inline;padding: 0;" [routerLink]="['/profesional/clientes']">Cliente</a></li>
+        <li class="breadcrumb-item active" *ngIf="!show"><a style="display: inline;padding: 0;">Registrar</a></li>
+        <li class="breadcrumb-item active" *ngIf="show"><a style="display: inline;padding: 0;">Detalle</a></li>
+    </ol>
+</nav>
+<br>
+<div class="container">
+    <h2>Formulario </h2>
+    <hr>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <form [formGroup]="formCliente" (ngSubmit)="saveData()" novalidate enctype="multipart/form-data">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <!--Nombre -->
+                                    <div class="form-group">
+                                        <h6 for="nombre">Nombre Cliente</h6>
+                                        <input formControlName="nombre" class="form-control" type="text" placeholder="Ingrese Nombre">
+                                        <div *ngIf="formCliente.get('nombre').errors && (formCliente.get('nombre').touched 
+                            || formCliente.get('nombre').dirty)" class="alert alert-danger">El nombre del cliente es obligatorio
+                                        </div>
+                                    </div>
+                                    <!--Fin Nombre -->
+                                </div>
+                                <div class="col-md-6">
+                                    <!--Apellido -->
+                                    <h6 for="apellido">Apellido Cliente</h6>
+                                    <input formControlName="apellido" class="form-control" type="text" placeholder="Ingrese apellido">
+                                    <div *ngIf="formCliente.get('apellido').errors && (formCliente.get('apellido').touched 
+                                    || formCliente.get('apellido').dirty)" class="alert alert-danger">El apellido del cliente es obligatorio
+                                    </div>
+                                    <!--Fin Apellido -->
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <!--RUT -->
+                                    <h6 for="rut">Rut</h6>
+                                    <input formControlName="rut" class="form-control" type="text" placeholder="Ingrese rut">
+                                    <div *ngIf="formCliente.get('rut').errors && (formCliente.get('rut').touched 
+                                    || formCliente.get('rut').dirty)" class="alert alert-danger">El rut del cliente es obligatorio
+                                    </div>
+                                    <!--Fin RUT-->
+                                </div>
+                                <div class="col-md-6">
+                                    <!-- Telefono-->
+                                    <div class="form-group">
+                                        <h6 for="Telefono">Teléfono</h6>
+                                        <input formControlName="telefono" type="text" class="form-control" placeholder="Ingrese Telefono">
+                                        <div *ngIf="formCliente.get('telefono').errors && (formCliente.get('telefono').touched 
+                                    || formCliente.get('telefono').dirty)" class="alert alert-danger">El telefono del cliente es obligatorio
+                                        </div>
+                                    </div>
+                                    <!--Fin Telefono -->
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <!--Email  -->
+                                    <div class="form-group">
+                                        <h6 for="Email">Email</h6>
+                                        <input formControlName="email" type="text" class="form-control" placeholder="Ingrese el email">
+                                        <div *ngIf="formCliente.get('email').errors && (formCliente.get('email').touched 
+                                    || formCliente.get('email').dirty)" class="alert alert-danger">El email del cliente es obligatorio
+                                        </div>
+                                        <!--Fin Email -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--Botones-->
+                            <div class="col-md-12" style="text-align: right" *ngIf="!show">
+                                <button type="button" class="btn btn-danger botones" style="background: #ff0000" data-toggle="modal" data-target="#modalSalir"> Cancelar </button> &nbsp;
+                                <button type="submit" class="btn btn-warning botones" style="background: #ff8800"> Guardar </button>
+                            </div>
+                            <div class="col-md-12" style="text-align: right" *ngIf="show">
+                                <button class="btn btn-warning botones" style="background: #ff8800" [routerLink]="['/profesional/clientes']"> Volver </button>
+                            </div>
+
+                            <!--Fin Botones-->
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalSalir" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Salir de formulario de ingreso de profesional</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro que deseas salir del formulario de ingreso de profesional?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-warning" data-dismiss="modal" [routerLink]="['/profesional/clientes']">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 import { Reserva } from 'src/app/entidades/Reserva';
 import { element } from 'protractor';
 import { number } from '@amcharts/amcharts4/core';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-reserva',
@@ -52,6 +53,7 @@ export class ReservaComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     if (!this.restService.hasRole('ROLE_CLIENT')) {
+      Swal.fire('Solicitud rechazada', 'credenciales Incorrectas', 'error');
       this.router.navigate(['']);
     }
     this.restService.getListaServicio().subscribe((res: any[]) => {

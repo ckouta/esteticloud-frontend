@@ -1,4 +1,11 @@
-<hr>
+<nav aria-label="breadcrumb z-depth-1">
+    <ol class="breadcrumb" style="margin: 0;">
+        <li class="breadcrumb-item "><a style="display: inline;padding: 0;" [routerLink]="['/profesional']"> Inicio</a>
+        </li>
+        <li class="breadcrumb-item active"><a style="display: inline;padding: 0;">Servicio</a></li>
+    </ol>
+</nav>
+<br>
 
 <body>
     <div>
@@ -55,6 +62,9 @@
                                             <td style="vertical-align: middle">{{servicio.servicio.precio | currency:'$ '}}</td>
                                             <td style="vertical-align: middle">
                                                 <div>
+                                                    <button type="button" class="btn btn-success" [routerLink]="'/profesional/servicios/registrar/'+servicio.servicio.id_servicio" [queryParams]="{ ver: true }">
+                                                        <i class="far fa-eye d-xl-flex justify-content-xl-center align-items-xl-center"></i>
+                                                    </button>&nbsp;
                                                     <button type="button" class="btn btn-danger" (click)="eliminarServicioOfrecido(servicio.id_servicioOfrecido)" data-toggle="modal" data-target="#modalEliminar">
                                         <i
                                             class="far fa-trash-alt d-xl-flex justify-content-xl-center align-items-xl-center"></i>
@@ -93,8 +103,11 @@
                                             <td style="vertical-align: middle">{{servi.precio | currency:'$ '}}</td>
                                             <td style="vertical-align: middle">
                                                 <div>
+                                                    <button type="button" class="btn btn-primary" [routerLink]="'/profesional/servicios/registrar/'+servi.id_servicio" [queryParams]="{ ver: true }">
+                                                        <i class="far fa-eye d-xl-flex justify-content-xl-center align-items-xl-center"></i>
+                                                    </button>&nbsp;
                                                     <button type="button" class="btn btn-success" (click)="guardarServicioOfrecido(servi)">
-                                                            <i class="fas fa-plus-circle"></i>
+                                                            <i class="fas fa-plus-circle d-xl-flex justify-content-xl-center align-items-xl-center"></i>
                                             </button>
                                                 </div>
                                             </td>

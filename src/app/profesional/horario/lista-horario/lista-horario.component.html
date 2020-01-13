@@ -1,4 +1,11 @@
-<hr>
+<nav aria-label="breadcrumb z-depth-1">
+    <ol class="breadcrumb" style="margin: 0;">
+        <li class="breadcrumb-item "><a style="display: inline;padding: 0;" [routerLink]="['/profesional']"> Inicio</a>
+        </li>
+        <li class="breadcrumb-item active"><a style="display: inline;padding: 0;">Horario</a></li>
+    </ol>
+</nav>
+<br>
 
 <body>
     <div>
@@ -31,12 +38,13 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="table-responsive">
-                        <table id="example" class="table table-striped table-bordered" width="100%">
+                        <table id="example" class="table table-striped table-bordered" width="100%" style="text-align: center;">
                             <thead>
                                 <tr style="text-align: center">
                                     <th style="vertical-align: middle">Hora de Inicio</th>
                                     <th style="vertical-align: middle">Hora de Fin</th>
                                     <th style="vertical-align: middle">Reserva</th>
+                                    <th style="vertical-align: middle">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody *ngFor="let horas of horasProfesional">
@@ -50,6 +58,13 @@
                                 <ng-template #elseBlock>
                                     <td style="vertical-align: middle ">No</td>
                                 </ng-template>
+                                <td style="vertical-align: middle">
+                                    <div>
+                                        <button type="button" class="btn btn-danger" (click)="eliminarHorario(horas.id_horarioProfesional)" data-toggle="modal" data-target="#modalEliminar">
+                                        <i class="far fa-trash-alt d-xl-flex justify-content-xl-center align-items-xl-center"></i>
+                                        </button>
+                                    </div>
+                                </td>
                             </tbody>
                         </table>
                     </div>

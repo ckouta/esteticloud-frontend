@@ -18,6 +18,7 @@ export class RegistrarProfesionalesComponent implements OnInit {
   formProduct: FormGroup;
   usuario: Usuario;
   registrar: Registro;
+  show:boolean = false;
   constructor(
     private router: Router,
     public restService: RestService,
@@ -25,22 +26,28 @@ export class RegistrarProfesionalesComponent implements OnInit {
     private rutaActiva: ActivatedRoute
   ) {
 
-    this.formProduct = this.formBuilder.group({
-      id_profesional: [],
-      nombre: ['', [Validators.required]],
-      apellido: ['', [Validators.required]],
-      rut: ['', [Validators.required]],
-      telefono: ['', [Validators.required]],
-      email: ['', [Validators.required]],
-      estado: ['', [Validators.required]],
-      descripcion: ['', [Validators.required]],
-      password: ['']
-    });
     this.usuario = new Usuario();
     this.registrar = new Registro();
   }
 
   ngOnInit() {
+    this.rutaActiva.queryParams.subscribe(params => {
+      let dato = params['ver'];
+      if(dato=="true"){
+        this.show= true;
+      }
+    });
+    this.formProduct = this.formBuilder.group({
+      id_profesional: [],
+      nombre: [{value: '', disabled: this.show}, [Validators.required]],
+      apellido: [{value: '', disabled: this.show}, [Validators.required]],
+      rut: [{value: '', disabled: this.show}, [Validators.required]],
+      telefono: [{value: '', disabled: this.show}, [Validators.required]],
+      email: [{value: '', disabled: this.show}, [Validators.required]],
+      estado: [{value: '', disabled: this.show}, [Validators.required]],
+      descripcion: [{value: '', disabled: this.show}, [Validators.required]],
+      password: ['']
+    });
     if (this.rutaActiva.snapshot.params.id != null) {
        this.restService.getProfesional(this.rutaActiva.snapshot.params.id).subscribe((res: any) => {
         this.ProfesionalActualizar = res;
@@ -83,11 +90,13 @@ export class RegistrarProfesionalesComponent implements OnInit {
   actualizarProfesional(profesional: Profesional) {
 
     this.restService.updateProfesional(profesional.id_profesional, profesional).subscribe(() => {
-      return this.restService.getListaProfesional().subscribe((res: any[]) => {
-        this.restService.listaProfesional = res;
+      Swal.fire('Solicitud aceptada', 'el profesional a sido actualizado', 'success');
+      return this.router.navigate(['profesional/profesional'])
       },
-        err => console.log(err));
-    })
+        err =>{
+          Swal.fire('Solicitud rechazada', 'el profesional no se actualizo', 'error');
+        }
+    )
   }
 
   saveData() {

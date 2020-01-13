@@ -1,5 +1,16 @@
+<nav aria-label="breadcrumb z-depth-1">
+    <ol class="breadcrumb" style="margin: 0;">
+        <li class="breadcrumb-item "><a style="display: inline;padding: 0;" [routerLink]="['/profesional']"> Inicio</a>
+        </li>
+        <li class="breadcrumb-item active"><a style="display: inline;padding: 0;" [routerLink]="['/profesional/servicios']">Servicio</a></li>
+        <li class="breadcrumb-item active" *ngIf="!show"><a style="display: inline;padding: 0;">Registrar</a></li>
+        <li class="breadcrumb-item active" *ngIf="show"><a style="display: inline;padding: 0;">Detalle</a></li>
+    </ol>
+</nav>
+<br>
 <div class="container">
-    <h2>Formulario de registro de servicio</h2>
+    <h2 *ngIf="!show">Formulario de registro de servicio</h2>
+    <h2 *ngIf="show">Detalle del servicio</h2>
     <hr>
     <div class="row">
         <div class="col-md-12">
@@ -22,9 +33,13 @@
                                 </div>
                                 <div class="col-md-6">
                                     <!-- Subir imagen-->
-                                    <div class="form-group">
+                                    <div class="form-group" *ngIf="!show">
                                         <h6 for="imagen">Seleccione una imagen para el Servicio</h6>
                                         <input (change)="seleccionarFoto($event)" type="file" class="form-control-file">
+                                    </div>
+                                    <div *ngIf="show" style="padding: auto;">
+                                        <h6 for="imagen">Imagen</h6>
+                                        <img src="http://parra.chillan.ubiobio.cl:8080/alvaro.castillo1501/servicio/uploads/img/{{servicioActualizar.foto}}" style="height: 130px;">
                                     </div>
                                     <!-- fin Subir imagen-->
                                 </div>
@@ -57,9 +72,12 @@
                             <!-- fin Ingresar Descripción-->
 
                             <!--Botones-->
-                            <div class="col-md-12" style="text-align: right">
+                            <div class="col-md-12" style="text-align: right" *ngIf="!show">
                                 <button type="button" class="btn btn-danger botones" style="background: #ff0000" data-toggle="modal" data-target="#modalSalir"> Cancelar </button> &nbsp;
                                 <button type="submit" class="btn btn-warning botones" style="background: #ff8800"> Guardar </button>
+                            </div>
+                            <div class="col-md-12" style="text-align: right" *ngIf="show">
+                                <button class="btn btn-warning botones" style="background: #ff8800" [routerLink]="['/profesional/servicios/']"> Volver </button>
                             </div>
 
                             <!--Fin Botones-->

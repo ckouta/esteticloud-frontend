@@ -48,7 +48,7 @@
             <full-calendar #calendar defaultView="dayGridMonth" selectable="true" [plugins]="calendarPlugins" [events]="calendarEvents" [header]="{
                 left: 'title',
                 right: 'prev,next'
-              }" [weekends]="calendarWeekends" locale="es-us" (dateClick)="handleDateClick($event)" [height]="500"></full-calendar>
+              }" [weekends]="calendarWeekends" locale="es-us" (dateClick)="handleDateClick($event)" (eventClick)="handleEventClick($event)" [height]="500"></full-calendar>
         </div>
     </div>
 </div>
@@ -89,7 +89,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Guardar</button>
+                    <button type="button" (click)="save()" class="btn btn-primary">Guardar</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="onCloseHandled()">Cancelar</button>
                 </div>
             </div>

@@ -3,6 +3,7 @@ import { Cliente } from 'src/app/entidades/Cliente';
 import { RestService } from 'src/app/servicioBackend/rest.service';
 import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-clientes',
@@ -10,7 +11,7 @@ import { FormBuilder } from '@angular/forms';
   styleUrls: ['./clientes.component.css']
 })
 export class ClientesComponent implements OnInit {
-  searchText:string;
+  searchText: string;
   cliente: Cliente[] = [];
   constructor(public restService: RestService, private router: Router, private formBuilder: FormBuilder) { }
 
@@ -26,5 +27,13 @@ export class ClientesComponent implements OnInit {
     },
       err => this.cliente = [])
   }
-
+  clienteEliminar(id: number) {
+    this.restService.deleteCliente(id).subscribe((res => {
+      Swal.fire('Cliente eliminado', "Eliminado con éxito!", 'success')
+      return this.restService.getListaCliente().subscribe((res: any[]) => {
+        this.cliente = res;
+      });
+    }
+    ))
+  }
 }

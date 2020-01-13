@@ -1,4 +1,11 @@
-<hr>
+<nav aria-label="breadcrumb z-depth-1">
+    <ol class="breadcrumb" style="margin: 0;">
+        <li class="breadcrumb-item "><a style="display: inline;padding: 0;" [routerLink]="['/profesional']"> Inicio</a>
+        </li>
+        <li class="breadcrumb-item active"><a style="display: inline;padding: 0;">Profesional</a></li>
+    </ol>
+</nav>
+<br>
 
 <body>
     <div>
@@ -42,6 +49,9 @@
                                     <td style="vertical-align: middle">{{Profesional.email}}</td>
                                     <td style="vertical-align: middle">
                                         <div>
+                                            <button type="button" class="btn btn-success" [routerLink]="['registrar/'+Profesional.id_profesional]" [queryParams]="{ ver: true }">
+                                                <i class="far fa-eye d-xl-flex justify-content-xl-center align-items-xl-center"></i>
+                                            </button>&nbsp;
                                             <button type="button" class="btn btn-danger" (click)="profesionalEliminar(Profesional.id_profesional)">
                         <i class="far fa-trash-alt d-xl-flex justify-content-xl-center align-items-xl-center"></i>
                       </button>&nbsp;
