@@ -66,7 +66,7 @@
                 <div class="">
                     <label>Cliente:</label>
                     <select [(ngModel)]="cliente" id="exampleFormControlSelect1" class="form-control">
-                        <option [ngValue]="0"> Ninguno Seleccionado</option>
+                        <option [ngValue]="0"> Ninguno seleccionado</option>
                         <option *ngFor="let cliente of listaClientes" [ngValue]="cliente"> {{cliente.nombre}}</option>
                     </select>
                 </div>
@@ -77,13 +77,13 @@
                 <div class="">
                     <label>Hora:</label>
                     <select [(ngModel)]="hora" id="horario" class="form-control">
-                        <option  [ngValue]="0" > Ninguno Seleccionado</option>
+                        <option  [ngValue]="0" > Ninguno seleccionado</option>
                         <option *ngFor="let horas of bloquesPosibles"  [ngValue]="horas"> Hora de Inicio:{{horas.horaInicio}} Hora de Fin:{{horas.horaFin}}</option>                       
                     </select>
                     <div class="">
                         <label>Servicio:</label>
                         <select [(ngModel)]="servicio" id="exampleFormControlSelect1" (change)="Select()" class="form-control">
-                        <option [ngValue]="0"> Ninguno Seleccionado</option>
+                        <option [ngValue]="0"> Ninguno seleccionado</option>
                         <option *ngFor="let servicio of listaServicios" [ngValue]="servicio"> {{servicio.nombre}}</option>
                     </select>
                     </div>

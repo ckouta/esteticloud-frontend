@@ -8,8 +8,8 @@
 <div>
     <div class="arrow-steps clearfix mx-auto " style="width: 900px;">
         <div [ngClass]=" 'step ' + arreglo[variable - 0]"> <span> Elige servicio </span> </div>
-        <div [ngClass]=" 'step ' + arreglo[variable - 1]"> <span>Elige dia y hora</span> </div>
-        <div [ngClass]=" 'step ' + arreglo[variable - 2]"> <span> Reserva Exitosa</span> </div>
+        <div [ngClass]=" 'step ' + arreglo[variable - 1]"> <span>Elige día y hora</span> </div>
+        <div [ngClass]=" 'step ' + arreglo[variable - 2]"> <span> Reserva exitosa</span> </div>
     </div>
 </div>
 
@@ -17,7 +17,7 @@
 <div class="tab-content" id="pills-tabContent">
     <!--Inicio Servicio-->
     <div class="tab-pane fade show active" id="pills-servicio" role="tabpanel" aria-labelledby="pills-servicio-tab">
-        <h1 style="margin-left: 30px;">Elegir Servicios</h1>
+        <h1 style="margin-left: 30px;">Elegir servicio</h1>
         <div class="row" style="padding: 2%;margin: 0;">
 
             <div class="col-3 z-depth-1" style="margin-right: 30px; padding: 3%;">
@@ -26,10 +26,10 @@
                     <div class="hr">
                     </div>
                     <select [(ngModel)]="esteticista" class="form-control" id="exampleFormControlSelect1" style="margin-top: 5%;" (ngModelChange)="serviciosofrecidos()">
-                        <option  [ngValue]="0"  > Ninguno Seleccionado</option>
+                        <option  [ngValue]="0"  > Ninguno seleccionado</option>
                         <option *ngFor="let profesional of listProfesionales" [ngValue]="profesional" > {{profesional.nombre}}</option>                       
                     </select>
-                    <h5 style="margin-bottom: 4%; margin-top: 30%;">Servicios Anteriores</h5>
+                    <h5 style="margin-bottom: 4%; margin-top: 30%;">Servicios anteriores</h5>
                     <div class="hr">
 
                     </div>
@@ -75,12 +75,12 @@
             <div class="col-5" style="margin-bottom: 30px;padding-left: 20px;">
                 <h5 class="mt-0" style="margin-bottom: 4%;">Profesional</h5>
                 <select [(ngModel)]="esteticista" (change)="Select()" class="form-control" id="exampleFormControlSelect1" style="margin-top: 5%;">
-                        <option  [ngValue]="0" > Ninguno Seleccionado</option>
+                        <option  [ngValue]="0" > Ninguno seleccionado</option>
                         <option *ngFor="let profesional of listProfesionales"  [ngValue]="profesional"> {{profesional.nombre}}</option>                       
                     </select>
                 <h3>Horarios</h3>
                 <select [(ngModel)]="hora" class="form-control" id="horario" style="margin-top: 5%; margin-bottom: 20px;">
-                    <option  [ngValue]="0" > Ninguno Seleccionado</option>
+                    <option  [ngValue]="0" > Ninguno seleccionado</option>
                     <option *ngFor="let horas of bloquesPosibles"  [ngValue]="horas"> Hora de Inicio:{{horas.horaInicio}} Hora de Fin:{{horas.horaFin}}</option>                       
                 </select>
                 <a class="btn btn-outline-success btn-lg btn-block" (click)="save()" id="pills-contact-tab" data-toggle="pill" href="#pills-contacto" role="tab" aria-controls="pills-contacto" aria-selected="true" *ngIf="hora !=0">Confirmar</a>
