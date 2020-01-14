@@ -47,7 +47,7 @@ export class ListaHorarioComponent implements OnInit {
       this.horario();
       Swal.fire('Eliminación correcta', 'el horario fue eliminado', 'success');
     }, err => {
-      Swal.fire('Error al eliminar', 'no se logro eliminar el horario', 'error');
+      Swal.fire('Error al eliminar', 'no se pudo eliminar el horario', 'error');
     })
   }
 }

@@ -90,7 +90,7 @@ export class RegistrarProfesionalesComponent implements OnInit {
   actualizarProfesional(profesional: Profesional) {
 
     this.restService.updateProfesional(profesional.id_profesional, profesional).subscribe(() => {
-      Swal.fire('Solicitud aceptada', 'el profesional a sido actualizado', 'success');
+      Swal.fire('Solicitud aceptada', 'el profesional ha sido actualizado', 'success');
       return this.router.navigate(['profesional/profesional'])
       },
         err =>{

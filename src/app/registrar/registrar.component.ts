@@ -43,10 +43,11 @@ export class RegistrarComponent implements OnInit {
     this.registrar.usuario = this.usuario;
     console.log(this.registrar);
     this.restService.saveClienteUsuario(this.registrar).subscribe(() => {
-      Swal.fire('Solicitud aceptada', 'Se a registrado correctamente', 'success');
+      Swal.fire('Solicitud aceptada', 'Se ha registrado correctamente', 'success');
       return this.router.navigate([''])
 
     }, err =>{
+      
       Swal.fire('Solicitud rechazada', 'Hay errores al momento de generar la solicitud', 'error');
     })
   }
