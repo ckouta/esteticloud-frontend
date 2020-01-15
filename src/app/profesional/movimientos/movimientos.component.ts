@@ -22,8 +22,8 @@ export class MovimientosComponent implements OnInit {
     private calendar: NgbCalendar) {
       this.formMovimiento = this.formBuilder.group({
         id_movimiento: [],
-        nombre: [{value: '', disabled: this.show}, [Validators.required]],
-        descripcion: [{value: '', disabled: this.show}, [Validators.required]],
+        nombre: [{value: '', disabled: this.show}, [Validators.required, Validators.minLength(3)]],
+        descripcion: [{value: '', disabled: this.show}, [Validators.required, Validators.minLength(3)]],
         valor: [{value: '', disabled: this.show}, [Validators.required]],
         fecha: [{value: '', disabled: this.show}, [Validators.required]],
       });
@@ -77,6 +77,7 @@ export class MovimientosComponent implements OnInit {
   }
   setDatosMovimiento(movimiento: Movimiento) {
     if(movimiento != null){
+      
       this.formMovimiento.setValue({
         id_movimiento: movimiento.id_movimiento,
         nombre: movimiento.nombre,
@@ -89,8 +90,8 @@ export class MovimientosComponent implements OnInit {
   vaciar(){
     this.formMovimiento = this.formBuilder.group({
       id_movimiento: [],
-      nombre: [{value: '', disabled: this.show}, [Validators.required]],
-      descripcion: [{value: '', disabled: this.show}, [Validators.required]],
+      nombre: [{value: '', disabled: this.show}, [Validators.required, Validators.minLength(3)]],
+      descripcion: [{value: '', disabled: this.show}, [Validators.required, Validators.minLength(3)]],
       valor: [{value: '', disabled: this.show}, [Validators.required]],
       fecha: [{value: '', disabled: this.show}, [Validators.required]],
     });
