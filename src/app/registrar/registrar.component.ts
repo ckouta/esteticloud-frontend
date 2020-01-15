@@ -21,12 +21,12 @@ export class RegistrarComponent implements OnInit {
     private formBuilder: FormBuilder,
     private rutaActiva: ActivatedRoute) {
     this.formCliente = this.formBuilder.group({
-      nombre: ['', [Validators.required]],
-      apellido: ['', [Validators.required]],
-      telefono: ['', [Validators.required]],
-      email: ['', [Validators.required]],
-      rut: ['', [Validators.required]],
-      password: ['', [Validators.required]],
+      nombre: ['', [Validators.required, Validators.minLength(2)]],
+      apellido: ['', [Validators.required, Validators.minLength(3)]],
+      telefono: ['', [Validators.required, Validators.minLength(9),Validators.maxLength(9)]],
+      email: ['', [Validators.required, Validators.email]],
+      rut: ['', [Validators.required, Validators.pattern(/^\d{1,2}\.\d{3}\.\d{3}[-][0-9kK]{1}$/)]],
+      password: ['', [Validators.required,Validators.minLength(6)]],
     });
     this.usuario = new Usuario();
     this.registrar = new Registro();
