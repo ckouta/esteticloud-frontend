@@ -29,7 +29,7 @@ export class ClientesComponent implements OnInit {
   }
   clienteEliminar(id: number) {
     this.restService.deleteCliente(id).subscribe((res => {
-      Swal.fire('Cliente eliminado', "Eliminado con éxito!", 'success')
+      Swal.fire('Cliente eliminado', "Cliente eliminado correctamente", 'success')
       return this.restService.getListaCliente().subscribe((res: any[]) => {
         this.cliente = res;
       });

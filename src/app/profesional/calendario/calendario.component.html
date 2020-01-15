@@ -9,7 +9,7 @@
     <div class="btn-group btn-group-toggle" data-toggle="buttons">
         <label class="btn btn-primary form-check-label active">
             <input class="form-check-input" type="radio" name="options" id="option1" autocomplete="off">
-            <button class="botonformato" (click)="formatoDia()">Dia</button>
+            <button class="botonformato" (click)="formatoDia()">Día</button>
         </label>
         <label class="btn btn-primary form-check-label">
             <button class="botonformato" (click)="formatoSemana()"><input class="form-check-input" type="radio"
@@ -37,7 +37,7 @@
             </li>
             <li>
                 <a (click)="openModal()" [ngClass]="{active: li=='reserva'}"><i class="far fa-calendar-alt"></i>
-                    Agregar Reserva </a>
+                    Agregar reserva </a>
             </li>
 
         </ul>
@@ -78,7 +78,7 @@
                     <label>Hora:</label>
                     <select [(ngModel)]="hora" id="horario" class="form-control">
                         <option  [ngValue]="0" > Ninguno seleccionado</option>
-                        <option *ngFor="let horas of bloquesPosibles"  [ngValue]="horas"> Hora de Inicio:{{horas.horaInicio}} Hora de Fin:{{horas.horaFin}}</option>                       
+                        <option *ngFor="let horas of bloquesPosibles"  [ngValue]="horas"> Hora de inicio:{{horas.horaInicio}} Hora de Fin:{{horas.horaFin}}</option>                       
                     </select>
                     <div class="">
                         <label>Servicio:</label>

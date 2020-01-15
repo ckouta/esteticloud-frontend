@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
   login(): void {
     console.log(this.usuario);
     if (this.usuario.username == null || this.usuario.password == null) {
-      Swal.fire('Campos Vacios', 'los campos estan vacios', 'error');
+      Swal.fire('campos Vacios', 'Los campos están vacíos', 'error');
       return;
     }
     this.restService.login(this.usuario).subscribe(response => {
@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
       })
     }, err => {
       if (err.status == 400) {
-        Swal.fire('Credenciales Incorrectas', 'las credenciales no coinciden', 'error');
+        Swal.fire('Credenciales incorrectas', 'Las credenciales no coinciden', 'error');
       }
     }
     )

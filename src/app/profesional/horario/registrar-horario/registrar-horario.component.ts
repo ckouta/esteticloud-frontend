@@ -80,7 +80,7 @@ export class RegistrarHorarioComponent implements OnInit {
     if (fechaInicio == null || fechaFIn == null) {
       console.log(this.horaFinDomingo);
       
-      Swal.fire('Datos Incorrectos', 'Asegure de ingresar los datos solicitados', 'error');
+      Swal.fire('Datos incorrectos', 'Verifique el ingreso de los datos', 'error');
     } else {
       
       do {
@@ -89,7 +89,7 @@ export class RegistrarHorarioComponent implements OnInit {
           horaInicio = this.horaInicioLunes;
           horaFin = this.horaFinLunes;
           if( horaInicio== null || horaFin==null){
-            Swal.fire('Datos Incorrectos', 'Asegure de ingresar los datos solicitados', 'error');
+            Swal.fire('Datos incorrectos', 'Verifique el ingreso de los datos', 'error');
             return;
           }
         } else {
@@ -97,7 +97,7 @@ export class RegistrarHorarioComponent implements OnInit {
             horaInicio = this.horaInicioMartes;
             horaFin = this.horaFinMartes;
             if( horaInicio== null || horaFin==null){
-              Swal.fire('Datos Incorrectos', 'Asegure de ingresar los datos solicitados', 'error');
+              Swal.fire('Datos incorrectos', 'Verifique el ingreso de los datos', 'error');
               return;
             }
           } else {
@@ -105,7 +105,7 @@ export class RegistrarHorarioComponent implements OnInit {
               horaInicio = this.horaInicioMiercoles;
               horaFin = this.horaFinMiercoles;
               if( horaInicio== null || horaFin==null){
-                Swal.fire('Datos Incorrectos', 'Asegure de ingresar los datos solicitados', 'error');
+                Swal.fire('Datos incorrectos', 'Verifique el ingreso de los datos', 'error');
                 return;
               }
             } else {
@@ -113,7 +113,7 @@ export class RegistrarHorarioComponent implements OnInit {
                 horaInicio = this.horaInicioJueves;
                 horaFin = this.horaFinJueves;
                 if( horaInicio== null || horaFin==null){
-                  Swal.fire('Datos Incorrectos', 'Asegure de ingresar los datos solicitados', 'error');
+                  Swal.fire('Datos Incorrectos', 'Verifique el ingreso de los datos', 'error');
                   return;
                 }
               } else {
@@ -121,7 +121,7 @@ export class RegistrarHorarioComponent implements OnInit {
                   horaInicio = this.horaInicioViernes;
                   horaFin = this.horaFinViernes;
                   if( horaInicio== null || horaFin==null){
-                    Swal.fire('Datos Incorrectos', 'Asegure de ingresar los datos solicitados', 'error');
+                    Swal.fire('Datos incorrectos', 'Verifique el ingreso de los datos', 'error');
                     return;
                   }
                 } else {
@@ -129,7 +129,7 @@ export class RegistrarHorarioComponent implements OnInit {
                     horaInicio = this.horaInicioSabado;
                     horaFin = this.horaFinSabado;
                     if( horaInicio== null || horaFin==null){
-                      Swal.fire('Datos Incorrectos', 'Asegure de ingresar los datos solicitados', 'error');
+                      Swal.fire('Datos incorrectos', 'Verifique el ingreso de los datos', 'error');
                       return;
                     }
                   } else {
@@ -137,7 +137,7 @@ export class RegistrarHorarioComponent implements OnInit {
                       horaInicio = this.horaInicioDomingo;
                       horaFin = this.horaFinDomingo;
                       if( horaInicio== null || horaFin==null){
-                        Swal.fire('Datos Incorrectos', 'Asegure de ingresar los datos solicitados', 'error');
+                        Swal.fire('Datos incorrectos', 'Verifique el ingreso de los datos', 'error');
                         return;
                       }
                     }

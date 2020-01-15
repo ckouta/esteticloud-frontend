@@ -81,7 +81,7 @@
                 <h3>Horarios</h3>
                 <select [(ngModel)]="hora" class="form-control" id="horario" style="margin-top: 5%; margin-bottom: 20px;">
                     <option  [ngValue]="0" > Ninguno seleccionado</option>
-                    <option *ngFor="let horas of bloquesPosibles"  [ngValue]="horas"> Hora de Inicio:{{horas.horaInicio}} Hora de Fin:{{horas.horaFin}}</option>                       
+                    <option *ngFor="let horas of bloquesPosibles"  [ngValue]="horas"> Hora de inicio:{{horas.horaInicio}} Hora de Fin:{{horas.horaFin}}</option>                       
                 </select>
                 <a class="btn btn-outline-success btn-lg btn-block" (click)="save()" id="pills-contact-tab" data-toggle="pill" href="#pills-contacto" role="tab" aria-controls="pills-contacto" aria-selected="true" *ngIf="hora !=0">Confirmar</a>
             </div>
@@ -101,7 +101,7 @@
                     &nbsp;
                     <h5>Nombre del servicio : {{reserva.servicio.nombre}}</h5>
                     <h5>Duración del servicio : {{reserva.servicio.duracion}} Minutos</h5>
-                    <h5>Precio del servicio : {{reserva.servicio.precio}}</h5>
+                    <h5>Precio mínimo del servicio : {{reserva.servicio.precio | currency:'CLP':'$ '}}</h5>
                     <h5>Nombre del cliente : {{reserva.cliente.nombre}} {{reserva.cliente.apellido}}</h5>
                     <h5>Correo : {{reserva.cliente.email}}</h5>
                     <h5>Fecha : {{hora.horarioProfesional[0].fecha}}</h5>

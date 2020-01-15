@@ -8,8 +8,8 @@
 </nav>
 <br>
 <div class="container">
-    <h2 *ngIf="!show">Formulario Profesional</h2>
-    <h2 *ngIf="show">Detalle Profesional </h2>
+    <h2 *ngIf="!show">Formulario profesional</h2>
+    <h2 *ngIf="show">Detalle profesional </h2>
     <hr>
     <div class="row">
         <div class="col-md-12">
@@ -25,17 +25,17 @@
                                         <h6 for="nombre">Nombre profesional</h6>
                                         <input formControlName="nombre" class="form-control" type="text" placeholder="Ingrese Nombre">
                                         <div *ngIf="formProduct.get('nombre').errors && (formProduct.get('nombre').touched 
-                            || formProduct.get('nombre').dirty)" class="alert alert-danger">El nombre del profesional es obligatorio
+                            || formProduct.get('nombre').dirty)" class="alert alert-danger">* El nombre del profesional es obligatorio.
                                         </div>
                                     </div>
                                     <!--Fin Nombre -->
                                 </div>
                                 <div class="col-md-4">
                                     <!--Apellido -->
-                                    <h6 for="apellido">Apellido Profesional</h6>
+                                    <h6 for="apellido">Apellido profesional</h6>
                                     <input formControlName="apellido" class="form-control" type="text" placeholder="Ingrese apellido">
                                     <div *ngIf="formProduct.get('apellido').errors && (formProduct.get('apellido').touched 
-                                    || formProduct.get('apellido').dirty)" class="alert alert-danger">El apellido del profesional es obligatorio
+                                    || formProduct.get('apellido').dirty)" class="alert alert-danger">* El apellido del profesional es obligatorio.
                                     </div>
                                     <!--Fin Apellido -->
                                 </div>
@@ -58,7 +58,7 @@
                                     <h6 for="rut">RUN</h6>
                                     <input formControlName="rut" class="form-control" type="text" placeholder="Ingrese rut">
                                     <div *ngIf="formProduct.get('rut').errors && (formProduct.get('rut').touched 
-                                    || formProduct.get('rut').dirty)" class="alert alert-danger">El RUN del profesional es obligatorio
+                                    || formProduct.get('rut').dirty)" class="alert alert-danger">* El RUN del profesional es obligatorio.
                                     </div>
                                     <!--Fin RUT-->
                                 </div>
@@ -68,7 +68,7 @@
                                         <h6 for="Telefono">Teléfono</h6>
                                         <input formControlName="telefono" type="text" class="form-control" placeholder="Ingrese Telefono">
                                         <div *ngIf="formProduct.get('telefono').errors && (formProduct.get('telefono').touched 
-                                    || formProduct.get('telefono').dirty)" class="alert alert-danger">El telefono del profesional es obligatorio
+                                    || formProduct.get('telefono').dirty)" class="alert alert-danger">* El teléfono del profesional es obligatorio.
                                         </div>
                                     </div>
                                     <!--Fin Telefono -->
@@ -82,7 +82,7 @@
                                         <h6 for="Email">Email</h6>
                                         <input formControlName="email" type="text" class="form-control" placeholder="Ingrese el email">
                                         <div *ngIf="formProduct.get('email').errors && (formProduct.get('email').touched 
-                                    || formProduct.get('email').dirty)" class="alert alert-danger">El email del profesional es obligatorio
+                                    || formProduct.get('email').dirty)" class="alert alert-danger">* El email del profesional es obligatorio.
                                         </div>
                                         <!--Fin Email -->
                                     </div>
@@ -101,7 +101,7 @@
                                 <h6 for="descripcionProducto">Descripción</h6>
                                 <textarea formControlName="descripcion" class="form-control" placeholder="Ingrese una descripción para el profesional"></textarea>
                                 <div *ngIf="formProduct.get('descripcion').errors && (formProduct.get('descripcion').touched 
-                              || formProduct.get('descripcion').dirty)" class="alert alert-danger">Es necesario ingresar una descripción.
+                              || formProduct.get('descripcion').dirty)" class="alert alert-danger">* Es necesario ingresar una descripción.
                                 </div>
                             </div>
                             <!-- fin Ingresar Descripción-->

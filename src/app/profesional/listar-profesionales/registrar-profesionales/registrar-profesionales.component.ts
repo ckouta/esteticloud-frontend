@@ -76,25 +76,25 @@ export class RegistrarProfesionalesComponent implements OnInit {
       this.restService.saveImagenProfesional(profesional.id_profesional + "", this.fotoSeleccionada).subscribe(() => {
         return this.restService.getListaProfesional().subscribe((res: any[]) => {
           this.restService.listaProfesional = res;
-          Swal.fire('Ingreso Correcto ', 'Se ingreso el profesional', 'success')
+          Swal.fire('Ingreso correcto ', 'Se ingresó correctamente el profesional', 'success')
           this.router.navigate(['profesional/profesional']);
           });
       },
-      err =>   {Swal.fire('Imagen', 'imagen no insertada', 'error')}
+      err =>   {Swal.fire('Imagen', 'Imagen no insertada', 'error')}
       )
 
     },
-    err=> {Swal.fire('Datos incorrectos', 'profesional no insertado, Datos incorrectos o duplicados', 'error')}
+    err=> {Swal.fire('Datos incorrectos', 'Profesional no insertado, datos incorrectos o duplicados', 'error')}
     )
   } 
   actualizarProfesional(profesional: Profesional) {
 
     this.restService.updateProfesional(profesional.id_profesional, profesional).subscribe(() => {
-      Swal.fire('Solicitud aceptada', 'el profesional ha sido actualizado', 'success');
+      Swal.fire('Solicitud aceptada', 'El profesional ha sido actualizado', 'success');
       return this.router.navigate(['profesional/profesional'])
       },
         err =>{
-          Swal.fire('Solicitud rechazada', 'el profesional no se actualizo', 'error');
+          Swal.fire('Solicitud rechazada', 'El profesional no se pudo actualizar', 'error');
         }
     )
   }

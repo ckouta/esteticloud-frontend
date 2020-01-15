@@ -23,10 +23,10 @@
                                 <div class="col-md-6">
                                     <!--Nombre producto-->
                                     <div class="form-group">
-                                        <h6 for="nombre">Nombre del Servicio</h6>
-                                        <input formControlName="nombre" class="form-control" type="text" placeholder="Ingrese Nombre">
+                                        <h6 for="nombre">Nombre del servicio</h6>
+                                        <input formControlName="nombre" class="form-control" type="text" placeholder="Ingrese el nombre">
                                         <div *ngIf="formServicio.get('nombre').errors && (formServicio.get('nombre').touched 
-                            || formServicio.get('nombre').dirty)" class="alert alert-danger">El nombre del servicio es obligatorio
+                            || formServicio.get('nombre').dirty)" class="alert alert-danger">* El nombre del servicio es obligatorio
                                         </div>
                                     </div>
                                     <!--Fin Nombre producto-->
@@ -34,7 +34,7 @@
                                 <div class="col-md-6">
                                     <!-- Subir imagen-->
                                     <div class="form-group" *ngIf="!show">
-                                        <h6 for="imagen">Seleccione una imagen para el Servicio</h6>
+                                        <h6 for="imagen">Seleccione una imagen para el servicio</h6>
                                         <input (change)="seleccionarFoto($event)" type="file" class="form-control-file">
                                     </div>
                                     <div *ngIf="show" style="padding: auto;">
@@ -47,15 +47,15 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <!--Seleccionar categoria-->
-                                    <h6 for="apellido">Duración</h6>
+                                    <h6 for="duracion">Duración</h6>
                                     <input formControlName="duracion" class="form-control" type="number" placeholder="Ingrese duración del servicio en minutos">
                                     <!--Fin seleccionar categoria-->
                                 </div>
                                 <div class="col-md-6">
                                     <!--Precio producto-->
                                     <div class="form-group">
-                                        <h6 for="Telefono">Precio</h6>
-                                        <input formControlName="precio" type="text" class="form-control" placeholder="Ingrese precio">
+                                        <h6 for="precio">Precio mínimo</h6>
+                                        <input formControlName="precio" type="text" class="form-control" placeholder="Ingrese precio mínimo que podría tener el servicio">
                                     </div>
                                     <!--Fin Precio producto-->
                                 </div>
@@ -63,7 +63,7 @@
 
                             <!--Ingresar Descripción-->
                             <div class="form-group">
-                                <h6 for="descripcionProducto">Descripción</h6>
+                                <h6 for="descripcion">Descripción</h6>
                                 <textarea formControlName="descripcion" class="form-control" placeholder="Ingrese una descripción para el servicio"></textarea>
                                 <div *ngIf="formServicio.get('descripcion').errors && (formServicio.get('descripcion').touched 
                               || formServicio.get('descripcion').dirty)" class="alert alert-danger">Es necesario ingresar una descripción.

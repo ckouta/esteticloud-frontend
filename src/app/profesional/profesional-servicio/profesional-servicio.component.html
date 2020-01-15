@@ -59,7 +59,7 @@
                                             </td>
                                             <td style="vertical-align: middle">{{servicio.servicio.nombre}}</td>
                                             <td style="vertical-align: middle">{{servicio.servicio.duracion}} Min</td>
-                                            <td style="vertical-align: middle">{{servicio.servicio.precio | currency:'$ '}}</td>
+                                            <td style="vertical-align: middle">{{servicio.servicio.precio | currency:'CLP':'$ '}}</td>
                                             <td style="vertical-align: middle">
                                                 <div>
                                                     <button type="button" class="btn btn-success" [routerLink]="'/profesional/servicios/registrar/'+servicio.servicio.id_servicio" [queryParams]="{ ver: true }">
@@ -88,7 +88,7 @@
                                             <th style="vertical-align: middle">Imagen</th>
                                             <th style="vertical-align: middle">Nombre</th>
                                             <th style="vertical-align: middle">Duración</th>
-                                            <th style="vertical-align: middle">Precio</th>
+                                            <th style="vertical-align: middle">Precio mínimo</th>
                                             <th style="vertical-align: middle">Acciones</th>
                                         </tr>
                                     </thead>
@@ -100,7 +100,7 @@
                                             </td>
                                             <td style="vertical-align: middle">{{servi.nombre}}</td>
                                             <td style="vertical-align: middle">{{servi.duracion}} Min </td>
-                                            <td style="vertical-align: middle">{{servi.precio | currency:'$ '}}</td>
+                                            <td style="vertical-align: middle">{{servi.precio | currency:'CLP':'$ '}}</td>
                                             <td style="vertical-align: middle">
                                                 <div>
                                                     <button type="button" class="btn btn-primary" [routerLink]="'/profesional/servicios/registrar/'+servi.id_servicio" [queryParams]="{ ver: true }">

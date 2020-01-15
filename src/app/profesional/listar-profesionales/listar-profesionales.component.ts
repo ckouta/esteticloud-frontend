@@ -22,7 +22,7 @@ export class ListarProfesionalesComponent implements OnInit {
   }
   profesionalEliminar(id: number){
 this.restService.deleteProfesional(id).subscribe((res =>{
-  Swal.fire('Profesional eliminado', "Eliminado con éxito!" , 'success')
+  Swal.fire('Profesional eliminado', "Profesional eliminado exitosamente" , 'success')
   return this.restService.getListaProfesional().subscribe((res: any[]) => {
     this.restService.listaProfesional = res;
     });

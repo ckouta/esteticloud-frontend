@@ -53,10 +53,10 @@ export class MovimientosComponent implements OnInit {
   movimientoEliminar(id: number) {
     this.restService.deleteMovimiento(id).subscribe((res: any[]) => {
       this.restService.getMovimientoProfesional(this.restService.profesional).subscribe((res: any[]) => {
-        Swal.fire('Solicitud aceptada', 'el movimiento ha sido eliminado', 'success');
+        Swal.fire('Solicitud aceptada', 'El movimiento ha sido eliminado', 'success');
         this.movimientos = res;
       },err =>{
-        Swal.fire('Solicitud rechazada', 'el movimiento no se pudo eliminar', 'error');
+        Swal.fire('Solicitud rechazada', 'El movimiento no se pudo eliminar', 'error');
       })
     })
   }
@@ -65,12 +65,12 @@ export class MovimientosComponent implements OnInit {
     this.restService.getProfesionalCorreo(this.restService.usuario.username).subscribe((res: any) => {
       movimiento.profesional = res;
       this.restService.saveMovimiento(movimiento).subscribe((res: any[]) => {
-        Swal.fire('Solicitud aceptada', 'el movimiento ha sido registrado', 'success');
+        Swal.fire('Solicitud aceptada', 'El movimiento ha sido registrado', 'success');
         this.restService.getMovimientoProfesional(this.restService.profesional).subscribe((res: any[]) => {
           this.movimientos = res;
         })
       },err =>{
-        Swal.fire('Solicitud rechazada', 'el movimiento no se pudo registrar', 'error');
+        Swal.fire('Solicitud rechazada', 'El movimiento no se pudo registrar', 'error');
       })
     })
 

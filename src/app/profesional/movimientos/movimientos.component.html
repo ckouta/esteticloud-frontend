@@ -12,7 +12,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <h2 style="width: 343px;">Lista de Movimientos</h2>
+                    <h2 style="width: 343px;">Lista de movimientos</h2>
                     <br>
                 </div>
                 <div class="col-md-4 d-flex justify-content-end align-self-start">
@@ -46,7 +46,7 @@
                                     <td style="vertical-align: middle">{{movimiento.fecha | date: 'dd/MM/yyyy'}}</td>
                                     <td style="vertical-align: middle">{{movimiento.nombre}}</td>
                                     <td style="vertical-align: middle">{{movimiento.descripcion}}</td>
-                                    <td style="vertical-align: middle">{{movimiento.valor}}</td>
+                                    <td style="vertical-align: middle">{{movimiento.valor| currency:'CLP':'$ '}}</td>
                                     <td style="vertical-align: middle">
                                         <div>
                                             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalRegisterForm2" (click)="mostrar(movimiento)">

@@ -53,7 +53,7 @@ export class ReservaComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     if (!this.restService.hasRole('ROLE_CLIENT')) {
-      Swal.fire('Solicitud rechazada', 'credenciales Incorrectas', 'error');
+      Swal.fire('Solicitud rechazada', 'Credenciales incorrectas', 'error');
       this.router.navigate(['']);
     }
     this.restService.getListaServicio().subscribe((res: any[]) => {
