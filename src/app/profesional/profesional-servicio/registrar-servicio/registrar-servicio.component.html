@@ -26,7 +26,7 @@
                                         <h6 for="nombre">Nombre del servicio</h6>
                                         <input formControlName="nombre" class="form-control" type="text" placeholder="Ingrese el nombre">
                                         <div *ngIf="formServicio.get('nombre').hasError('required') && (formServicio.get('nombre').touched 
-                            || formServicio.get('nombre').dirty)" class="alert alert-danger">* El nombre del servicio es obligatorio
+                                        || formServicio.get('nombre').dirty)" class="alert alert-danger">* El nombre del servicio es obligatorio
                                         </div>
                                     </div>
                                     <!--Fin Nombre producto-->
@@ -58,7 +58,7 @@
                                     <!--Precio producto-->
                                     <div class="form-group">
                                         <h6 for="precio">Precio mínimo</h6>
-                                        <input formControlName="precio" type="text" class="form-control" placeholder="Ingrese precio mínimo que podría tener el servicio">
+                                        <input formControlName="precio" type="number" class="form-control" placeholder="Ingrese precio mínimo que podría tener el servicio">
                                         <div *ngIf="formServicio.get('precio').errors && (formServicio.get('precio').touched 
                                         || formServicio.get('precio').dirty)" class="alert alert-danger">* El precio mínimo del servicio es obligatorio
                                         </div>
