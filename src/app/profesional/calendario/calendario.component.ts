@@ -151,7 +151,7 @@ export class CalendarioComponent implements OnInit {
             '<li class="nav-item" > ' +
             'Nombre cliente: '+this.horasProfesional[i].reserva.cliente.nombre+' '+this.horasProfesional[i].reserva.cliente.apellido+'</li>' +
             '<li class="nav-item" > ' +
-            'Rut: '+this.horasProfesional[i].reserva.cliente.rut+'</li>'+
+            'RUN: '+this.horasProfesional[i].reserva.cliente.rut+'</li>'+
             '<li class="nav-item" > ' +
             'Servicio: '+this.horasProfesional[i].reserva.servicio.nombre+'</li>'+
             '<li class="nav-item" > ' +

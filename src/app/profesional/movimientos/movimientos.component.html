@@ -12,7 +12,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <h2 style="width: 343px;">Lista de Movimientos</h2>
+                    <h2 style="width: 343px;">Lista de movimientos</h2>
                     <br>
                 </div>
                 <div class="col-md-4 d-flex justify-content-end align-self-start">
@@ -46,7 +46,7 @@
                                     <td style="vertical-align: middle">{{movimiento.fecha | date: 'dd/MM/yyyy'}}</td>
                                     <td style="vertical-align: middle">{{movimiento.nombre}}</td>
                                     <td style="vertical-align: middle">{{movimiento.descripcion}}</td>
-                                    <td style="vertical-align: middle">{{movimiento.valor}}</td>
+                                    <td style="vertical-align: middle">{{movimiento.valor| currency:'CLP':'$ '}}</td>
                                     <td style="vertical-align: middle">
                                         <div>
                                             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalRegisterForm2" (click)="mostrar(movimiento)">
@@ -87,22 +87,40 @@
                         <i class="fas fa-edit prefix grey-text"></i>
                         <label for="nombre"> Nombre</label>
                         <input formControlName="nombre" type="text" id="nombre" class="form-control">
+                        <div *ngIf="formMovimiento.get('nombre').hasError('required') && (formMovimiento.get('nombre').touched 
+                        || formMovimiento.get('nombre').dirty)" class="alert alert-danger p-1">* El nombre del movimiento es obligatorio.
+                        </div>
+                        <div *ngIf="formMovimiento.get('nombre').hasError('minlength') && (formMovimiento.get('nombre').touched 
+                        || formMovimiento.get('nombre').dirty)" class="alert alert-danger p-1">* El nombre del movimiento debe tener más caracteres.
+                        </div>
                     </div>
                     <div class="form-group">
                         <i class="fas fa-tasks prefix grey-text"></i>
                         <label for="descripcion"> Descripción</label>
                         <input formControlName="descripcion" type="text" id="descripcion" class="form-control ">
+                        <div *ngIf="formMovimiento.get('descripcion').hasError('required') && (formMovimiento.get('descripcion').touched 
+                        || formMovimiento.get('descripcion').dirty)" class="alert alert-danger p-1">* La descripción del movimiento es obligatoria.
+                        </div>
+                        <div *ngIf="formMovimiento.get('descripcion').hasError('minlength') && (formMovimiento.get('descripcion').touched 
+                        || formMovimiento.get('descripcion').dirty)" class="alert alert-danger p-1">* La descripción del movimiento debe tener más caracteres.
+                        </div>
                     </div>
                     <div class="form-group">
                         <i class="fas fa-dollar-sign prefix grey-text"></i>
                         <label for="valor"> Valor</label>
                         <input formControlName="valor" type="number" id="valor" class="form-control ">
+                        <div *ngIf="formMovimiento.get('valor').errors && (formMovimiento.get('valor').touched 
+                        || formMovimiento.get('valor').dirty)" class="alert alert-danger p-1">* El valor del movimiento es obligatorio.
+                        </div>
                     </div>
 
                     <div class="form-group">
                         <i class="fas fa-calendar-alt prefix grey-text"></i>
                         <label for="fecha"> Fecha</label>
                         <input formControlName="fecha" data-format="yyyy-MM-dd" type="Date" id="fecha" class="form-control ">
+                        <div *ngIf="formMovimiento.get('fecha').errors && (formMovimiento.get('fecha').touched 
+                        || formMovimiento.get('fecha').dirty)" class="alert alert-danger p-1">* La fecha del movimiento es obligatoria.
+                        </div>
                     </div>
                 </form>
             </div>
@@ -127,7 +145,7 @@
                     <div class="form-group">
                         <i class="fas fa-edit prefix grey-text"></i>
                         <label for="nombre"> Nombre</label>
-                        <input formControlName="nombre" type="text" id="nombre" class="form-control">
+                    <input formControlName="nombre" type="text" id="nombre" class="form-control" >
                     </div>
                     <div class="form-group">
                         <i class="fas fa-tasks prefix grey-text"></i>
@@ -137,13 +155,13 @@
                     <div class="form-group">
                         <i class="fas fa-dollar-sign prefix grey-text"></i>
                         <label for="valor"> Valor</label>
-                        <input formControlName="valor" type="number" id="valor" class="form-control ">
+                        <input formControlName="valor"  id="valor" class="form-control" [value] = "formMovimiento2.get('valor').value | currency:'CLP':'$ ' ">
                     </div>
 
                     <div class="form-group">
                         <i class="fas fa-calendar-alt prefix grey-text"></i>
                         <label for="fecha"> Fecha</label>
-                        <input formControlName="fecha" data-format="yyyy-MM-dd" type="Date" id="fecha" class="form-control ">
+                        <input formControlName="fecha" data-format="yyyy-MM-dd" type="Date" id="fecha" class="form-control">
                     </div>
                 </form>
             </div>

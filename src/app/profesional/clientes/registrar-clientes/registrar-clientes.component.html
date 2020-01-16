@@ -43,10 +43,10 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <!--RUT -->
-                                    <h6 for="rut">Rut</h6>
-                                    <input formControlName="rut" class="form-control" type="text" placeholder="Ingrese rut">
+                                    <h6 for="rut">RUN</h6>
+                                    <input formControlName="rut" class="form-control" type="text" placeholder="Ingrese RUN">
                                     <div *ngIf="formCliente.get('rut').errors && (formCliente.get('rut').touched 
-                                    || formCliente.get('rut').dirty)" class="alert alert-danger">El rut del cliente es obligatorio
+                                    || formCliente.get('rut').dirty)" class="alert alert-danger">El RUN del cliente es obligatorio
                                     </div>
                                     <!--Fin RUT-->
                                 </div>
@@ -54,9 +54,9 @@
                                     <!-- Telefono-->
                                     <div class="form-group">
                                         <h6 for="Telefono">Teléfono</h6>
-                                        <input formControlName="telefono" type="text" class="form-control" placeholder="Ingrese Telefono">
+                                        <input formControlName="telefono" type="text" class="form-control" placeholder="Ingrese teléfono">
                                         <div *ngIf="formCliente.get('telefono').errors && (formCliente.get('telefono').touched 
-                                    || formCliente.get('telefono').dirty)" class="alert alert-danger">El telefono del cliente es obligatorio
+                                    || formCliente.get('telefono').dirty)" class="alert alert-danger">El teléfono del cliente es obligatorio
                                         </div>
                                     </div>
                                     <!--Fin Telefono -->

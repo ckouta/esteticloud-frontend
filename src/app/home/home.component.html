@@ -40,7 +40,7 @@
         </li>
         <li class="" *ngIf="restService.hasRole('ROLE_CLIENT')">
             <a [routerLink]="['/home/misReservas']" class="navbar-tile" title="Regístrate">
-                <i class="far fa-address-card"></i> Mis Reservas</a>
+                <i class="far fa-address-card"></i> Mis reservas</a>
         </li>
 
         <li class="" id="espacio" *ngIf="!restService.hasRole('ROLE_CLIENT')"></li>
@@ -55,7 +55,7 @@
                 </button>
 
                 <div class="dropdown-menu dropdown-secondary" style="background-color: #aa66cc;">
-                    <a class="dropdown-item" (click)="cerrarSesion()">Cerrar Sesión</a>
+                    <a class="dropdown-item" (click)="cerrarSesion()">Cerrar sesión</a>
                 </div>
             </div>
         </li>
@@ -99,10 +99,10 @@
         <hr>
         <ul class="list-unstyled list-inline text-center py-2">
             <li class="list-inline-item">
-                <h5 class="mb-1">Regístrate Gratis</h5>
+                <h5 class="mb-1">Regístrate gratis</h5>
             </li>
             <li class="list-inline-item">
-                <a [routerLink]="['/home/registro']" mdbBtn color="blue">Ingresa!</a>
+                <a [routerLink]="['/home/registro']" mdbBtn color="blue">¡Click aquí!</a>
             </li>
         </ul>
         <hr>
@@ -218,7 +218,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header text-center">
-                <h4 class="modal-title w-100 font-weight-bold">Inicia Sesión</h4>
+                <h4 class="modal-title w-100 font-weight-bold">Inicia sesión</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

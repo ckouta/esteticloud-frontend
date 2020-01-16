@@ -56,10 +56,10 @@ export class RegistrarClientesComponent implements OnInit {
     let cliente: Cliente = this.formCliente.value;
     if(cliente.id_cliente == null){
       this.restService.saveCliente(cliente).subscribe(() => {
-        Swal.fire('Solicitud aceptada', 'el cliente a sido agregado', 'success');
+        Swal.fire('Solicitud aceptada', 'El cliente ha sido agregado', 'success');
         return this.router.navigate(['profesional/clientes'])
       },err =>{
-        Swal.fire('Solicitud rechazada', 'el cliente no se logro agregar', 'error');
+        Swal.fire('Solicitud rechazada', 'El cliente no se pudo agregar', 'error');
       })
     }else{
       this.actualizarCliente(cliente);
@@ -69,10 +69,10 @@ export class RegistrarClientesComponent implements OnInit {
   actualizarCliente(cliente: Cliente) {
 
     this.restService.updateCliente(cliente.id_cliente, cliente).subscribe(() => {
-      Swal.fire('Solicitud aceptada', 'el cliente a sido actualizado', 'success');
+      Swal.fire('Solicitud aceptada', 'El cliente ha sido actualizado', 'success');
       return this.router.navigate(['profesional/clientes'])
     }, err =>{
-      Swal.fire('Solicitud rechazada', 'el cliente no se logro actualizar', 'error');
+      Swal.fire('Solicitud rechazada', 'El cliente no se pudo actualizar', 'error');
     })
   }
 }

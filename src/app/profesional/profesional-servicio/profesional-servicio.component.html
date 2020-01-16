@@ -12,7 +12,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <h2 style="width: 343px;">Lista de Servicios</h2>
+                    <h2 style="width: 343px;">Lista de servicios</h2>
                     <br>
                 </div>
                 <div class="col-md-4 d-flex justify-content-end align-self-start">
@@ -59,7 +59,7 @@
                                             </td>
                                             <td style="vertical-align: middle">{{servicio.servicio.nombre}}</td>
                                             <td style="vertical-align: middle">{{servicio.servicio.duracion}} Min</td>
-                                            <td style="vertical-align: middle">{{servicio.servicio.precio | currency:'$ '}}</td>
+                                            <td style="vertical-align: middle">{{servicio.servicio.precio | currency:'CLP':'$ '}}</td>
                                             <td style="vertical-align: middle">
                                                 <div>
                                                     <button type="button" class="btn btn-success" [routerLink]="'/profesional/servicios/registrar/'+servicio.servicio.id_servicio" [queryParams]="{ ver: true }">
@@ -88,7 +88,7 @@
                                             <th style="vertical-align: middle">Imagen</th>
                                             <th style="vertical-align: middle">Nombre</th>
                                             <th style="vertical-align: middle">Duración</th>
-                                            <th style="vertical-align: middle">Precio</th>
+                                            <th style="vertical-align: middle">Precio mínimo</th>
                                             <th style="vertical-align: middle">Acciones</th>
                                         </tr>
                                     </thead>
@@ -99,8 +99,8 @@
                                                 <img src="http://parra.chillan.ubiobio.cl:8080/alvaro.castillo1501/servicio/uploads/img/{{servi.foto}}" class="align-self-center mr-3" style="width: 80px;height:80px;">
                                             </td>
                                             <td style="vertical-align: middle">{{servi.nombre}}</td>
-                                            <td style="vertical-align: middle">{{servi.duracion}} (Min)</td>
-                                            <td style="vertical-align: middle">{{servi.precio | currency:'$ '}}</td>
+                                            <td style="vertical-align: middle">{{servi.duracion}} Min </td>
+                                            <td style="vertical-align: middle">{{servi.precio | currency:'CLP':'$ '}}</td>
                                             <td style="vertical-align: middle">
                                                 <div>
                                                     <button type="button" class="btn btn-primary" [routerLink]="'/profesional/servicios/registrar/'+servi.id_servicio" [queryParams]="{ ver: true }">

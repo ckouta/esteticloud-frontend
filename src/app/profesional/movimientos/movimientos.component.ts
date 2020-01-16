@@ -22,8 +22,8 @@ export class MovimientosComponent implements OnInit {
     private calendar: NgbCalendar) {
       this.formMovimiento = this.formBuilder.group({
         id_movimiento: [],
-        nombre: [{value: '', disabled: this.show}, [Validators.required]],
-        descripcion: [{value: '', disabled: this.show}, [Validators.required]],
+        nombre: [{value: '', disabled: this.show}, [Validators.required, Validators.minLength(3)]],
+        descripcion: [{value: '', disabled: this.show}, [Validators.required, Validators.minLength(3)]],
         valor: [{value: '', disabled: this.show}, [Validators.required]],
         fecha: [{value: '', disabled: this.show}, [Validators.required]],
       });
@@ -53,10 +53,10 @@ export class MovimientosComponent implements OnInit {
   movimientoEliminar(id: number) {
     this.restService.deleteMovimiento(id).subscribe((res: any[]) => {
       this.restService.getMovimientoProfesional(this.restService.profesional).subscribe((res: any[]) => {
-        Swal.fire('Solicitud aceptada', 'el movimiento a sido eliminado', 'success');
+        Swal.fire('Solicitud aceptada', 'El movimiento ha sido eliminado', 'success');
         this.movimientos = res;
       },err =>{
-        Swal.fire('Solicitud rechazada', 'el movimiento no se logro eliminar', 'error');
+        Swal.fire('Solicitud rechazada', 'El movimiento no se pudo eliminar', 'error');
       })
     })
   }
@@ -65,18 +65,19 @@ export class MovimientosComponent implements OnInit {
     this.restService.getProfesionalCorreo(this.restService.usuario.username).subscribe((res: any) => {
       movimiento.profesional = res;
       this.restService.saveMovimiento(movimiento).subscribe((res: any[]) => {
-        Swal.fire('Solicitud aceptada', 'el movimiento a sido registrado', 'success');
+        Swal.fire('Solicitud aceptada', 'El movimiento ha sido registrado', 'success');
         this.restService.getMovimientoProfesional(this.restService.profesional).subscribe((res: any[]) => {
           this.movimientos = res;
         })
       },err =>{
-        Swal.fire('Solicitud rechazada', 'el movimiento no se logro registrar', 'error');
+        Swal.fire('Solicitud rechazada', 'El movimiento no se pudo registrar', 'error');
       })
     })
 
   }
   setDatosMovimiento(movimiento: Movimiento) {
     if(movimiento != null){
+      
       this.formMovimiento.setValue({
         id_movimiento: movimiento.id_movimiento,
         nombre: movimiento.nombre,
@@ -89,8 +90,8 @@ export class MovimientosComponent implements OnInit {
   vaciar(){
     this.formMovimiento = this.formBuilder.group({
       id_movimiento: [],
-      nombre: [{value: '', disabled: this.show}, [Validators.required]],
-      descripcion: [{value: '', disabled: this.show}, [Validators.required]],
+      nombre: [{value: '', disabled: this.show}, [Validators.required, Validators.minLength(3)]],
+      descripcion: [{value: '', disabled: this.show}, [Validators.required, Validators.minLength(3)]],
       valor: [{value: '', disabled: this.show}, [Validators.required]],
       fecha: [{value: '', disabled: this.show}, [Validators.required]],
     });

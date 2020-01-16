@@ -8,8 +8,8 @@
 <div>
     <div class="arrow-steps clearfix mx-auto " style="width: 900px;">
         <div [ngClass]=" 'step ' + arreglo[variable - 0]"> <span> Elige servicio </span> </div>
-        <div [ngClass]=" 'step ' + arreglo[variable - 1]"> <span>Elige dia y hora</span> </div>
-        <div [ngClass]=" 'step ' + arreglo[variable - 2]"> <span> Reserva Exitosa</span> </div>
+        <div [ngClass]=" 'step ' + arreglo[variable - 1]"> <span>Elige día y hora</span> </div>
+        <div [ngClass]=" 'step ' + arreglo[variable - 2]"> <span> Reserva exitosa</span> </div>
     </div>
 </div>
 
@@ -17,7 +17,7 @@
 <div class="tab-content" id="pills-tabContent">
     <!--Inicio Servicio-->
     <div class="tab-pane fade show active" id="pills-servicio" role="tabpanel" aria-labelledby="pills-servicio-tab">
-        <h1 style="margin-left: 30px;">Elegir Servicios</h1>
+        <h1 style="margin-left: 30px;">Elegir servicio</h1>
         <div class="row" style="padding: 2%;margin: 0;">
 
             <div class="col-3 z-depth-1" style="margin-right: 30px; padding: 3%;">
@@ -26,10 +26,10 @@
                     <div class="hr">
                     </div>
                     <select [(ngModel)]="esteticista" class="form-control" id="exampleFormControlSelect1" style="margin-top: 5%;" (ngModelChange)="serviciosofrecidos()">
-                        <option  [ngValue]="0"  > Ninguno Seleccionado</option>
+                        <option  [ngValue]="0"  > Ninguno seleccionado</option>
                         <option *ngFor="let profesional of listProfesionales" [ngValue]="profesional" > {{profesional.nombre}}</option>                       
                     </select>
-                    <h5 style="margin-bottom: 4%; margin-top: 30%;">Servicios Anteriores</h5>
+                    <h5 style="margin-bottom: 4%; margin-top: 30%;">Servicios anteriores</h5>
                     <div class="hr">
 
                     </div>
@@ -39,7 +39,7 @@
             <div class="col-8">
 
                 <div class="overflow-auto" style="height:500px">
-                    <h5 class="mt-0" style="margin-bottom: 4%;">Lista de Servicios</h5>
+                    <h5 class="mt-0" style="margin-bottom: 4%;">Lista de servicios</h5>
                     <div class="list-group" *ngFor="let servicio of listServicios">
                         <a class="list-group-item list-group-item-action ">
                             <div class="media">
@@ -75,13 +75,13 @@
             <div class="col-5" style="margin-bottom: 30px;padding-left: 20px;">
                 <h5 class="mt-0" style="margin-bottom: 4%;">Profesional</h5>
                 <select [(ngModel)]="esteticista" (change)="Select()" class="form-control" id="exampleFormControlSelect1" style="margin-top: 5%;">
-                        <option  [ngValue]="0" > Ninguno Seleccionado</option>
+                        <option  [ngValue]="0" > Ninguno seleccionado</option>
                         <option *ngFor="let profesional of listProfesionales"  [ngValue]="profesional"> {{profesional.nombre}}</option>                       
                     </select>
                 <h3>Horarios</h3>
                 <select [(ngModel)]="hora" class="form-control" id="horario" style="margin-top: 5%; margin-bottom: 20px;">
-                    <option  [ngValue]="0" > Ninguno Seleccionado</option>
-                    <option *ngFor="let horas of bloquesPosibles"  [ngValue]="horas"> Hora de Inicio:{{horas.horaInicio}} Hora de Fin:{{horas.horaFin}}</option>                       
+                    <option  [ngValue]="0" > Ninguno seleccionado</option>
+                    <option *ngFor="let horas of bloquesPosibles"  [ngValue]="horas"> Hora de inicio:{{horas.horaInicio}} Hora de Fin:{{horas.horaFin}}</option>                       
                 </select>
                 <a class="btn btn-outline-success btn-lg btn-block" (click)="save()" id="pills-contact-tab" data-toggle="pill" href="#pills-contacto" role="tab" aria-controls="pills-contacto" aria-selected="true" *ngIf="hora !=0">Confirmar</a>
             </div>
@@ -95,22 +95,22 @@
                     <hr>
                 </div>
                 <div>
-                    <h1>¡Reserva Realizada con Exito!</h1>
+                    <h1>¡Reserva realizada con éxito!</h1>
                     &nbsp;
                     <h2>Detalles de la reserva</h2>
                     &nbsp;
                     <h5>Nombre del servicio : {{reserva.servicio.nombre}}</h5>
                     <h5>Duración del servicio : {{reserva.servicio.duracion}} Minutos</h5>
-                    <h5>Precio del servicio : {{reserva.servicio.precio}}</h5>
+                    <h5>Precio mínimo del servicio : {{reserva.servicio.precio | currency:'CLP':'$ '}}</h5>
                     <h5>Nombre del cliente : {{reserva.cliente.nombre}} {{reserva.cliente.apellido}}</h5>
                     <h5>Correo : {{reserva.cliente.email}}</h5>
                     <h5>Fecha : {{hora.horarioProfesional[0].fecha}}</h5>
-                    <h5>Nombre del Profesional : {{hora.horarioProfesional[0].profesional.nombre}} {{hora.horarioProfesional[0].profesional.apellido}}</h5>
-                    <h5>Hora de Atención : {{hora.horarioProfesional[0].bloque_horario.horaInicio}}</h5>
+                    <h5>Nombre del profesional : {{hora.horarioProfesional[0].profesional.nombre}} {{hora.horarioProfesional[0].profesional.apellido}}</h5>
+                    <h5>Hora de atención : {{hora.horarioProfesional[0].bloque_horario.horaInicio}}</h5>
                 </div>
                 <hr>
                 <div style="width: 450px; text-align: center;">
-                    <p>Para poder hacer valido necesita imprimir esta boleta para una mejor interacción y nose con que mas rellenar para que quede super largo este documento</p>
+                    <p>Recuerde llegar con 10 minutos de anticipación a su cita para evitar inconvenientes, si desea cancelar la cita agendada hágalo con anticipación </p>
                 </div>
             </div>
 

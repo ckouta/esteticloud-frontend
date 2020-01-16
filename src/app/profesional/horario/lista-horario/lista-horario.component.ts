@@ -70,9 +70,9 @@ export class ListaHorarioComponent implements OnInit {
   eliminarHorario(id:number){
     this.restService.deleteHorario(id).subscribe((res: any[]) => {
       this.horario();
-      Swal.fire('Eliminación correcta', 'el horario fue eliminado', 'success');
+      Swal.fire('Eliminación correcta', 'El horario fue eliminado', 'success');
     }, err => {
-      Swal.fire('Error al eliminar', 'no se logro eliminar el horario', 'error');
+      Swal.fire('Error al eliminar', 'No se pudo eliminar el horario', 'error');
     })
   }
 }
