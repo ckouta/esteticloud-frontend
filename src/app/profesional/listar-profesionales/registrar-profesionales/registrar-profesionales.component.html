@@ -23,7 +23,7 @@
                                     <!--Nombre -->
                                     <div class="form-group">
                                         <h6 for="nombre">Nombre profesional</h6>
-                                        <input formControlName="nombre" class="form-control" type="text" placeholder="Ingrese Nombre">
+                                        <input formControlName="nombre" class="form-control" type="text" placeholder="Ingrese nombre">
                                         <div *ngIf="formProduct.get('nombre').errors && (formProduct.get('nombre').touched 
                             || formProduct.get('nombre').dirty)" class="alert alert-danger">* El nombre del profesional es obligatorio.
                                         </div>
@@ -66,7 +66,7 @@
                                     <!-- Telefono-->
                                     <div class="form-group">
                                         <h6 for="Telefono">Teléfono</h6>
-                                        <input formControlName="telefono" type="text" class="form-control" placeholder="Ingrese Telefono">
+                                        <input formControlName="telefono" type="text" class="form-control" placeholder="Ingrese teléfono">
                                         <div *ngIf="formProduct.get('telefono').errors && (formProduct.get('telefono').touched 
                                     || formProduct.get('telefono').dirty)" class="alert alert-danger">* El teléfono del profesional es obligatorio.
                                         </div>
