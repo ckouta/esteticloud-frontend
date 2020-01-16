@@ -25,7 +25,7 @@
                                     <div class="form-group">
                                         <h6 for="nombre">Nombre del servicio</h6>
                                         <input formControlName="nombre" class="form-control" type="text" placeholder="Ingrese el nombre">
-                                        <div *ngIf="formServicio.get('nombre').errors && (formServicio.get('nombre').touched 
+                                        <div *ngIf="formServicio.get('nombre').hasError('required') && (formServicio.get('nombre').touched 
                             || formServicio.get('nombre').dirty)" class="alert alert-danger">* El nombre del servicio es obligatorio
                                         </div>
                                     </div>
@@ -49,6 +49,9 @@
                                     <!--Seleccionar categoria-->
                                     <h6 for="duracion">Duración</h6>
                                     <input formControlName="duracion" class="form-control" type="number" placeholder="Ingrese duración del servicio en minutos">
+                                    <div *ngIf="formServicio.get('duracion').errors && (formServicio.get('duracion').touched 
+                                    || formServicio.get('duracion').dirty)" class="alert alert-danger">* La duración aproximada del servicio es obligatorio
+                                    </div>
                                     <!--Fin seleccionar categoria-->
                                 </div>
                                 <div class="col-md-6">
@@ -56,6 +59,9 @@
                                     <div class="form-group">
                                         <h6 for="precio">Precio mínimo</h6>
                                         <input formControlName="precio" type="text" class="form-control" placeholder="Ingrese precio mínimo que podría tener el servicio">
+                                        <div *ngIf="formServicio.get('precio').errors && (formServicio.get('precio').touched 
+                                        || formServicio.get('precio').dirty)" class="alert alert-danger">* El precio mínimo del servicio es obligatorio
+                                        </div>
                                     </div>
                                     <!--Fin Precio producto-->
                                 </div>
@@ -65,8 +71,8 @@
                             <div class="form-group">
                                 <h6 for="descripcion">Descripción</h6>
                                 <textarea formControlName="descripcion" class="form-control" placeholder="Ingrese una descripción para el servicio"></textarea>
-                                <div *ngIf="formServicio.get('descripcion').errors && (formServicio.get('descripcion').touched 
-                              || formServicio.get('descripcion').dirty)" class="alert alert-danger">Es necesario ingresar una descripción.
+                                <div *ngIf="formServicio.get('descripcion').hasError('required') && (formServicio.get('descripcion').touched 
+                              || formServicio.get('descripcion').dirty)" class="alert alert-danger">* La descripción del servicio es obligatoria.
                                 </div>
                             </div>
                             <!-- fin Ingresar Descripción-->
@@ -74,7 +80,7 @@
                             <!--Botones-->
                             <div class="col-md-12" style="text-align: right" *ngIf="!show">
                                 <button type="button" class="btn btn-danger botones" style="background: #ff0000" data-toggle="modal" data-target="#modalSalir"> Cancelar </button> &nbsp;
-                                <button type="submit" class="btn btn-warning botones" style="background: #ff8800"> Guardar </button>
+                                <button type="submit" [disabled]="formServicio.invalid" class="btn btn-warning botones" style="background: #ff8800"> Guardar </button>
                             </div>
                             <div class="col-md-12" style="text-align: right" *ngIf="show">
                                 <button class="btn btn-warning botones" style="background: #ff8800" [routerLink]="['/profesional/servicios/']"> Volver </button>
