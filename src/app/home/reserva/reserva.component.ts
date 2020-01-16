@@ -1,4 +1,4 @@
-import { Component, OnInit, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, OnInit ,OnChanges } from '@angular/core';
 import { Servicio } from '../../entidades/Servicio'
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGrigPlugin from '@fullcalendar/timegrid';
@@ -6,22 +6,25 @@ import interactionPlugin from '@fullcalendar/interaction';
 import { RestService } from 'src/app/servicioBackend/rest.service';
 import { Profesional } from 'src/app/entidades/Profesional';
 import { NgbDatepickerI18n, NgbDateStruct, NgbDate, NgbCalendar, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
-import localeEs from '@angular/common/locales/es';
 import { HorarioProfesional } from 'src/app/entidades/HorarioProfesional';
 import { RangoFecha } from 'src/app/entidades/RangoFecha';
 import { HorarioPosible } from 'src/app/entidades/HorarioPosible';
 import { Router } from '@angular/router';
 import { Reserva } from 'src/app/entidades/Reserva';
-import { element } from 'protractor';
-import { number } from '@amcharts/amcharts4/core';
 import Swal from 'sweetalert2';
+import { esI18n } from 'src/app/esI18n';
 
 @Component({
   selector: 'app-reserva',
   templateUrl: './reserva.component.html',
-  styleUrls: ['./reserva.component.css']
+  providers: [
+    {provide: NgbDatepickerI18n, useClass: esI18n}
+],
+  styleUrls: ['./reserva.component.css'],
+ 
 })
-export class ReservaComponent implements OnInit, OnChanges {
+
+export class ReservaComponent  implements OnInit, OnChanges {
   isDisabled;
   //date.day >= 3 && date.day <= 7  ||  date.day >= 9 && date.day <= 13 
   
@@ -30,7 +33,7 @@ export class ReservaComponent implements OnInit, OnChanges {
   calendarWeekends = true;
   arreglo: String[] = ["", "current", "done", "done", "done"];
   variable: number = 1;
-  listServicios: Servicio[];
+  listServicios: Servicio[] = [];
   listProfesionales: Profesional[];
   horasProfesional: HorarioProfesional[];
   bloquesPosibles: HorarioPosible[] = [];
@@ -57,7 +60,13 @@ export class ReservaComponent implements OnInit, OnChanges {
       this.router.navigate(['']);
     }
     this.restService.getListaServicio().subscribe((res: any[]) => {
-      this.listServicios = res;
+      res.forEach(element => {
+        this.restService.getListaServicioOfrecidoporServicio(element).subscribe((res: any[]) => {
+          if(res.length != 0){
+            this.listServicios.push(element);
+          }
+        });
+      });
     });
     this.restService.getListaProfesional().subscribe((res: any[]) => {
       this.listProfesionales = res;
@@ -75,6 +84,8 @@ export class ReservaComponent implements OnInit, OnChanges {
         this.horasProfesional = res;
         this.bloquesHorario();
       });
+    }else{
+      this.servicioPorProfesional();
     }
   }
   agregarServicio(sv: Servicio) {
@@ -142,7 +153,14 @@ export class ReservaComponent implements OnInit, OnChanges {
   serviciosofrecidos(){
     if(this.esteticista==0){
       this.restService.getListaServicio().subscribe((res: any[]) => {
-        this.listServicios = res;
+        this.listServicios= [];
+        res.forEach(element => {
+          this.restService.getListaServicioOfrecidoporServicio(element).subscribe((res: any[]) => {
+            if(res.length != 0){
+              this.listServicios.push(element);
+            }
+          });
+        });
       });
     }else{
       this.listServicios=[];
@@ -153,5 +171,20 @@ export class ReservaComponent implements OnInit, OnChanges {
         })
       });
     }
+  }
+  servicioPorProfesional(){
+    if(this.esteticista==0){
+      this.restService.getListaServicioOfrecidoporServicio(this.servicio).subscribe((res: any[]) => {
+        this.listProfesionales = res;
+        if(res.length == 0){
+          console.log("hola");
+        }
+      });
+    }
+  }
+  validarServicio(servicio: Servicio){
+    this.restService.getListaServicioOfrecidoporServicio(servicio).subscribe((res: any[]) => {
+      console.log(res);
+    });
   }
 }

@@ -14,14 +14,18 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { any } from '@amcharts/amcharts4/.internal/core/utils/Array';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgbCalendar, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCalendar, NgbDateParserFormatter, NgbDateStruct, NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap';
 import { Cliente } from 'src/app/entidades/Cliente';
 import { Servicio } from 'src/app/entidades/Servicio';
 import { HorarioPosible } from 'src/app/entidades/HorarioPosible';
 import { Reserva } from 'src/app/entidades/Reserva';
+import { esI18n } from 'src/app/esI18n';
 @Component({
   selector: 'app-calendario',
   templateUrl: './calendario.component.html',
+  providers: [
+    {provide: NgbDatepickerI18n, useClass: esI18n}
+],
   styleUrls: ['./calendario.component.css']
 })
 export class CalendarioComponent implements OnInit {

@@ -23,6 +23,16 @@ export class HorarioComponent implements OnInit {
   ngOnInit() {
     this.restService.getListabloques().subscribe((res: any[]) => {
       this.restService.listaBloque = res;
+      this.restService.listaBloque.sort(function (a, b) {
+        if (a.idBloque < b.idBloque) {
+          return 1;
+        }
+        if (a.idBloque > b.idBloque) {
+          return -1;
+        }
+        // a must be equal to b
+        return 0;
+      });
     });
   }
   

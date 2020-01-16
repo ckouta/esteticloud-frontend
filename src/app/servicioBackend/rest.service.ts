@@ -107,7 +107,7 @@ export class RestService {
   deleteMovimiento(id: number) {
     return this.http.delete(this.URL + '/movimiento/' + id, { headers: this.agregarAuthorizationHeader() });
   }
-  /*Reserva actualizar metodos */
+  /*Reserva */
   getListaReserva() {
     return this.http.get(this.URL + '/reserva/', { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as Profesional[]));
   }
@@ -128,13 +128,13 @@ export class RestService {
     return this.http.delete(this.URL + '/so/' + id, { headers: this.agregarAuthorizationHeader() });
   }
   getListaServicioOfrecidoporProfesional(profesional: Profesional) {
-    return this.http.post(this.URL + '/so/por_profesional', profesional).pipe(map((res) => res as Servicio[]));
+    return this.http.post(this.URL + '/so/por_profesional', profesional, { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as Servicio[]));
   }
   getListaServicioOfrecidoNoASignadoProfesional(profesional: Profesional) {
     return this.http.post(this.URL + '/so/sin_profesional', profesional, { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as Servicio[]));
   }
   getListaServicioOfrecidoporServicio(servicio: Servicio) {
-    return this.http.post(this.URL + '/so/profesional', servicio).pipe(map((res) => res as Profesional[]));
+    return this.http.post(this.URL + '/so/profesional', servicio, { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as Profesional[]));
   }
   /*Servicio */
   getListaServicio() {

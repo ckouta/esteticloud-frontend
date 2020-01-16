@@ -1,14 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
 import { RestService } from 'src/app/servicioBackend/rest.service';
-import { NgbDate, NgbCalendar, NgbDateParserFormatter, NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDate, NgbCalendar, NgbDateParserFormatter, NgbDatepickerI18n, NgbDateStruct, NgbCalendarIslamicCivil } from '@ng-bootstrap/ng-bootstrap';
 import { Calendar } from '@fullcalendar/core';
 import { RangoFecha } from 'src/app/entidades/RangoFecha';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
+import { esI18n } from 'src/app/esI18n';
+
 
 @Component({
   selector: 'app-registrar-horario',
   templateUrl: './registrar-horario.component.html',
-  styleUrls: ['./registrar-horario.component.css']
+  providers: [
+    {provide: NgbDatepickerI18n, useClass: esI18n}
+],
+  styleUrls: ['./registrar-horario.component.css'],
 })
 export class RegistrarHorarioComponent implements OnInit {
 
@@ -38,11 +44,10 @@ export class RegistrarHorarioComponent implements OnInit {
   toDate: NgbDate;
 
   lunes: number = new Date().getDay();
-  constructor(public restService: RestService, private calendar: NgbCalendar, private parseCalendar: NgbDateParserFormatter, private dia: NgbDatepickerI18n) {
+  constructor(public restService: RestService, private calendar: NgbCalendar, private parseCalendar: NgbDateParserFormatter, private dia: NgbDatepickerI18n, private router: Router) {
     this.fromDate = calendar.getToday();
 
   }
-
   ngOnInit() {
     this.restService.getListabloques().subscribe((res: any[]) => {
       this.restService.listaBloque = res;
@@ -167,6 +172,8 @@ export class RegistrarHorarioComponent implements OnInit {
           });
           
         });
+        Swal.fire('Horario registrado', 'el horario fue agregado ', 'success');
+        this.router.navigate(['profesional/horario']);
       console.log(listaFecha);
     }
   }
