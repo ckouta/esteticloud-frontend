@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { RestService } from 'src/app/servicioBackend/rest.service';
 import { Router } from '@angular/router';
 import { Movimiento } from 'src/app/entidades/Movimiento';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { NgbCalendar, NgbDateStruct, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
+import { number } from '@amcharts/amcharts4/core';
 
 @Component({
   selector: 'app-movimientos',
@@ -15,6 +16,9 @@ export class MovimientosComponent implements OnInit {
   searchText:string;
   model: NgbDateStruct;
   movimientos: Movimiento[] = [];
+  templateChecked = true;
+  valor = true;
+  checkvalor:boolean = true;
   formMovimiento: FormGroup;
   formMovimiento2: FormGroup;
   show:boolean=false;
@@ -24,6 +28,7 @@ export class MovimientosComponent implements OnInit {
         id_movimiento: [],
         nombre: [{value: '', disabled: this.show}, [Validators.required, Validators.minLength(3)]],
         descripcion: [{value: '', disabled: this.show}, [Validators.required, Validators.minLength(3)]],
+        radio:new FormControl(true),
         valor: [{value: '', disabled: this.show}, [Validators.required]],
         fecha: [{value: '', disabled: this.show}, [Validators.required]],
       });
@@ -31,6 +36,7 @@ export class MovimientosComponent implements OnInit {
         id_movimiento: [],
         nombre: [{value: '', disabled: true}, [Validators.required]],
         descripcion: [{value: '', disabled: true}, [Validators.required]],
+        radio:new FormControl(true),
         valor: [{value: '', disabled: true}, [Validators.required]],
         fecha: [{value: '', disabled: true}, [Validators.required]],
       });
@@ -46,22 +52,43 @@ export class MovimientosComponent implements OnInit {
       this.restService.getMovimientoProfesional(this.restService.profesional).subscribe((res: any[]) => {
 
         this.movimientos = res;
+        console.log(this.movimientos);
       })
     },
       err => this.movimientos = [])
   }
+  getCheckboxesValue() {
+    console.log('ngModel value', this.valor);
+  }
   movimientoEliminar(id: number) {
-    this.restService.deleteMovimiento(id).subscribe((res: any[]) => {
-      this.restService.getMovimientoProfesional(this.restService.profesional).subscribe((res: any[]) => {
-        Swal.fire('Solicitud aceptada', 'El movimiento ha sido eliminado', 'success');
-        this.movimientos = res;
-      },err =>{
-        Swal.fire('Solicitud rechazada', 'El movimiento no se pudo eliminar', 'error');
-      })
+    Swal.fire({
+      title: '¿Estás seguro que desea eliminar el movimiento?',
+      text: "El cambio es irreversible",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Aceptar'
+    }).then((result) => {
+      if (result.value) {
+        this.restService.deleteMovimiento(id).subscribe((res: any[]) => {
+          this.restService.getMovimientoProfesional(this.restService.profesional).subscribe((res: any[]) => {
+            Swal.fire('Solicitud aceptada', 'El movimiento ha sido eliminado', 'success');
+            this.movimientos = res;
+          },err =>{
+            Swal.fire('Solicitud rechazada', 'El movimiento no se pudo eliminar', 'error');
+          })
+        })
+      }
     })
+    
   }
   guardarMovimiento() {
     let movimiento: Movimiento = this.formMovimiento.value;
+    if(!this.formMovimiento.get('radio').value){
+      let valor = +movimiento.valor*-1;
+      movimiento.valor= ''+valor;
+    }
     this.restService.getProfesionalCorreo(this.restService.usuario.username).subscribe((res: any) => {
       movimiento.profesional = res;
       this.restService.saveMovimiento(movimiento).subscribe((res: any[]) => {
@@ -76,13 +103,21 @@ export class MovimientosComponent implements OnInit {
 
   }
   setDatosMovimiento(movimiento: Movimiento) {
+    let radio = true;
+    let valor = +movimiento.valor;
+
+  if (valor<0) {
+    radio = false;
+    valor= valor*-1;
+  }
     if(movimiento != null){
       
       this.formMovimiento.setValue({
         id_movimiento: movimiento.id_movimiento,
         nombre: movimiento.nombre,
         descripcion: movimiento.descripcion,
-        valor: movimiento.valor,
+        radio:radio,
+        valor: valor,
         fecha: movimiento.fecha,
       })
     }
@@ -92,21 +127,27 @@ export class MovimientosComponent implements OnInit {
       id_movimiento: [],
       nombre: [{value: '', disabled: this.show}, [Validators.required, Validators.minLength(3)]],
       descripcion: [{value: '', disabled: this.show}, [Validators.required, Validators.minLength(3)]],
+      radio:new FormControl(true),
       valor: [{value: '', disabled: this.show}, [Validators.required]],
       fecha: [{value: '', disabled: this.show}, [Validators.required]],
     });
   }
   mostrar(movimiento: Movimiento) {
-
+      let radio = true;
+      let valor = +movimiento.valor;
+    if (valor<0) {
+      radio = false;
+      valor= valor*-1;
+    }
     if(movimiento != null){
       this.formMovimiento2.setValue({
         id_movimiento: movimiento.id_movimiento,
         nombre: movimiento.nombre,
         descripcion: movimiento.descripcion,
-        valor: movimiento.valor,
+        radio: radio,
+        valor: valor,
         fecha: movimiento.fecha,
       })
     }
-    
   }
 }

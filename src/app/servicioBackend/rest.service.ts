@@ -15,6 +15,7 @@ import { HorarioProfesional } from '../entidades/HorarioProfesional';
 import { ServicioOfrecido } from '../entidades/ServicioOfrecido';
 import { Movimiento } from '../entidades/Movimiento';
 import { IntervaloFecha } from '../entidades/IntervaloFecha';
+import { estado } from '../entidades/Estado';
 
 
 @Injectable({
@@ -111,6 +112,12 @@ export class RestService {
   getListaReserva() {
     return this.http.get(this.URL + '/reserva/', { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as Profesional[]));
   }
+  getListEstadoReserva() {
+    return this.http.get(this.URL + '/reserva/estado', { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as estado));
+    }
+  updateReserva(id: number, reserva: Reserva) {
+      return this.http.put(this.URL + '/reserva/' + id, reserva, { headers: this.agregarAuthorizationHeader() });
+  }
   saveReserva(reserva: Reserva) {
     return this.http.post<Reserva>(this.URL + '/reserva/save', reserva, { headers: this.agregarAuthorizationHeader() });
   }
@@ -164,6 +171,9 @@ export class RestService {
   /*Horario */
   getListabloques() {
     return this.http.get(this.URL + '/bloque/', { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as Bloque[]));
+  }
+  getHorario(id: number) {
+  return this.http.get(this.URL + '/horario/' + id, { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as HorarioProfesional));
   }
   saveHorario(rangoFecha: RangoFecha) {
     return this.http.post<HorarioProfesional[]>(this.URL + '/horario/save', rangoFecha, { headers: this.agregarAuthorizationHeader() });

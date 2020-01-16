@@ -41,7 +41,7 @@
                                 </tr>
                             </thead>
                             <tbody *ngFor="let movimiento of movimientos | filter: searchText">
-                                <tr style="text-align: center">
+                                <tr style="text-align: center" *ngIf="movimiento.estado_movimiento.id_estado_movimiento != 2">
 
                                     <td style="vertical-align: middle">{{movimiento.fecha | date: 'dd/MM/yyyy'}}</td>
                                     <td style="vertical-align: middle">{{movimiento.nombre}}</td>
@@ -107,7 +107,17 @@
                     </div>
                     <div class="form-group">
                         <i class="fas fa-dollar-sign prefix grey-text"></i>
-                        <label for="valor"> Valor</label>
+                        <label for="valor" style="margin-right: 15px;"> Valor</label>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" formControlName="radio" [value]="templateChecked" class="custom-control-input" id="defaultInline1" name="radio">
+                            <label class="custom-control-label" for="defaultInline1">Ingreso</label>
+                        </div>
+
+                        <!-- Default inline 2-->
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" formControlName="radio" [value]="!templateChecked" class="custom-control-input" id="defaultInline2" name="radio">
+                            <label class="custom-control-label" for="defaultInline2">Egreso</label>
+                        </div>
                         <input formControlName="valor" type="number" id="valor" class="form-control ">
                         <div *ngIf="formMovimiento.get('valor').errors && (formMovimiento.get('valor').touched 
                         || formMovimiento.get('valor').dirty)" class="alert alert-danger p-1">* El valor del movimiento es obligatorio.
@@ -145,7 +155,7 @@
                     <div class="form-group">
                         <i class="fas fa-edit prefix grey-text"></i>
                         <label for="nombre"> Nombre</label>
-                    <input formControlName="nombre" type="text" id="nombre" class="form-control" >
+                        <input formControlName="nombre" type="text" id="nombre" class="form-control">
                     </div>
                     <div class="form-group">
                         <i class="fas fa-tasks prefix grey-text"></i>
@@ -155,7 +165,17 @@
                     <div class="form-group">
                         <i class="fas fa-dollar-sign prefix grey-text"></i>
                         <label for="valor"> Valor</label>
-                        <input formControlName="valor"  id="valor" class="form-control" [value] = "formMovimiento2.get('valor').value | currency:'CLP':'$ ' ">
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" formControlName="radio" [value]="templateChecked" class="custom-control-input" id="defaultInline1" name="radio">
+                            <label class="custom-control-label" for="defaultInline1">Ingreso</label>
+                        </div>
+
+                        <!-- Default inline 2-->
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" formControlName="radio" [value]="!templateChecked" class="custom-control-input" id="defaultInline2" name="radio">
+                            <label class="custom-control-label" for="defaultInline2">Egreso</label>
+                        </div>
+                        <input formControlName="valor" id="valor" class="form-control" [value]="formMovimiento2.get('valor').value | currency:'CLP':'$ ' ">
                     </div>
 
                     <div class="form-group">

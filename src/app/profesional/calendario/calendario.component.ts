@@ -20,45 +20,52 @@ import { Servicio } from 'src/app/entidades/Servicio';
 import { HorarioPosible } from 'src/app/entidades/HorarioPosible';
 import { Reserva } from 'src/app/entidades/Reserva';
 import { esI18n } from 'src/app/esI18n';
+import { estado } from 'src/app/entidades/Estado';
 @Component({
   selector: 'app-calendario',
   templateUrl: './calendario.component.html',
   providers: [
-    {provide: NgbDatepickerI18n, useClass: esI18n}
-],
+    { provide: NgbDatepickerI18n, useClass: esI18n }
+  ],
   styleUrls: ['./calendario.component.css']
 })
 export class CalendarioComponent implements OnInit {
   li: string = 'mes';
   display = 'none';
-  
+  display2 = 'none';
+
   calendarEvents = [
     { title: 'event 2', start: '2019-10-17T10:30:00', end: '2019-10-17T11:30:00' }
   ];
-  Evento: Evento = {
-    title: "event 1",
-    start: '2019-11-17',
-    end: '2019-11-17',
-    description: '2019-10-17'
-  };
+  Evento: Evento ;
 
   @ViewChild('calendar', { static: false }) calendarComponent: FullCalendarComponent;
   horasProfesional: HorarioProfesional[] = [];
   listaHoras: HorarioProfesional[] = [];
-  listaServicios: Servicio [] = [];
-  servicio:any = 0;
+  listaServicios: Servicio[] = [];
+  servicio: any = 0;
   formReserva: FormGroup;
   model: NgbDateStruct;
-  hora:any = 0;
+  hora: any = 0;
   listaClientes: Cliente[] = [];
-  cliente:any = 0;
+  cliente: any = 0;
   bloquesPosibles: HorarioPosible[] = [];
   reserva: Reserva;
+  selectReserva: any;
+  listEstado:any;
 
   constructor(public restService: RestService, private router: Router, private formBuilder: FormBuilder, private parseCalendar: NgbDateParserFormatter,
-    private calendar: NgbCalendar) { 
-      this.model = this.calendar.getToday();
-    }
+    private calendar: NgbCalendar) {
+    this.model = this.calendar.getToday();
+    this.formReserva = this.formBuilder.group({
+      id_reserva: [''],
+      cliente: [{value: '', disabled: true}],
+      servicio: [{value: '', disabled: true}],
+      fecha:[{value: '', disabled: true}],
+      hora: [{value: '', disabled: true}],
+      estado: [{value: '', disabled: false}],
+    });
+  }
 
 
 
@@ -83,6 +90,9 @@ export class CalendarioComponent implements OnInit {
     this.restService.getListaServicio().subscribe((res: any[]) => {
       this.listaServicios = res;
     });
+    this.restService.getListEstadoReserva().subscribe((res => {
+      this.listEstado= res;
+    }));
   }
   calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
   calendarWeekends = true;
@@ -123,6 +133,7 @@ export class CalendarioComponent implements OnInit {
 
       let id: number;//obtener id de la reserva
       let evento: Evento; // objeto de tipo evento para agregar al calendario
+      let estado:any;
       for (let i = 0; i <= this.horasProfesional.length; i++) {
 
         if (id == null) {// Para comenzar se le asigna un arreglo y un nuevo evento
@@ -131,7 +142,30 @@ export class CalendarioComponent implements OnInit {
             title: this.horasProfesional[i].reserva.cliente.nombre,
             start: this.horasProfesional[i].fecha + "T" + this.horasProfesional[i].bloque_horario.horaInicio,
             end: this.horasProfesional[i].fecha + "T" + this.horasProfesional[i].bloque_horario.horaFin,
-            description: 'reserva'
+            description: ""+this.horasProfesional[i].id_horarioProfesional,
+            backgroundColor: ""
+          }
+          estado = this.horasProfesional[i].reserva.estado_reserva;
+          if(estado.id_estado_reserva==1){
+            evento.backgroundColor= '#08D2EF';
+          }else{
+            if(estado.id_estado_reserva==2){
+              evento.backgroundColor= '#08EF24';
+            }else{
+              if(estado.id_estado_reserva==3){
+                evento.backgroundColor= '#EF9808';
+              }else{
+                if(estado.id_estado_reserva==4){
+                  evento.backgroundColor= '#EF5E08';
+                }else{
+                  if(estado.id_estado_reserva==5){
+                    evento.backgroundColor= '#D3EF08';
+                  }else{
+                    evento.backgroundColor= '#EF2408';              
+                  }             
+                }
+              }
+            }
           }
         }
         if (i == this.horasProfesional.length) {//si ya es el ultimo ciclo agrega el evento
@@ -147,18 +181,30 @@ export class CalendarioComponent implements OnInit {
             title: this.horasProfesional[i].reserva.cliente.nombre,
             start: this.horasProfesional[i].fecha + "T" + this.horasProfesional[i].bloque_horario.horaInicio,
             end: this.horasProfesional[i].fecha + "T" + this.horasProfesional[i].bloque_horario.horaFin,
-            description: ' <ul class="navbar-nav m-auto">' +
-            '<li class="nav-item" > ' +
-            'Nombre cliente: '+this.horasProfesional[i].reserva.cliente.nombre+' '+this.horasProfesional[i].reserva.cliente.apellido+'</li>' +
-            '<li class="nav-item" > ' +
-            'RUN: '+this.horasProfesional[i].reserva.cliente.rut+'</li>'+
-            '<li class="nav-item" > ' +
-            'Servicio: '+this.horasProfesional[i].reserva.servicio.nombre+'</li>'+
-            '<li class="nav-item" > ' +
-            'Fecha: '+this.horasProfesional[i].fecha +'</li>'+
-            '<li class="nav-item" > ' +
-            'Hora de inicio: '+this.horasProfesional[i].bloque_horario.horaInicio+'</li>'+
-            '</ul>'
+            description: ""+this.horasProfesional[i].id_horarioProfesional,
+            backgroundColor: ""
+          }
+          estado = this.horasProfesional[i].reserva.estado_reserva;
+          if(estado.id_estado_reserva==1){
+            evento.backgroundColor= '#08D2EF';
+          }else{
+            if(estado.id_estado_reserva==2){
+              evento.backgroundColor= '#08EF24';
+            }else{
+              if(estado.id_estado_reserva==3){
+                evento.backgroundColor= '#EF9808';
+              }else{
+                if(estado.id_estado_reserva==4){
+                  evento.backgroundColor= '#EF5E08';
+                }else{
+                  if(estado.id_estado_reserva==5){
+                    evento.backgroundColor= '#D3EF08';
+                  }else{
+                    evento.backgroundColor= '#EF2408';              
+                  }             
+                }
+              }
+            }
           }
         }
 
@@ -169,80 +215,105 @@ export class CalendarioComponent implements OnInit {
   handleDateClick(arg) { // handler method
     this.display = 'block';
     this.model = this.parseCalendar.parse(arg.dateStr);
-    console.log(arg.event);
   }
+
   handleEventClick(arg) { // handler method
     console.log(arg.event);
+    this.display2 = 'block';
     console.log(arg.event.extendedProps);
-    Swal.fire({
-      title: '<strong>Reserva</strong>',
-      icon: 'info',
-      html: arg.event.extendedProps.description   
+    let id:number = arg.event.extendedProps.description;
+    this.restService.getHorario(id).subscribe((res: any) => {
+      console.log(res);
+      this.selectReserva = res ;
+      this.formReserva.setValue({
+        id_reserva: this.selectReserva.reserva.id_reserva,
+      cliente: this.selectReserva.reserva.cliente.nombre+" "+this.selectReserva.reserva.cliente.apellido,
+      servicio: this.selectReserva.reserva.servicio.nombre,
+      fecha: this.selectReserva.fecha,
+      hora: this.selectReserva.bloque_horario.horaInicio,
+      estado: this.selectReserva.reserva.estado_reserva.id_estado_reserva,
+      })
     })
-  }
-
-
-
-  openModal() {
-
-    this.display = 'block';
-
-  }
-  onCloseHandled() {
-
-    this.display = 'none';
-
-  }
-  Select() {
-    this.bloquesPosibles = [];
-
-      let fecha: RangoFecha = { id: this.restService.profesional.id_profesional, fecha: this.parseCalendar.format(this.model), horaInicio: null, horaFin: null };
-      this.restService.getHorarioprofesionalfecha(fecha).subscribe((res: any[]) => {
-        this.listaHoras = res;
-        this.bloquesHorario();
-      });
     
-  }
-  bloquesHorario() {
-    let valor: number = this.servicio.duracion / 10;
-    for (let i = 0; i <= this.listaHoras.length - valor; i++) {
-      let bloque: HorarioPosible = {
-        horaInicio: this.listaHoras[i].bloque_horario.horaInicio,
-        horaFin: null,
-        horarioProfesional: [],
+}
+
+changeEstado(e) {
+  console.log(this.formReserva.getRawValue().estado);
+}
+
+
+openModal() {
+
+  this.display = 'block';
+
+}
+onCloseHandled() {
+
+  this.display = 'none';
+  this.display2 = 'none';
+
+}
+Select() {
+  this.bloquesPosibles = [];
+
+  let fecha: RangoFecha = { id: this.restService.profesional.id_profesional, fecha: this.parseCalendar.format(this.model), horaInicio: null, horaFin: null };
+  this.restService.getHorarioprofesionalfecha(fecha).subscribe((res: any[]) => {
+    this.listaHoras = res;
+    this.bloquesHorario();
+  });
+
+}
+bloquesHorario() {
+  let valor: number = this.servicio.duracion / 10;
+  for (let i = 0; i <= this.listaHoras.length - valor; i++) {
+    let bloque: HorarioPosible = {
+      horaInicio: this.listaHoras[i].bloque_horario.horaInicio,
+      horaFin: null,
+      horarioProfesional: [],
+    }
+    for (let j = 0; j < valor; j++) {
+      if (this.listaHoras[i + j].reserva != null) {
+        break;
       }
-      for (let j = 0; j < valor; j++) {
-        if (this.listaHoras[i + j].reserva != null) {
-          break;
-        }
-        if (this.listaHoras[i + j + 1] == null || this.listaHoras[i + j].bloque_horario.horaFin != this.listaHoras[i + j + 1].bloque_horario.horaInicio) {
-          break;
-        }
-        bloque.horarioProfesional.push(this.listaHoras[i + j]);
-        if (j + 1 == valor - 1) {
-          bloque.horaFin = this.listaHoras[i + j + 1].bloque_horario.horaFin;
-          this.bloquesPosibles.push(bloque);
-        }
+      if (this.listaHoras[i + j + 1] == null || this.listaHoras[i + j].bloque_horario.horaFin != this.listaHoras[i + j + 1].bloque_horario.horaInicio) {
+        break;
+      }
+      bloque.horarioProfesional.push(this.listaHoras[i + j]);
+      if (j + 1 == valor - 1) {
+        bloque.horaFin = this.listaHoras[i + j + 1].bloque_horario.horaFin;
+        this.bloquesPosibles.push(bloque);
       }
     }
   }
-  save() {
- 
-
-      this.reserva = {
-        id_reserva: null,
-        cliente: this.cliente,
-        servicio: this.servicio,
-        estado_reserva: null
-      }
-      this.restService.saveReserva(this.reserva).subscribe(res => {
-        this.reserva = res;
-        this.hora.horarioProfesional.forEach(element => {
-          this.restService.updateHorarioReserva(element.id_horarioProfesional, res).subscribe(res => {
-            console.log(res);
-          })
-        });
-      })
-
+}
+save() {
+  this.reserva = {
+    id_reserva: null,
+    cliente: this.cliente,
+    servicio: this.servicio,
+    estado_reserva: null
   }
+  this.restService.saveReserva(this.reserva).subscribe(res => {
+    this.reserva = res;
+    this.hora.horarioProfesional.forEach(element => {
+      this.restService.updateHorarioReserva(element.id_horarioProfesional, res).subscribe(res => {
+        console.log(res);
+      })
+    });
+  })
+}
+actualizarEstadoReserva(){
+  this.reserva = this.selectReserva.reserva;
+  this.reserva.estado_reserva = this.listEstado[this.formReserva.getRawValue().estado-1];
+  this.restService.updateReserva(this.reserva.id_reserva,this.reserva).subscribe((res: any[]) => {
+    this.onCloseHandled();
+    Swal.fire('Solicitud aceptada', 'La reserva ha sido actualizada', 'success');
+    let calendar = this.calendarComponent.getApi();
+    calendar.removeAllEvents();
+    this.reservas(this.restService.profesional);
+  }, err =>{
+    Swal.fire('Solicitud rechazada', 'La reserva no se pudo actualizar', 'error');
+  });
+
+}
 }

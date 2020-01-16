@@ -77,15 +77,17 @@
                 <div class="">
                     <label>Hora:</label>
                     <select [(ngModel)]="hora" id="horario" class="form-control">
-                        <option  [ngValue]="0" > Ninguno seleccionado</option>
-                        <option *ngFor="let horas of bloquesPosibles"  [ngValue]="horas"> Hora de inicio:{{horas.horaInicio}} Hora de Fin:{{horas.horaFin}}</option>                       
+                        <option [ngValue]="0"> Ninguno seleccionado</option>
+                        <option *ngFor="let horas of bloquesPosibles" [ngValue]="horas"> Hora de
+                            inicio:{{horas.horaInicio}} Hora de Fin:{{horas.horaFin}}</option>
                     </select>
                     <div class="">
                         <label>Servicio:</label>
                         <select [(ngModel)]="servicio" id="exampleFormControlSelect1" (change)="Select()" class="form-control">
-                        <option [ngValue]="0"> Ninguno seleccionado</option>
-                        <option *ngFor="let servicio of listaServicios" [ngValue]="servicio"> {{servicio.nombre}}</option>
-                    </select>
+                            <option [ngValue]="0"> Ninguno seleccionado</option>
+                            <option *ngFor="let servicio of listaServicios" [ngValue]="servicio"> {{servicio.nombre}}
+                            </option>
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -95,3 +97,49 @@
             </div>
         </div>
     </div>
+</div>
+<!--modal update -->
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display2}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detalle Reserva</h5>
+                <button type="button" class="close" data-dismiss="modal" (click)="onCloseHandled()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="formReserva">
+                    <div class="form-group">
+                        <label for="cliente"> Cliente</label>
+                        <input formControlName="cliente" type="text" id="cliente" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="servicio"> Servicio</label>
+                        <input formControlName="servicio" type="text" id="servicio" class="form-control ">
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha"> Fecha</label>
+                        <input formControlName="fecha" type="text" id="fecha" class="form-control ">
+                    </div>
+                    <div class="form-group">
+                        <label for="hora"> Hora</label>
+                        <input formControlName="hora" type="text" id="hora" class="form-control ">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="estado"> Estado</label>
+                        <select class="custom-select" (change)="changeEstado($event)" formControlName="estado">
+                            <option *ngFor="let estado of listEstado" [ngValue]="estado.id_estado_reserva">{{estado.nombre}}</option>
+                         </select>
+                    </div>
+                </form>
+
+                <div class="modal-footer">
+                    <button type="button" (click)="actualizarEstadoReserva()" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="onCloseHandled()">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
