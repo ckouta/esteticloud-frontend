@@ -13,12 +13,13 @@ import Swal from 'sweetalert2';
   styleUrls: ['./registrar-profesionales.component.css']
 })
 export class RegistrarProfesionalesComponent implements OnInit {
+  public show:boolean = false;
   ProfesionalActualizar: Profesional = null;
   fotoSeleccionada: File;
   formProduct: FormGroup;
   usuario: Usuario;
   registrar: Registro;
-  show:boolean = false;
+  
   constructor(
     private router: Router,
     public restService: RestService,
@@ -28,28 +29,40 @@ export class RegistrarProfesionalesComponent implements OnInit {
 
     this.usuario = new Usuario();
     this.registrar = new Registro();
+    
   }
 
   ngOnInit() {
+  
     this.rutaActiva.queryParams.subscribe(params => {
       let dato = params['ver'];
       if(dato=="true"){
         this.show= true;
       }
+
+       
+
     });
+
+  
+
+
     this.formProduct = this.formBuilder.group({
       id_profesional: [],
-      nombre: [{value: '', disabled: this.show}, [Validators.required]],
-      apellido: [{value: '', disabled: this.show}, [Validators.required]],
-      rut: [{value: '', disabled: this.show}, [Validators.required]],
-      telefono: [{value: '', disabled: this.show}, [Validators.required]],
-      email: [{value: '', disabled: this.show}, [Validators.required]],
-      estado: [{value: '', disabled: this.show}, [Validators.required]],
+      nombre: [{value: '', disabled: this.show}, [Validators.required, Validators.minLength(2)]],
+      apellido: [{value: '', disabled: this.show}, [Validators.required, Validators.minLength(3)]],
+      rut: [{value: '', disabled: this.show}, [Validators.required, Validators.pattern(/^\d{1,2}\.\d{3}\.\d{3}[-][0-9kK]{1}$/)]],
+      telefono: [{value: '', disabled: this.show}, [Validators.required, Validators.pattern(/^\d{9}$/)]],
+      email: [{value: '', disabled: this.show}, [Validators.required, Validators.email]],
+      estado: [{value: 1, disabled: this.show}, [Validators.required]],
       descripcion: [{value: '', disabled: this.show}, [Validators.required]],
-      password: ['']
+      password: [{value:'', disabled: this.show},[Validators.required,Validators.minLength(6)]]
     });
+
+
     if (this.rutaActiva.snapshot.params.id != null) {
        this.restService.getProfesional(this.rutaActiva.snapshot.params.id).subscribe((res: any) => {
+
         this.ProfesionalActualizar = res;
         this.formProduct.setValue({
           id_profesional: this.ProfesionalActualizar.id_profesional,
@@ -60,17 +73,17 @@ export class RegistrarProfesionalesComponent implements OnInit {
           rut: this.ProfesionalActualizar.rut,
           estado: res.estado_profesional,
           descripcion: this.ProfesionalActualizar.descripcion,
-          password: ''
+          password: ""
   
         });
-        console.log(this.ProfesionalActualizar)
+        
       })
     }
-
   }
+
+
   guardarProducto(registrar: Registro) {
     console.log(this.fotoSeleccionada);
-
 
     this.restService.saveUsuarioProfesional(registrar).subscribe((profesional) => {
       this.restService.saveImagenProfesional(profesional.id_profesional + "", this.fotoSeleccionada).subscribe(() => {
@@ -80,13 +93,18 @@ export class RegistrarProfesionalesComponent implements OnInit {
           this.router.navigate(['profesional/profesional']);
           });
       },
-      err =>   {Swal.fire('Imagen', 'Imagen no insertada', 'error')}
+      err =>   {Swal.fire('Imagen', 'Imagen no insertada', 'error'); console.log(err);
+        }
       )
 
     },
-    err=> {Swal.fire('Datos incorrectos', 'Profesional no insertado, datos incorrectos o duplicados', 'error')}
+    err=> {Swal.fire('Datos incorrectos', 'Profesional no insertado, datos incorrectos o duplicados', 'error');
+          console.log(err);
+          }
     )
   } 
+
+
   actualizarProfesional(profesional: Profesional) {
 
     this.restService.updateProfesional(profesional.id_profesional, profesional).subscribe(() => {
@@ -114,6 +132,7 @@ export class RegistrarProfesionalesComponent implements OnInit {
     //this.router.navigate(['profesional/profesional']);
     console.log(this.formProduct.value);
   }
+
   seleccionarFoto(event) {
     this.fotoSeleccionada = event.target.files[0];
   }

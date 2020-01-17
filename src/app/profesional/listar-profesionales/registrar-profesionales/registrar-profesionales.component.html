@@ -3,7 +3,9 @@
         <li class="breadcrumb-item "><a style="display: inline;padding: 0;" [routerLink]="['/profesional']"> Inicio</a>
         </li>
         <li class="breadcrumb-item active"><a style="display: inline;padding: 0;" [routerLink]="['/profesional/profesional']">Profesional</a></li>
-        <li class="breadcrumb-item active"><a style="display: inline;padding: 0;">Registrar</a></li>
+        <li *ngIf="!formProduct.getRawValue().id_profesional && !show" class="breadcrumb-item active"><a style="display: inline;padding: 0;">Registrar</a></li>
+        <li *ngIf="formProduct.getRawValue().id_profesional && !show" class="breadcrumb-item active"><a style="display: inline;padding: 0;">Actualizar</a></li>
+        <li *ngIf="formProduct.getRawValue().id_profesional && show" class="breadcrumb-item active"><a style="display: inline;padding: 0;">Ver</a></li>
     </ol>
 </nav>
 <br>
@@ -22,20 +24,27 @@
                                 <div class="col-md-4">
                                     <!--Nombre -->
                                     <div class="form-group">
-                                        <h6 for="nombre">Nombre profesional</h6>
-                                        <input formControlName="nombre" class="form-control" type="text" placeholder="Ingrese nombre">
-                                        <div *ngIf="formProduct.get('nombre').errors && (formProduct.get('nombre').touched 
-                            || formProduct.get('nombre').dirty)" class="alert alert-danger">* El nombre del profesional es obligatorio.
+                                        <h6 for="nombre">Nombre</h6>
+                                        <input formControlName="nombre" class="form-control" type="text" placeholder="Ingrese nombre del profesional">
+                                        <div *ngIf="formProduct.get('nombre').hasError('required') && (formProduct.get('nombre').touched 
+                            || formProduct.get('nombre').dirty)" class="alert alert-danger">* El nombre es obligatorio.
                                         </div>
+                                        <div *ngIf="formProduct.get('nombre').hasError('minlength') && (formProduct.get('nombre').touched 
+                                        || formProduct.get('nombre').dirty)" class="alert alert-danger">* El nombre debe tener más caracteres.
+                                        </div>
+                                        
                                     </div>
                                     <!--Fin Nombre -->
                                 </div>
                                 <div class="col-md-4">
                                     <!--Apellido -->
-                                    <h6 for="apellido">Apellido profesional</h6>
-                                    <input formControlName="apellido" class="form-control" type="text" placeholder="Ingrese apellido">
-                                    <div *ngIf="formProduct.get('apellido').errors && (formProduct.get('apellido').touched 
-                                    || formProduct.get('apellido').dirty)" class="alert alert-danger">* El apellido del profesional es obligatorio.
+                                    <h6 for="apellido">Apellido</h6>
+                                    <input formControlName="apellido" class="form-control" type="text" placeholder="Ingrese apellido del profesional">
+                                    <div *ngIf="formProduct.get('apellido').hasError('required') && (formProduct.get('apellido').touched 
+                                    || formProduct.get('apellido').dirty)" class="alert alert-danger">* El apellido es obligatorio.
+                                    </div>
+                                    <div *ngIf="formProduct.get('apellido').hasError('minlength') && (formProduct.get('apellido').touched 
+                                    || formProduct.get('apellido').dirty)" class="alert alert-danger">* El apellido debe tener más caracteres.
                                     </div>
                                     <!--Fin Apellido -->
                                 </div>
@@ -56,9 +65,12 @@
                                 <div class="col-md-6">
                                     <!--RUT -->
                                     <h6 for="rut">RUN</h6>
-                                    <input formControlName="rut" class="form-control" type="text" placeholder="Ingrese rut">
-                                    <div *ngIf="formProduct.get('rut').errors && (formProduct.get('rut').touched 
-                                    || formProduct.get('rut').dirty)" class="alert alert-danger">* El RUN del profesional es obligatorio.
+                                    <input formControlName="rut" class="form-control" type="text" placeholder="Ingrese RUN del profesional">
+                                    <div *ngIf="formProduct.get('rut').hasError('required') && (formProduct.get('rut').touched 
+                                    || formProduct.get('rut').dirty)" class="alert alert-danger">* El RUN es obligatorio.
+                                    </div>
+                                    <div *ngIf="formProduct.get('rut').hasError('pattern') && (formProduct.get('rut').touched 
+                                    || formProduct.get('rut').dirty)" class="alert alert-danger">* El RUN debe tener la forma 1.234.567-k.
                                     </div>
                                     <!--Fin RUT-->
                                 </div>
@@ -66,9 +78,12 @@
                                     <!-- Telefono-->
                                     <div class="form-group">
                                         <h6 for="Telefono">Teléfono</h6>
-                                        <input formControlName="telefono" type="text" class="form-control" placeholder="Ingrese teléfono">
-                                        <div *ngIf="formProduct.get('telefono').errors && (formProduct.get('telefono').touched 
-                                    || formProduct.get('telefono').dirty)" class="alert alert-danger">* El teléfono del profesional es obligatorio.
+                                        <input formControlName="telefono" type="number" class="form-control" placeholder="Ingrese teléfono del profesional">
+                                        <div *ngIf="formProduct.get('telefono').hasError('required') && (formProduct.get('telefono').touched 
+                                    || formProduct.get('telefono').dirty)" class="alert alert-danger">* El teléfono es obligatorio.
+                                        </div>
+                                        <div *ngIf="formProduct.get('telefono').hasError('pattern')   && (formProduct.get('telefono').touched 
+                                    || formProduct.get('telefono').dirty)" class="alert alert-danger">* El teléfono debe tener 9 dígitos.
                                         </div>
                                     </div>
                                     <!--Fin Telefono -->
@@ -80,9 +95,12 @@
                                     <!--Email  -->
                                     <div class="form-group">
                                         <h6 for="Email">Email</h6>
-                                        <input formControlName="email" type="text" class="form-control" placeholder="Ingrese el email">
-                                        <div *ngIf="formProduct.get('email').errors && (formProduct.get('email').touched 
-                                    || formProduct.get('email').dirty)" class="alert alert-danger">* El email del profesional es obligatorio.
+                                        <input formControlName="email" type="text" class="form-control" placeholder="Ingrese email del profesional">
+                                        <div *ngIf="formProduct.get('email').hasError('required') && (formProduct.get('email').touched 
+                                    || formProduct.get('email').dirty)" class="alert alert-danger">* El email obligatorio.
+                                        </div>
+                                        <div *ngIf="formProduct.get('email').hasError('email') && (formProduct.get('email').touched 
+                                    || formProduct.get('email').dirty)" class="alert alert-danger">* El email no es válido.
                                         </div>
                                         <!--Fin Email -->
                                     </div>
@@ -92,6 +110,12 @@
                                     <div class="form-group">
                                         <h6 for="contraseña">Contraseña</h6>
                                         <input formControlName="password" type="password" class="form-control" placeholder="Ingrese una contraseña">
+                                        <div *ngIf="formProduct.get('password').hasError('required') && (formProduct.get('password').touched 
+                                    || formProduct.get('password').dirty)" class="alert alert-danger">* La contraseña es obligatoria.
+                                        </div>
+                                        <div *ngIf="formProduct.get('password').hasError('minlength') && (formProduct.get('password').touched 
+                                    || formProduct.get('password').dirty)" class="alert alert-danger">* La contraseña debe tener al menos 6 caracteres.
+                                        </div>
                                         <!--Fin cantidad personas-->
                                     </div>
                                 </div>
@@ -101,7 +125,7 @@
                                 <h6 for="descripcionProducto">Descripción</h6>
                                 <textarea formControlName="descripcion" class="form-control" placeholder="Ingrese una descripción para el profesional"></textarea>
                                 <div *ngIf="formProduct.get('descripcion').errors && (formProduct.get('descripcion').touched 
-                              || formProduct.get('descripcion').dirty)" class="alert alert-danger">* Es necesario ingresar una descripción.
+                              || formProduct.get('descripcion').dirty)" class="alert alert-danger">* La descripción es obligatoria.
                                 </div>
                             </div>
                             <!-- fin Ingresar Descripción-->
@@ -109,7 +133,7 @@
                             <!--Botones-->
                             <div class="col-md-12" style="text-align: right" *ngIf="!show">
                                 <button type="button" class="btn btn-danger botones" style="background: #ff0000" data-toggle="modal" data-target="#modalSalir"> Cancelar </button> &nbsp;
-                                <button type="submit" class="btn btn-warning botones" style="background: #ff8800"> Guardar </button>
+                                <button type="submit" [disabled]="formProduct.get('email').errors || formProduct.get('rut').errors || formProduct.get('telefono').errors" class="btn btn-warning botones" style="background: #ff8800"> Guardar </button>
                             </div>
                             <div class="col-md-12" style="text-align: right" *ngIf="show">
                                 <button class="btn btn-warning botones" style="background: #ff8800" [routerLink]="['/profesional/profesional']"> Volver </button>
