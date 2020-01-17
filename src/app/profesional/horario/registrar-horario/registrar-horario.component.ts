@@ -49,6 +49,12 @@ export class RegistrarHorarioComponent implements OnInit {
 
   }
   ngOnInit() {
+    if (!this.restService.hasRole('ROLE_ESTETI')) {
+      this.router.navigate(['login']);
+    }
+    this.restService.getProfesionalCorreo(this.restService.usuario.username).subscribe((res: any) => {
+      this.restService.profesional = res;
+    })
     this.restService.getListabloques().subscribe((res: any[]) => {
       this.restService.listaBloque = res;
     });
@@ -79,7 +85,7 @@ export class RegistrarHorarioComponent implements OnInit {
     let fechaInicio: NgbDate = this.fromDate;
     let fechaFIn: NgbDate = this.toDate;
     let listaFecha: RangoFecha[]= [];
-    let id: number = 1;
+    let id: number = this.restService.profesional.id_profesional;
     let horaInicio;
     let horaFin;
     if (fechaInicio == null || fechaFIn == null) {
