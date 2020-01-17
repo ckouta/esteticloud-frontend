@@ -51,4 +51,19 @@ export class RegistrarComponent implements OnInit {
       Swal.fire('Solicitud rechazada', 'Hay errores al momento de generar la solicitud', 'error');
     })
   }
+  regresar(){
+    Swal.fire({
+      title: '¿Estás seguro que deseas salir del formulario de registro?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar'   
+    }).then((result) => {
+      if (result.value) {
+        this.router.navigate(['']);
+      }
+    })
+  }
 }

@@ -19,7 +19,7 @@
                                     <!--Nombre cliente-->
                                     <div class="form-group">
                                         <div class="md-form">
-                                            <input mdbInput mdbValidate formControlName="nombre" type="text" id="nombre" class="form-control" >
+                                            <input mdbInput mdbValidate formControlName="nombre" type="text" id="nombre" class="form-control">
                                             <label for="nombre">Nombre</label>
                                             <mdb-error *ngIf="formCliente.get('nombre').hasError('required') && (formCliente.get('nombre').dirty || formCliente.get('nombre').touched)">* El nombre es obligatorio</mdb-error>
                                             <mdb-error *ngIf="formCliente.get('nombre').hasError('minlength') && (formCliente.get('nombre').dirty || formCliente.get('nombre').touched)">* El nombre debe tener más caracteres</mdb-error>
@@ -46,7 +46,7 @@
                                 <div class="col-md-6">
                                     <!--Rut Cliente-->
                                     <div class="md-form">
-                                        <input  mdbInput mdbValidate formControlName="rut" type="text" id="rut" class="form-control">
+                                        <input mdbInput mdbValidate formControlName="rut" type="text" id="rut" class="form-control">
                                         <label for="rut">RUN</label>
                                         <mdb-error *ngIf="formCliente.get('rut').hasError('required') && (formCliente.get('rut').dirty || formCliente.get('rut').touched)">* El RUN es obligatorio</mdb-error>
                                         <mdb-error *ngIf="formCliente.get('rut').hasError('pattern') && (formCliente.get('rut').dirty || formCliente.get('rut').touched)">* El RUN debe tener la forma 12.345.678-k</mdb-error>
@@ -74,12 +74,12 @@
                                     <!--Email Cliente-->
                                     <div class="form-group">
                                         <div class="md-form">
-                                            <input  mdbInput mdbValidate formControlName="email" type="text" id="email" class="form-control">
+                                            <input mdbInput mdbValidate formControlName="email" type="text" id="email" class="form-control">
                                             <label for="email">Correo</label>
                                             <mdb-error *ngIf="formCliente.get('email').hasError('required') && (formCliente.get('email').dirty || formCliente.get('email').touched)">* El correo electrónico es obligatorio</mdb-error>
                                             <mdb-error *ngIf="formCliente.get('email').hasError('email')  && (formCliente.get('email').dirty || formCliente.get('email').touched)">* correo inválido</mdb-error>
                                             <mdb-success *ngIf="formCliente.get('email').valid && (formCliente.get('email').dirty || formCliente.get('telefono').touched)">✔</mdb-success>
-                                        
+
                                         </div>
 
                                     </div>
@@ -102,7 +102,7 @@
                             </div>
                             <!--Botones-->
                             <div class="col-md-12" style="text-align: right">
-                                <button type="button" class="btn btn-danger botones" style="background: #ff0000" data-toggle="modal" data-target="#modalSalir"> Cancelar </button> &nbsp;
+                                <button type="button" class="btn btn-danger botones" style="background: #ff0000" (click)="regresar()"> Cancelar </button> &nbsp;
                                 <button type="submit" class="btn btn-warning botones" style="background: #ff8800">
                                     Guardar </button>
                             </div>
