@@ -13,15 +13,19 @@
         <mdb-card class="mb-3" borderColor="border-secondary">
             <mdb-card-header>Reservas vigentes</mdb-card-header>
             <mdb-card-body>
-                <div class="overflow-auto" style="height:200px">
+                <div class="overflow-auto" style="max-height:200px">
                     <div class="list-group" *ngFor="let reserva of reserva">
-                        <a class="list-group-item list-group-item-action ">
+                        <a class="list-group-item list-group-item-action " *ngIf="reserva.reserva.estado_reserva.id_estado_reserva == 1">
                             <div class="media">
-                                <img src="http://parra.chillan.ubiobio.cl:8080/alvaro.castillo1501/servicio/uploads/img/{{reserva.reserva.servicio.foto}}" class="align-self-center mr-3" style="width: 80px;height:80px;">
+                                <img src="http://parra.chillan.ubiobio.cl:8080/alvaro.castillo1501/servicio/uploads/img/{{reserva.reserva.servicio.foto}}" class="align-self-center mr-3" style="width: 60px;height:60px;">
                                 <div class="media-body">
                                     <h5 class="mt-0">Nombre del servicio: {{reserva.reserva.servicio.nombre}}</h5>
-                                    <p> Profesional: {{reserva.profesional.nombre}} Día: {{reserva.fecha}} Hora: {{reserva.bloque_horario.horaInicio}}
-                                    </p>
+                                    <div class="d-flex" style="align-items: center;">
+                                        <b> Profesional:</b> {{reserva.profesional.nombre}} {{reserva.profesional.apellido}} <b> Día:</b> {{reserva.fecha}} <b> Hora:</b> {{reserva.bloque_horario.horaInicio}} <b> Estado de la reserva :</b> {{reserva.reserva.estado_reserva.nombre}}
+
+                                        <a class="btn btn-danger float-right ml-auto" (click)="cancelarReserva(reserva)">Cancelar Reserva</a>
+
+                                    </div>
                                 </div>
 
                             </div>
@@ -36,14 +40,14 @@
         <mdb-card class="mb-3" borderColor="border-secondary">
             <mdb-card-header>Reservas anteriores</mdb-card-header>
             <mdb-card-body>
-                <div class="overflow-auto" style="height:200px">
+                <div class="overflow-auto" style="max-height:200px">
                     <div class="list-group" *ngFor="let reserva of reserva">
-                        <a class="list-group-item list-group-item-action ">
+                        <a class="list-group-item list-group-item-action " *ngIf="reserva.reserva.estado_reserva.id_estado_reserva != 1">
                             <div class="media">
-                                <img src="http://parra.chillan.ubiobio.cl:8080/alvaro.castillo1501/servicio/uploads/img/{{reserva.reserva.servicio.foto}}" class="align-self-center mr-3" style="width: 80px;height:80px;">
+                                <img src="http://parra.chillan.ubiobio.cl:8080/alvaro.castillo1501/servicio/uploads/img/{{reserva.reserva.servicio.foto}}" class="align-self-center mr-3" style="width: 60px;height:60px;">
                                 <div class="media-body">
                                     <h5 class="mt-0">Nombre del servicio: {{reserva.reserva.servicio.nombre}}</h5>
-                                    <p> Profesional: {{reserva.profesional.nombre}} Día: {{reserva.fecha}} Hora: {{reserva.bloque_horario.horaInicio}}
+                                    <p> <b> Profesional:</b> {{reserva.profesional.nombre}} {{reserva.profesional.apellido}} <b> Día:</b> {{reserva.fecha}} <b> Hora:</b> {{reserva.bloque_horario.horaInicio}} <b> Estado de la reserva :</b> {{reserva.reserva.estado_reserva.nombre}}
                                     </p>
                                 </div>
 

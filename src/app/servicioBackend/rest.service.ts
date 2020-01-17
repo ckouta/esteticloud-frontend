@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Profesional } from '../entidades/Profesional';
 import { Servicio } from '../entidades/Servicio';
 import { map, switchMap } from 'rxjs/operators';
@@ -24,6 +24,7 @@ import { estado } from '../entidades/Estado';
 export class RestService {
 
   private URL = 'http://parra.chillan.ubiobio.cl:8080/alvaro.castillo1501';
+  //private URL = 'http://localhost:8080';
   listaProfesional: Profesional[];
   listaServicio: Servicio[];
   listaBloque: Bloque[];
@@ -122,8 +123,15 @@ export class RestService {
     return this.http.post<Reserva>(this.URL + '/reserva/save', reserva, { headers: this.agregarAuthorizationHeader() });
   }
   getReservaCliente(cliente: Cliente) {
-    return this.http.post(this.URL + '/reserva/listarRC' ,cliente, { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as HorarioProfesional[]));
+    return this.http.post(this.URL + '/reserva/por_cliente' ,cliente, { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as HorarioProfesional[]));
   }
+  deleteReserva(id: number, idEstado:number) {
+    const params = new HttpParams()
+      .set('id', ""+id)
+      .set('id_estado', ""+idEstado);
+    return this.http.delete(this.URL + '/reserva/' + { params: params }, { headers: this.agregarAuthorizationHeader() });
+  }
+
   /*Servicio Ofrecido */
   getListaServicioOfrecido() {
     return this.http.get(this.URL + '/so/').pipe(map((res) => res as Servicio[]));
