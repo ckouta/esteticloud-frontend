@@ -30,11 +30,11 @@ export class RegistrarClientesComponent implements OnInit {
       });
       this.formCliente = this.formBuilder.group({
         id_cliente:[''],
-        nombre: [{value: '', disabled: this.show}, [Validators.required]],
-        apellido: [{value: '', disabled: this.show}, [Validators.required]],
-        telefono: [{value: '', disabled: this.show}, [Validators.required]],
-        email: [{value: '', disabled: this.show}, [Validators.required]],
-        rut: [{value: '', disabled: this.show}, [Validators.required]],
+        nombre: [{value: '', disabled: this.show}, [Validators.required, Validators.minLength(2)]],
+        apellido: [{value: '', disabled: this.show}, [Validators.required, Validators.minLength(3)]],
+        telefono: [{value: '', disabled: this.show}, [ Validators.pattern(/^\d{9}$/)]],
+        email: [{value: '', disabled: this.show}, [Validators.required, Validators.email]],
+        rut: [{value: '', disabled: this.show}, [Validators.required,Validators.pattern(/^\d{1,2}\.\d{3}\.\d{3}[-][0-9kK]{1}$/)]],
       });
     if (this.rutaActiva.snapshot.params.id != null) {
       this.restService.getCliente(this.rutaActiva.snapshot.params.id).subscribe((res: any) => {

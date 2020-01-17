@@ -9,7 +9,7 @@
 </nav>
 <br>
 <div class="container">
-    <h2>Formulario </h2>
+    <h2>Formulario de registro de cliente </h2>
     <hr>
     <div class="row">
         <div class="col-md-12">
@@ -22,20 +22,27 @@
                                 <div class="col-md-6">
                                     <!--Nombre -->
                                     <div class="form-group">
-                                        <h6 for="nombre">Nombre Cliente</h6>
-                                        <input formControlName="nombre" class="form-control" type="text" placeholder="Ingrese Nombre">
-                                        <div *ngIf="formCliente.get('nombre').errors && (formCliente.get('nombre').touched 
-                            || formCliente.get('nombre').dirty)" class="alert alert-danger">El nombre del cliente es obligatorio
+                                        <h6 for="nombre">Nombre</h6>
+                                        <input formControlName="nombre" class="form-control" type="text" placeholder="Ingrese nombre del cliente">
+                                        <div *ngIf="formCliente.get('nombre').hasError('required') && (formCliente.get('nombre').touched 
+                                        || formCliente.get('nombre').dirty)" class="alert alert-danger">* El nombre es obligatorio.
                                         </div>
+                                        <div *ngIf="formCliente.get('nombre').hasError('minlength') && (formCliente.get('nombre').touched 
+                                        || formCliente.get('nombre').dirty)" class="alert alert-danger">* El nombre debe tener más caracteres.
+                                        </div>
+                                        
                                     </div>
                                     <!--Fin Nombre -->
                                 </div>
                                 <div class="col-md-6">
                                     <!--Apellido -->
-                                    <h6 for="apellido">Apellido Cliente</h6>
-                                    <input formControlName="apellido" class="form-control" type="text" placeholder="Ingrese apellido">
-                                    <div *ngIf="formCliente.get('apellido').errors && (formCliente.get('apellido').touched 
-                                    || formCliente.get('apellido').dirty)" class="alert alert-danger">El apellido del cliente es obligatorio
+                                    <h6 for="apellido">Apellido</h6>
+                                    <input formControlName="apellido" class="form-control" type="text" placeholder="Ingrese apellido del cliente">
+                                    <div *ngIf="formCliente.get('apellido').hasError('required') && (formCliente.get('apellido').touched 
+                                    || formCliente.get('apellido').dirty)" class="alert alert-danger">* El apellido es obligatorio.
+                                    </div>
+                                    <div *ngIf="formCliente.get('apellido').hasError('minlength') && (formCliente.get('apellido').touched 
+                                    || formCliente.get('apellido').dirty)" class="alert alert-danger">* El apellido debe tener más caracteres.
                                     </div>
                                     <!--Fin Apellido -->
                                 </div>
@@ -44,9 +51,12 @@
                                 <div class="col-md-6">
                                     <!--RUT -->
                                     <h6 for="rut">RUN</h6>
-                                    <input formControlName="rut" class="form-control" type="text" placeholder="Ingrese RUN">
-                                    <div *ngIf="formCliente.get('rut').errors && (formCliente.get('rut').touched 
-                                    || formCliente.get('rut').dirty)" class="alert alert-danger">El RUN del cliente es obligatorio
+                                    <input formControlName="rut" class="form-control" type="text" placeholder="Ingrese RUN del cliente">
+                                    <div *ngIf="formCliente.get('rut').hasError('required') && (formCliente.get('rut').touched 
+                                    || formCliente.get('rut').dirty)" class="alert alert-danger">* El RUN es obligatorio.
+                                    </div>
+                                    <div *ngIf="formCliente.get('rut').hasError('pattern') && (formCliente.get('rut').touched 
+                                    || formCliente.get('rut').dirty)" class="alert alert-danger">* El RUN debe tener la forma 1.234.567-k.
                                     </div>
                                     <!--Fin RUT-->
                                 </div>
@@ -54,9 +64,12 @@
                                     <!-- Telefono-->
                                     <div class="form-group">
                                         <h6 for="Telefono">Teléfono</h6>
-                                        <input formControlName="telefono" type="text" class="form-control" placeholder="Ingrese teléfono">
-                                        <div *ngIf="formCliente.get('telefono').errors && (formCliente.get('telefono').touched 
-                                    || formCliente.get('telefono').dirty)" class="alert alert-danger">El teléfono del cliente es obligatorio
+                                        <input formControlName="telefono" type="text" class="form-control" placeholder="Ingrese teléfono del cliente">
+                                        <div *ngIf="formCliente.get('telefono').hasError('required') && (formCliente.get('telefono').touched 
+                                    || formCliente.get('telefono').dirty)" class="alert alert-danger">* El teléfono es obligatorio.
+                                        </div>
+                                        <div *ngIf="formCliente.get('telefono').hasError('pattern')   && (formCliente.get('telefono').touched 
+                                    || formCliente.get('telefono').dirty)" class="alert alert-danger">* El teléfono debe tener 9 dígitos.
                                         </div>
                                     </div>
                                     <!--Fin Telefono -->
@@ -68,9 +81,12 @@
                                     <!--Email  -->
                                     <div class="form-group">
                                         <h6 for="Email">Email</h6>
-                                        <input formControlName="email" type="text" class="form-control" placeholder="Ingrese el email">
-                                        <div *ngIf="formCliente.get('email').errors && (formCliente.get('email').touched 
-                                    || formCliente.get('email').dirty)" class="alert alert-danger">El email del cliente es obligatorio
+                                        <input formControlName="email" type="text" class="form-control" placeholder="Ingrese el email del cliente">
+                                        <div *ngIf="formCliente.get('email').hasError('required') && (formCliente.get('email').touched 
+                                    || formCliente.get('email').dirty)" class="alert alert-danger">* El email es obligatorio.
+                                        </div>
+                                        <div *ngIf="formCliente.get('email').hasError('email') && (formCliente.get('email').touched 
+                                    || formCliente.get('email').dirty)" class="alert alert-danger">* El email no es válido.
                                         </div>
                                         <!--Fin Email -->
                                     </div>
@@ -80,7 +96,7 @@
                             <!--Botones-->
                             <div class="col-md-12" style="text-align: right" *ngIf="!show">
                                 <button type="button" class="btn btn-danger botones" style="background: #ff0000" data-toggle="modal" data-target="#modalSalir"> Cancelar </button> &nbsp;
-                                <button type="submit" class="btn btn-warning botones" style="background: #ff8800"> Guardar </button>
+                                <button type="submit" [disabled]="formCliente.invalid" class="btn btn-warning botones" style="background: #ff8800"> Guardar </button>
                             </div>
                             <div class="col-md-12" style="text-align: right" *ngIf="show">
                                 <button class="btn btn-warning botones" style="background: #ff8800" [routerLink]="['/profesional/clientes']"> Volver </button>
