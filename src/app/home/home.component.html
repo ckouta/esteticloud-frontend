@@ -96,16 +96,21 @@
     <!-- Footer Elements -->
     <div class="container">
         <!-- Call to action -->
-        <hr>
-        <ul class="list-unstyled list-inline text-center py-2">
-            <li class="list-inline-item">
-                <h5 class="mb-1">Regístrate gratis</h5>
-            </li>
-            <li class="list-inline-item">
-                <a [routerLink]="['/home/registro']" mdbBtn color="blue">¡Click aquí!</a>
-            </li>
-        </ul>
-        <hr>
+        <div *ngIf="!restService.hasRole('ROLE_CLIENT')">
+            <hr>
+            <ul class="list-unstyled list-inline text-center py-2">
+                <li class="list-inline-item">
+                    <h5 class="mb-1">Regístrate gratis</h5>
+                </li>
+                <li class="list-inline-item">
+                    <a [routerLink]="['/home/registro']" mdbBtn color="blue">¡Click aquí!</a>
+                </li>
+            </ul>
+            <hr>
+        </div>
+        <div *ngIf="restService.hasRole('ROLE_CLIENT')">
+            <br>
+        </div>
         <!-- Call to action -->
         <ul class="list-unstyled list-inline text-center py-2">
             <li class="list-inline-item">
@@ -228,7 +233,8 @@
                     <div class="md-form mb-5">
                         <i class="fas fa-envelope prefix grey-text"></i>
                         <input [(ngModel)]="usuario.username" type="email" id="defaultForm-email" class="form-control validate" name="username" autofocus required>
-                        <label data-error="error" data-success="correcto" for="defaultForm-email">Ingresa tu email</label>
+                        <label data-error="error" data-success="correcto" for="defaultForm-email">Ingresa tu
+                            email</label>
                         <div class="md-form mb-4">
                             <i class="fas fa-lock prefix grey-text"></i>
                             <input [(ngModel)]="usuario.password" type="password" id="defaultForm-pass" class="form-control validate" name="password" required>
