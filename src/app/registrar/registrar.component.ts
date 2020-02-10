@@ -71,4 +71,19 @@ export class RegistrarComponent implements OnInit {
     return null;
   }
 
+  regresar(){
+    Swal.fire({
+      title: '¿Estás seguro que deseas salir del formulario de registro?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar'   
+    }).then((result) => {
+      if (result.value) {
+        this.router.navigate(['']);
+      }
+    })
+  }
 }

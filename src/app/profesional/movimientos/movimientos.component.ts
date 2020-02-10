@@ -68,7 +68,8 @@ export class MovimientosComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Aceptar'
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar'  
     }).then((result) => {
       if (result.value) {
         this.restService.deleteMovimiento(id).subscribe((res: any[]) => {
