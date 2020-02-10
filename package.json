@@ -28,6 +28,7 @@
         "@fullcalendar/interaction": "^4.3.0",
         "@fullcalendar/timegrid": "^4.3.0",
         "@ng-bootstrap/ng-bootstrap": "^5.1.5",
+        "@ng-select/ng-select": "^3.7.2",
         "@types/fullcalendar": "^3.8.0",
         "@types/html2canvas": "0.0.35",
         "angular-bootstrap-md": "^8.8.1",

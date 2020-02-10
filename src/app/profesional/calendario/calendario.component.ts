@@ -21,6 +21,7 @@ import { HorarioPosible } from 'src/app/entidades/HorarioPosible';
 import { Reserva } from 'src/app/entidades/Reserva';
 import { esI18n } from 'src/app/esI18n';
 import { estado } from 'src/app/entidades/Estado';
+import { NgSelectConfig } from '@ng-select/ng-select';
 @Component({
   selector: 'app-calendario',
   templateUrl: './calendario.component.html',
@@ -55,7 +56,15 @@ export class CalendarioComponent implements OnInit {
   listEstado:any;
 
   constructor(public restService: RestService, private router: Router, private formBuilder: FormBuilder, private parseCalendar: NgbDateParserFormatter,
-    private calendar: NgbCalendar) {
+    private calendar: NgbCalendar, private config: NgSelectConfig) {
+      this.config.notFoundText = 'no Existe Coincidencia';
+      this.config.appendTo = 'body';
+      // set the bindValue to global config when you use the same 
+      // bindValue in most of the place. 
+      // You can also override bindValue for the specified template 
+      // by defining `bindValue` as property
+      // Eg : <ng-select bindValue="some-new-value"></ng-select>
+      this.config.bindValue = 'value';
     this.model = this.calendar.getToday();
     this.formReserva = this.formBuilder.group({
       id_reserva: [''],
