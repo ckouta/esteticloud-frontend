@@ -143,7 +143,8 @@ export class CalendarioComponent implements OnInit {
             start: this.horasProfesional[i].fecha + "T" + this.horasProfesional[i].bloque_horario.horaInicio,
             end: this.horasProfesional[i].fecha + "T" + this.horasProfesional[i].bloque_horario.horaFin,
             description: ""+this.horasProfesional[i].id_horarioProfesional,
-            backgroundColor: ""
+            backgroundColor: "",
+            borderColor: "#e9ecef"
           }
           estado = this.horasProfesional[i].reserva.estado_reserva;
           evento.backgroundColor= this.colorSegunEstado(estado.id_estado_reserva);
