@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RestService } from '../servicioBackend/rest.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Cliente } from '../entidades/Cliente';
 import { Usuario } from '../entidades/Usuario';
 import { Registro } from '../entidades/Registro';
@@ -25,7 +25,7 @@ export class RegistrarComponent implements OnInit {
       apellido: ['', [Validators.required, Validators.minLength(3)]],
       telefono: ['', [Validators.required, Validators.minLength(9),Validators.maxLength(9)]],
       email: ['', [Validators.required, Validators.email]],
-      rut: ['', [Validators.required, Validators.pattern(/^\d{1,2}\.\d{3}\.\d{3}[-][0-9kK]{1}$/)]],
+      rut: ['', [Validators.required, Validators.pattern(/^\d{1,2}\.\d{3}\.\d{3}[-][0-9kK]{1}$/),this.rutValidator]],
       password: ['', [Validators.required,Validators.minLength(6)]],
     });
     this.usuario = new Usuario();
@@ -34,6 +34,7 @@ export class RegistrarComponent implements OnInit {
 
   ngOnInit() {
   }
+  
   saveData() {
     console.log(this.formCliente.value);
     let cliente: Cliente = this.formCliente.value;
@@ -51,4 +52,23 @@ export class RegistrarComponent implements OnInit {
       Swal.fire('Solicitud rechazada', 'Hay errores al momento de generar la solicitud', 'error');
     })
   }
+
+  rutValidator(control: AbstractControl): { [key: string]: boolean } | null {
+   
+    
+    
+    if(control.value.length>11){
+      let dato = control.value.replace(/-/g,'').replace(/\./g,'');
+      let dv = dato.slice(dato.length-1);
+      dato= dato.substring(0,dato.length-1)
+      console.log(dato +" "+ dv);
+    }
+
+    
+    if (control.value > 18) {
+      return { 'age': true };
+    }
+    return null;
+  }
+
 }
