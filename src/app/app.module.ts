@@ -32,6 +32,7 @@ import { FilterPipe } from './pipe/search.pipe';
 import { InicioProfesionalComponent } from './profesional/inicio-profesional/inicio-profesional.component';
 import { ClienteReservaComponent } from './home/cliente-reserva/cliente-reserva.component';
 import { ReportesComponent } from './profesional/reportes/reportes.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 @NgModule({
   declarations: [
     AppComponent,
@@ -74,6 +75,7 @@ import { ReportesComponent } from './profesional/reportes/reportes.component';
     TableModule,
     IconsModule ,
     NgbModule,
+    NgSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]
