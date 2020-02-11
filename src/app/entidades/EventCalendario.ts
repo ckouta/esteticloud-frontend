@@ -3,5 +3,6 @@ export interface Evento {
     start: string,
     end: string,
     description: String,
-    backgroundColor: any
+    backgroundColor: any,
+    borderColor: any
 }

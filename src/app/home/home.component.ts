@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
   login(): void {
     console.log(this.usuario);
     if (this.usuario.username == null || this.usuario.password == null) {
-      Swal.fire('campos Vacios', 'Los campos están vacíos', 'error');
+      Swal.fire('Campos vacíos', 'Los campos están vacíos', 'error');
       return;
     }
     this.restService.login(this.usuario).subscribe(response => {

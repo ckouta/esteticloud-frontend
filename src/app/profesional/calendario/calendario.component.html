@@ -75,20 +75,20 @@
                     <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" (click)="d.toggle()" (change)="Select()" ngbDatepicker #d="ngbDatepicker">
                 </div>
                 <div class="">
+                    <label>Servicio:</label>
+                    <select [(ngModel)]="servicio" id="exampleFormControlSelect1" (change)="Select()" class="form-control">
+                        <option [ngValue]="0"> Ninguno seleccionado</option>
+                        <option *ngFor="let servicio of listaServicios" [ngValue]="servicio"> {{servicio.nombre}}
+                        </option>
+                    </select>
+                </div>
+                <div class="">
                     <label>Hora:</label>
                     <select [(ngModel)]="hora" id="horario" class="form-control">
                         <option [ngValue]="0"> Ninguno seleccionado</option>
                         <option *ngFor="let horas of bloquesPosibles" [ngValue]="horas"> Hora de
-                            inicio:{{horas.horaInicio}} Hora de Fin:{{horas.horaFin}}</option>
-                    </select>
-                    <div class="">
-                        <label>Servicio:</label>
-                        <select [(ngModel)]="servicio" id="exampleFormControlSelect1" (change)="Select()" class="form-control">
-                            <option [ngValue]="0"> Ninguno seleccionado</option>
-                            <option *ngFor="let servicio of listaServicios" [ngValue]="servicio"> {{servicio.nombre}}
-                            </option>
-                        </select>
-                    </div>
+                            inicio:{{horas.horaInicio}} - hora de fin:{{horas.horaFin}}</option>
+                    </select>                   
                 </div>
                 <div class="modal-footer">
                     <button type="button" (click)="save()" class="btn btn-primary">Guardar</button>

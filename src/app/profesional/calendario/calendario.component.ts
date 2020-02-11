@@ -152,30 +152,12 @@ export class CalendarioComponent implements OnInit {
             start: this.horasProfesional[i].fecha + "T" + this.horasProfesional[i].bloque_horario.horaInicio,
             end: this.horasProfesional[i].fecha + "T" + this.horasProfesional[i].bloque_horario.horaFin,
             description: ""+this.horasProfesional[i].id_horarioProfesional,
-            backgroundColor: ""
+            backgroundColor: "",
+            borderColor: "#e9ecef"
           }
           estado = this.horasProfesional[i].reserva.estado_reserva;
-          if(estado.id_estado_reserva==1){
-            evento.backgroundColor= '#08D2EF';
-          }else{
-            if(estado.id_estado_reserva==2){
-              evento.backgroundColor= '#08EF24';
-            }else{
-              if(estado.id_estado_reserva==3){
-                evento.backgroundColor= '#EF9808';
-              }else{
-                if(estado.id_estado_reserva==4){
-                  evento.backgroundColor= '#EF5E08';
-                }else{
-                  if(estado.id_estado_reserva==5){
-                    evento.backgroundColor= '#D3EF08';
-                  }else{
-                    evento.backgroundColor= '#EF2408';              
-                  }             
-                }
-              }
-            }
-          }
+          evento.backgroundColor= this.colorSegunEstado(estado.id_estado_reserva);
+          
         }
         if (i == this.horasProfesional.length) {//si ya es el ultimo ciclo agrega el evento
           calendar.addEvent(evento);
@@ -191,35 +173,36 @@ export class CalendarioComponent implements OnInit {
             start: this.horasProfesional[i].fecha + "T" + this.horasProfesional[i].bloque_horario.horaInicio,
             end: this.horasProfesional[i].fecha + "T" + this.horasProfesional[i].bloque_horario.horaFin,
             description: ""+this.horasProfesional[i].id_horarioProfesional,
-            backgroundColor: ""
+            backgroundColor: "",
+            borderColor:"#e9ecef"
           }
           estado = this.horasProfesional[i].reserva.estado_reserva;
-          if(estado.id_estado_reserva==1){
-            evento.backgroundColor= '#08D2EF';
-          }else{
-            if(estado.id_estado_reserva==2){
-              evento.backgroundColor= '#08EF24';
-            }else{
-              if(estado.id_estado_reserva==3){
-                evento.backgroundColor= '#EF9808';
-              }else{
-                if(estado.id_estado_reserva==4){
-                  evento.backgroundColor= '#EF5E08';
-                }else{
-                  if(estado.id_estado_reserva==5){
-                    evento.backgroundColor= '#D3EF08';
-                  }else{
-                    evento.backgroundColor= '#EF2408';              
-                  }             
-                }
-              }
-            }
-          }
+          evento.backgroundColor= this.colorSegunEstado(estado.id_estado_reserva);
+
         }
 
       }
     });
 
+  }
+  /**
+   * Retorna un strign del color hexadecimal (#rrggbb) de acuerdo al id del estado
+   */
+  colorSegunEstado(estado: Number){
+    switch (estado) {
+      case 1:       
+        return '#08D2EF';
+      case 2:       
+        return '#08EF24';
+      case 3:       
+        return '#EF9808';
+      case 4:       
+        return '#EF5E08';  
+      case 5:       
+        return '#D3EF08';
+      default:
+        return '#EF2408';
+    }
   }
   handleDateClick(arg) { // handler method
     this.display = 'block';
@@ -309,6 +292,15 @@ save() {
         console.log(res);
       })
     });
+   
+    Swal.fire('Solicitud aceptada', 'La reserva ha sido agregada', 'success');
+      this.display = 'none';
+      return this.router.navigate(['profesional/reserva'])
+      
+    }
+    ,err =>{
+        Swal.fire('Solicitud rechazada', 'La reserva no se pudo agregar', 'error');
+      
   })
 }
 actualizarEstadoReserva(){
