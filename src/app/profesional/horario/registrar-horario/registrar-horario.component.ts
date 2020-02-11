@@ -6,6 +6,7 @@ import { RangoFecha } from 'src/app/entidades/RangoFecha';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { esI18n } from 'src/app/esI18n';
+import { Bloque } from 'src/app/entidades/Bloque_horario';
 
 
 @Component({
@@ -17,23 +18,23 @@ import { esI18n } from 'src/app/esI18n';
   styleUrls: ['./registrar-horario.component.css'],
 })
 export class RegistrarHorarioComponent implements OnInit {
-  isDisabled = (date: NgbDate, current: {month: number}) => date.day < this.fromDate.day && date.month<= this.fromDate.month;
+  isDisabled = (date: NgbDate, current: {month: number}) => date.day < this.Dia.day && date.month<= this.Dia.month;
   minDate;
   hoveredDate: NgbDate;
   horaInicioLunes: string;
-  horaFinLunes: string;
+  horaFinLunes: string = null;
   horaInicioMartes: string;
-  horaFinMartes: string;
+  horaFinMartes: string = null;
   horaInicioMiercoles: string;
-  horaFinMiercoles: string;
+  horaFinMiercoles: string = null;
   horaInicioJueves: string;
-  horaFinJueves: string;
+  horaFinJueves: string = null;
   horaInicioViernes: string;
-  horaFinViernes: string;
+  horaFinViernes: string = null;
   horaInicioSabado: string;
-  horaFinSabado: string;
+  horaFinSabado: string = null;
   horaInicioDomingo: string;
-  horaFinDomingo: string;
+  horaFinDomingo: string = null;
   checklunes: boolean = true;
   checkmartes: boolean= true;
   checkmiercoles: boolean= true;
@@ -42,11 +43,20 @@ export class RegistrarHorarioComponent implements OnInit {
   checksabado: boolean= true;
   checkdomingo: boolean= true;
   fromDate: NgbDate;
+  Dia: NgbDate;
   toDate: NgbDate;
+  listBloquesLunes: Bloque[] = [] ;
+  listBloquesMartes: Bloque[] = [] ;
+  listBloquesMiercoles: Bloque[] = [] ;
+  listBloquesJueves: Bloque[] = [] ;
+  listBloquesViernes: Bloque[] = [] ;
+  listBloquesSabado: Bloque[] = [] ;
+  listBloquesDomingo: Bloque[] = [] ;
 
   lunes: number = new Date().getDay();
   constructor(public restService: RestService, private calendar: NgbCalendar, private parseCalendar: NgbDateParserFormatter, private dia: NgbDatepickerI18n, private router: Router) {
     this.fromDate = calendar.getToday();
+    this.Dia = calendar.getToday();
     this.minDate = {year: this.fromDate.year, month: this.fromDate.month, day: 1};
 
   }
@@ -182,8 +192,69 @@ export class RegistrarHorarioComponent implements OnInit {
         });
         Swal.fire('Horario registrado', 'el horario fue agregado ', 'success');
         this.router.navigate(['profesional/horario']);
-      console.log(listaFecha);
     }
   }
-
+  limitarLunes(){
+    this.listBloquesLunes=[];
+    this.restService.listaBloque.forEach(element => {
+      if(element.diaSemana == "1" && element.horaInicio >= this.horaInicioLunes){
+        this.listBloquesLunes.push(element);
+      }
+    });
+    this.horaFinLunes = null;
+  }
+  limitarMartes(){
+    this.listBloquesMartes=[];
+    this.restService.listaBloque.forEach(element => {
+      if(element.diaSemana == "2" && element.horaInicio >= this.horaInicioMartes){
+        this.listBloquesMartes.push(element);
+      }
+    });
+    this.horaFinMartes = null;
+  }
+  limitarMiercoles(){
+    this.listBloquesMiercoles=[];
+    this.restService.listaBloque.forEach(element => {
+      if(element.diaSemana == "3" && element.horaInicio >= this.horaInicioMiercoles){
+        this.listBloquesMiercoles.push(element);
+      }
+    });
+    this.horaFinMiercoles = null;
+  }
+  limitarJueves(){
+    this.listBloquesJueves=[];
+    this.restService.listaBloque.forEach(element => {
+      if(element.diaSemana == "4" && element.horaInicio >= this.horaInicioJueves){
+        this.listBloquesJueves.push(element);
+      }
+    });
+    this.horaFinJueves = null;
+  }
+  limitarViernes(){
+    this.listBloquesJueves=[];
+    this.restService.listaBloque.forEach(element => {
+      if(element.diaSemana == "5" && element.horaInicio >= this.horaInicioViernes){
+        this.listBloquesViernes.push(element);
+      }
+    });
+    this.horaFinViernes = null;
+  }
+   limitarSabado(){
+    this.listBloquesJueves=[];
+    this.restService.listaBloque.forEach(element => {
+      if(element.diaSemana == "6" && element.horaInicio >= this.horaInicioSabado){
+        this.listBloquesSabado.push(element);
+      }
+    });
+    this.horaFinSabado = null;
+  }
+  limitarDomingo(){
+    this.listBloquesJueves=[];
+    this.restService.listaBloque.forEach(element => {
+      if(element.diaSemana == "0" && element.horaInicio >= this.horaInicioDomingo){
+        this.listBloquesDomingo.push(element);
+      }
+    });
+    this.horaFinDomingo = null;
+  }
 }

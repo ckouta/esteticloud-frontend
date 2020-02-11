@@ -39,7 +39,7 @@
                         <p style="margin-bottom: 4%;">
                             <b>Hora de inicio:</b>
                         </p>
-                        <select [(ngModel)]="horaInicioLunes" [disabled]="!checklunes" class="form-control" id="exampleFormControlSelect1">
+                        <select [(ngModel)]="horaInicioLunes" [disabled]="!checklunes" class="form-control" id="exampleFormControlSelect1" (change)="limitarLunes()">
                             <option> Ninguno seleccionado</option>
                             <ng-container *ngFor="let horario of this.restService.listaBloque">
                                 <option *ngIf="horario.diaSemana==1"> {{horario.horaInicio}}</option>
@@ -51,8 +51,8 @@
                             <b>Hora de fin:</b>
                         </p>
                         <select [(ngModel)]="horaFinLunes" [disabled]="!checklunes" class="form-control" id="exampleFormControlSelect1">
-                            <option> Ninguno seleccionado</option>
-                            <ng-container *ngFor="let horario of this.restService.listaBloque">
+                            <option [ngValue]="null"> Ninguno seleccionado</option>
+                            <ng-container *ngFor="let horario of listBloquesLunes">
                                 <option *ngIf="horario.diaSemana==1 "> {{horario.horaFin}}</option>
                             </ng-container>
                         </select>
@@ -69,10 +69,10 @@
                         <p style="margin-bottom: 4%;">
                             <b>Hora de inicio:</b>
                         </p>
-                        <select [(ngModel)]="horaInicioMartes" [disabled]="!checkmartes" class="form-control" id="exampleFormControlSelect1">
+                        <select [(ngModel)]="horaInicioMartes" [disabled]="!checkmartes" class="form-control" id="exampleFormControlSelect1" (change)="limitarMartes()">
                             <option> Ninguno seleccionado</option>
                             <ng-container *ngFor="let horario of this.restService.listaBloque">
-                                <option *ngIf="horario.diaSemana==1"> {{horario.horaInicio}}</option>
+                                <option *ngIf="horario.diaSemana==2"> {{horario.horaInicio}}</option>
                             </ng-container>
                         </select>
                     </div>
@@ -81,9 +81,9 @@
                             <b>Hora de fin:</b>
                         </p>
                         <select [(ngModel)]="horaFinMartes" [disabled]="!checkmartes" class="form-control" id="exampleFormControlSelect1">
-                            <option> Ninguno seleccionado</option>
-                            <ng-container *ngFor="let horario of this.restService.listaBloque">
-                                <option *ngIf="horario.diaSemana==1"> {{horario.horaFin}}</option>
+                            <option [ngValue]="null"> Ninguno seleccionado</option>
+                            <ng-container *ngFor="let horario of listBloquesMartes">
+                                <option *ngIf="horario.diaSemana==2"> {{horario.horaFin}}</option>
                             </ng-container>
                         </select>
                     </div>
@@ -99,7 +99,7 @@
                         <p style="margin-bottom: 4%;">
                             <b>Hora de inicio:</b>
                         </p>
-                        <select [(ngModel)]="horaInicioMiercoles" [disabled]="!checkmiercoles" class="form-control" id="exampleFormControlSelect1">
+                        <select [(ngModel)]="horaInicioMiercoles" [disabled]="!checkmiercoles" class="form-control" id="exampleFormControlSelect1" (change)="limitarMiercoles()">
                             <option> Ninguno seleccionado</option>
                             <ng-container *ngFor="let horario of this.restService.listaBloque">
                                 <option *ngIf="horario.diaSemana==1"> {{horario.horaInicio}}</option>
@@ -111,9 +111,9 @@
                             <b>Hora de fin:</b>
                         </p>
                         <select [(ngModel)]="horaFinMiercoles" [disabled]="!checkmiercoles" class="form-control" id="exampleFormControlSelect1">
-                            <option> Ninguno seleccionado</option>
-                            <ng-container *ngFor="let horario of this.restService.listaBloque">
-                                <option *ngIf="horario.diaSemana==1"> {{horario.horaFin}}</option>
+                            <option [ngValue]="null"> Ninguno seleccionado</option>
+                            <ng-container *ngFor="let horario of listBloquesMiercoles">
+                                <option *ngIf="horario.diaSemana==3"> {{horario.horaFin}}</option>
                             </ng-container>
                         </select>
                     </div>
@@ -129,7 +129,7 @@
                         <p style="margin-bottom: 4%;">
                             <b>Hora de inicio:</b>
                         </p>
-                        <select [(ngModel)]="horaInicioJueves" [disabled]="!checkjueves" class="form-control" id="exampleFormControlSelect1">
+                        <select [(ngModel)]="horaInicioJueves" [disabled]="!checkjueves" class="form-control" id="exampleFormControlSelect1" (change)="limitarJueves()">
                             <option> Ninguno seleccionado</option>
                             <ng-container *ngFor="let horario of this.restService.listaBloque">
                                 <option *ngIf="horario.diaSemana==1"> {{horario.horaInicio}}</option>
@@ -141,9 +141,9 @@
                             <b>Hora de fin:</b>
                         </p>
                         <select [(ngModel)]="horaFinJueves" [disabled]="!checkjueves" class="form-control" id="exampleFormControlSelect1">
-                            <option> Ninguno seleccionado</option>
-                            <ng-container *ngFor="let horario of this.restService.listaBloque">
-                                <option *ngIf="horario.diaSemana==1"> {{horario.horaFin}}</option>
+                            <option [ngValue]="null"> Ninguno seleccionado</option>
+                            <ng-container *ngFor="let horario of listBloquesJueves">
+                                <option *ngIf="horario.diaSemana==4"> {{horario.horaFin}}</option>
                             </ng-container>
                         </select>
                     </div>
@@ -159,7 +159,7 @@
                         <p style="margin-bottom: 4%;">
                             <b>Hora de inicio:</b>
                         </p>
-                        <select [(ngModel)]="horaInicioViernes" [disabled]="!checkviernes" class="form-control" id="exampleFormControlSelect1">
+                        <select [(ngModel)]="horaInicioViernes" [disabled]="!checkviernes" class="form-control" id="exampleFormControlSelect1" (change)="limitarViernes()">
                             <option> Ninguno seleccionado</option>
                             <ng-container *ngFor="let horario of this.restService.listaBloque">
                                 <option *ngIf="horario.diaSemana==1"> {{horario.horaInicio}}</option>
@@ -171,9 +171,9 @@
                             <b>Hora de fin:</b>
                         </p>
                         <select [(ngModel)]="horaFinViernes" [disabled]="!checkviernes" class="form-control" id="exampleFormControlSelect1">
-                            <option> Ninguno seleccionado</option>
-                            <ng-container *ngFor="let horario of this.restService.listaBloque">
-                                <option *ngIf="horario.diaSemana==1"> {{horario.horaFin}}</option>
+                            <option [ngValue]="null"> Ninguno seleccionado</option>
+                            <ng-container *ngFor="let horario of listBloquesViernes">
+                                <option *ngIf="horario.diaSemana==5"> {{horario.horaFin}}</option>
                             </ng-container>
                         </select>
                     </div>
@@ -189,7 +189,7 @@
                         <p style="margin-bottom: 4%;">
                             <b>Hora de inicio:</b>
                         </p>
-                        <select [(ngModel)]="horaInicioSabado" [disabled]="!checksabado" class="form-control" id="exampleFormControlSelect1">
+                        <select [(ngModel)]="horaInicioSabado" [disabled]="!checksabado" class="form-control" id="exampleFormControlSelect1" (change)="limitarSabado()">
                             <option> Ninguno seleccionado</option>
                             <ng-container *ngFor="let horario of this.restService.listaBloque">
                                 <option *ngIf="horario.diaSemana==1"> {{horario.horaInicio}}</option>
@@ -201,9 +201,9 @@
                             <b>Hora de Fin</b>
                         </p>
                         <select [(ngModel)]="horaFinSabado" [disabled]="!checksabado" class="form-control" id="exampleFormControlSelect1">
-                            <option> Ninguno seleccionado</option>
-                            <ng-container *ngFor="let horario of this.restService.listaBloque">
-                                <option *ngIf="horario.diaSemana==1"> {{horario.horaFin}}</option>
+                            <option [ngValue]="null"> Ninguno seleccionado</option>
+                            <ng-container *ngFor="let horario of listBloquesSabado">
+                                <option *ngIf="horario.diaSemana==6"> {{horario.horaFin}}</option>
                             </ng-container>
                         </select>
                     </div>
@@ -219,7 +219,7 @@
                         <p style="margin-bottom: 4%;">
                             <b>Hora de inicio:</b>
                         </p>
-                        <select [(ngModel)]="horaInicioDomingo" [disabled]="!checkdomingo" class="form-control" id="exampleFormControlSelect1">
+                        <select [(ngModel)]="horaInicioDomingo" [disabled]="!checkdomingo" class="form-control" id="exampleFormControlSelect1" (change)="limitarDomingo()">
                             <option> Ninguno seleccionado</option>
                             <ng-container *ngFor="let horario of this.restService.listaBloque">
                                 <option *ngIf="horario.diaSemana==1"> {{horario.horaInicio}}</option>
@@ -231,9 +231,9 @@
                             <b>Hora de fin:</b>
                         </p>
                         <select [(ngModel)]="horaFinDomingo" [disabled]="!checkdomingo" class="form-control" id="exampleFormControlSelect1">
-                            <option> Ninguno seleccionado</option>
-                            <ng-container *ngFor="let horario of this.restService.listaBloque">
-                                <option *ngIf="horario.diaSemana==1"> {{horario.horaFin}}</option>
+                            <option [ngValue]="null"> Ninguno seleccionado</option>
+                            <ng-container *ngFor="let horario of listBloquesDomingo">
+                                <option *ngIf="horario.diaSemana==0"> {{horario.horaFin}}</option>
                             </ng-container>
                         </select>
                     </div>
