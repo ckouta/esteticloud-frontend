@@ -17,7 +17,7 @@
 
                 </div>
                 <div class="row">
-                    <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden">
+                    <ngb-datepicker #dp (select)="onDateSelection($event)" [minDate]="minDate" [maxDate]="{year: 2048, month: 12, day: 31}" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden" [markDisabled]="isDisabled">
                     </ngb-datepicker>
 
                     <ng-template #t let-date let-focused="focused">
@@ -53,7 +53,7 @@
                         <select [(ngModel)]="horaFinLunes" [disabled]="!checklunes" class="form-control" id="exampleFormControlSelect1">
                             <option> Ninguno seleccionado</option>
                             <ng-container *ngFor="let horario of this.restService.listaBloque">
-                                <option *ngIf="horario.diaSemana==1"> {{horario.horaFin}}</option>
+                                <option *ngIf="horario.diaSemana==1 "> {{horario.horaFin}}</option>
                             </ng-container>
                         </select>
                     </div>

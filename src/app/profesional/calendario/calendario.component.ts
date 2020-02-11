@@ -57,7 +57,7 @@ export class CalendarioComponent implements OnInit {
 
   constructor(public restService: RestService, private router: Router, private formBuilder: FormBuilder, private parseCalendar: NgbDateParserFormatter,
     private calendar: NgbCalendar, private config: NgSelectConfig) {
-      this.config.notFoundText = 'no Existe Coincidencia';
+      this.config.notFoundText = 'No hay coincidencias';
       this.config.appendTo = 'body';
       // set the bindValue to global config when you use the same 
       // bindValue in most of the place. 
@@ -284,7 +284,7 @@ bloquesHorario() {
       if (this.listaHoras[i + j].reserva != null) {
         break;
       }
-      if (this.listaHoras[i + j + 1] == null || this.listaHoras[i + j].bloque_horario.horaFin != this.listaHoras[i + j + 1].bloque_horario.horaInicio) {
+      if (this.listaHoras[i + j + 1].reserva != null || this.listaHoras[i + j].bloque_horario.horaFin != this.listaHoras[i + j + 1].bloque_horario.horaInicio) {
         break;
       }
       bloque.horarioProfesional.push(this.listaHoras[i + j]);

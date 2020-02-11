@@ -17,7 +17,8 @@ import { esI18n } from 'src/app/esI18n';
   styleUrls: ['./registrar-horario.component.css'],
 })
 export class RegistrarHorarioComponent implements OnInit {
-
+  isDisabled = (date: NgbDate, current: {month: number}) => date.day < this.fromDate.day && date.month<= this.fromDate.month;
+  minDate;
   hoveredDate: NgbDate;
   horaInicioLunes: string;
   horaFinLunes: string;
@@ -46,6 +47,7 @@ export class RegistrarHorarioComponent implements OnInit {
   lunes: number = new Date().getDay();
   constructor(public restService: RestService, private calendar: NgbCalendar, private parseCalendar: NgbDateParserFormatter, private dia: NgbDatepickerI18n, private router: Router) {
     this.fromDate = calendar.getToday();
+    this.minDate = {year: this.fromDate.year, month: this.fromDate.month, day: 1};
 
   }
   ngOnInit() {

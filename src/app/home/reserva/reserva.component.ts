@@ -107,7 +107,7 @@ export class ReservaComponent  implements OnInit, OnChanges {
         if (this.horasProfesional[i + j].reserva != null) {
           break;
         }
-        if (this.horasProfesional[i + j + 1] == null || this.horasProfesional[i + j].bloque_horario.horaFin != this.horasProfesional[i + j + 1].bloque_horario.horaInicio) {
+        if (this.horasProfesional[i + j + 1].reserva != null || this.horasProfesional[i + j].bloque_horario.horaFin != this.horasProfesional[i + j + 1].bloque_horario.horaInicio) {
           break;
         }
         bloque.horarioProfesional.push(this.horasProfesional[i + j]);
