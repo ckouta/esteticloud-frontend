@@ -23,8 +23,8 @@ import { estado } from '../entidades/Estado';
 })
 export class RestService {
 
-  private URL = 'http://parra.chillan.ubiobio.cl:8080/alvaro.castillo1501';
-  //private URL = 'http://localhost:8080';
+  //private URL = 'http://parra.chillan.ubiobio.cl:8080/alvaro.castillo1501';
+  private URL = 'http://localhost:8080';
   listaProfesional: Profesional[];
   listaServicio: Servicio[];
   listaBloque: Bloque[];
@@ -75,6 +75,9 @@ export class RestService {
   getListaCliente() {
     return this.http.get(this.URL + '/cliente/', { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as Cliente[]));
   }
+  getListaServicioAnteriores(id:number) {
+    return this.http.get(this.URL + '/cliente/servicio/'+ id, { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as Reserva[]));
+  }
   getCliente(correo: string) {
     return this.http.get(this.URL + '/cliente/' + correo, { headers: this.agregarAuthorizationHeader() }).pipe(map((res) => res as Cliente));
   }
@@ -86,6 +89,9 @@ export class RestService {
   }
   updateCliente(id: number, cliente: Cliente) {
     return this.http.put(this.URL + '/cliente/update/' + id, cliente, { headers: this.agregarAuthorizationHeader() });
+  }
+  updateContrasena( usuario: Registro) {
+    return this.http.put(this.URL + '/cliente/updateContraseña' , usuario,  { headers: this.agregarAuthorizationHeader() });
   }
   deleteCliente(id: number) {
     return this.http.delete(this.URL + '/cliente/delete/' + id, { headers: this.agregarAuthorizationHeader() });

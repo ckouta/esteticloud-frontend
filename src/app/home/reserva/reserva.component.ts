@@ -43,6 +43,7 @@ export class ReservaComponent  implements OnInit, OnChanges {
   esteticista: any = 0;
   hora: any = 0;
   reserva: Reserva;
+  listReservasAnteriores: Reserva[];
   constructor(public restService: RestService,
     private calendar: NgbCalendar,
     private ngbDatepickerI18n: NgbDatepickerI18n,
@@ -71,6 +72,11 @@ export class ReservaComponent  implements OnInit, OnChanges {
     this.restService.getListaProfesional().subscribe((res: any[]) => {
       this.listProfesionales = res;
     });
+    this.restService.getCliente(this.restService.usuario.username).subscribe(res => {
+      this.restService.getListaServicioAnteriores(res.id_cliente).subscribe(respuesta =>{
+        this.listReservasAnteriores = respuesta;
+      })
+    })
   }
   ngOnChanges() {
 

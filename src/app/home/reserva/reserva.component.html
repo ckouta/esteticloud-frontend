@@ -27,11 +27,15 @@
                     </div>
                     <select [(ngModel)]="esteticista" class="form-control" id="exampleFormControlSelect1" style="margin-top: 5%;" (ngModelChange)="serviciosofrecidos()">
                         <option  [ngValue]="0"  > Ninguno seleccionado</option>
-                        <option *ngFor="let profesional of listProfesionales" [ngValue]="profesional" > {{profesional.nombre}}</option>                       
+                        <option *ngFor="let profesional of listProfesionales" [ngValue]="profesional" > {{profesional.nombre}} {{profesional.apellido}}</option>                       
                     </select>
                     <h5 style="margin-bottom: 4%; margin-top: 30%;">Servicios anteriores</h5>
-                    <div class="hr">
-
+                    <div *ngFor="let reserva of listServicios">
+                        <a (click)="press(servicio)">
+                            <div class="media-body">
+                                <p class="mt-0"><b>{{servicio.nombre}}</b></p>
+                            </div>
+                        </a>
                     </div>
 
                 </div>
