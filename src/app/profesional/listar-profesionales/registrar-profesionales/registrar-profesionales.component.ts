@@ -119,7 +119,7 @@ export class RegistrarProfesionalesComponent implements OnInit {
 
   saveData() {
 
-    if (this.formProduct.getRawValue().id_profesional == null) {
+    if (!this.formProduct.getRawValue().id_profesional) {
       let profesional: Profesional = this.formProduct.value;
       this.usuario.username = profesional.email;
       this.usuario.password = this.formProduct.get("password").value;
