@@ -38,10 +38,6 @@
         <li class="" *ngIf="!restService.hasRole('ROLE_CLIENT')">
             <a [routerLink]="['/home/registro']" class="navbar-tile" title="Regístrate">Regístrate</a>
         </li>
-        <li class="" *ngIf="restService.hasRole('ROLE_CLIENT')">
-            <a [routerLink]="['/home/misReservas']" class="navbar-tile" title="Regístrate">
-                <i class="far fa-address-card"></i> Mis reservas</a>
-        </li>
 
         <li class="" id="espacio" *ngIf="!restService.hasRole('ROLE_CLIENT')"></li>
 
@@ -50,14 +46,19 @@
         </li>
         <li class="" *ngIf="restService.hasRole('ROLE_CLIENT')">
             <div class="btn-group" mdbDropdown>
-                <button mdbDropdownToggle type="button" mdbBtn color="secondary" class="dropdown-toggle waves-light" mdbWavesEffect>
+                <button mdbDropdownToggle mdbBtn type="button" mdbBtn color="secondary" class="dropdown-toggle waves-light" mdbWavesEffect>
                     Mi cuenta
                 </button>
 
-                <div class="dropdown-menu dropdown-secondary" style="background-color: #aa66cc;">
+                <div class="dropdown-menu " style="background-color: #aa66cc;">
                     <a class="dropdown-item" (click)="cerrarSesion()">Cerrar sesión</a>
+                    <a class="dropdown-item" data-toggle="modal" data-target="#exampleModal">Cambiar contraseña</a>
                 </div>
             </div>
+        </li>
+        <li class="" *ngIf="restService.hasRole('ROLE_CLIENT')">
+            <a [routerLink]="['/home/misReservas']" class="navbar-tile" title="Regístrate">
+                <i class="far fa-address-card"></i> Mis reservas</a>
         </li>
 
     </ul>
@@ -248,6 +249,39 @@
                         </div>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div [hidden]="IsmodelShow2" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Cambiar contraseña</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body mx-3">
+                <div class="md-form mb-4">
+                    <div class="md-form">
+                        <i class="fas fa-key prefix"></i>
+                        <input [(ngModel)]="contrasenaActual" type="password" id="actual" class="form-control">
+                        <label for="actual">Contraseña actual</label>
+                    </div>
+                    <div class="md-form">
+                        <i class="fas fa-key prefix"></i>
+                        <input [(ngModel)]="cambioContrasena.nuevaContrasena" type="password" id="nueva" class="form-control">
+                        <label for="nueva">Contraseña nueva</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" (click)="cambiarContrasena()">Guardar</button>
             </div>
         </div>
     </div>

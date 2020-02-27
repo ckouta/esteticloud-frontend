@@ -138,6 +138,7 @@ export class ReportesComponent implements OnInit {
     //exportacion 
     this.chart2.exporting.menu = new am4core.ExportMenu();
     this.chart2.exporting.title = "Reporte de Servicios";
+    this.chart2.exporting.filePrefix ="reporte";
     this.chart2.exporting.menu.items = [{
       "label": "<i class=\"fas fa-align-justify\"></i>",
       "menu": [
@@ -164,6 +165,7 @@ export class ReportesComponent implements OnInit {
         })
       });
       this.chart.data = data;
+      this.show = true;
     })
     // Create axes
     let categoryAxis = this.chart.xAxes.push(new am4charts.CategoryAxis());
@@ -184,6 +186,7 @@ export class ReportesComponent implements OnInit {
     //exportacion 
     this.chart.exporting.menu = new am4core.ExportMenu();
     this.chart.exporting.title = "Reporte de Servicios";
+    this.chart.exporting.filePrefix ="reporte";
     this.chart.exporting.menu.items = [{
       "label": "<i class=\"fas fa-align-justify\"></i>",
       "menu": [
@@ -246,8 +249,10 @@ export class ReportesComponent implements OnInit {
         "country": "Ausente Cliente",
         "visits": ausente
       }]
+      this.show = true;
     }, err => {
       this.reservas = [];
+      
     })
     // Create axes
     let categoryAxis = this.chart3.xAxes.push(new am4charts.CategoryAxis());
@@ -268,6 +273,7 @@ export class ReportesComponent implements OnInit {
     //exportacion 
     this.chart3.exporting.menu = new am4core.ExportMenu();
     this.chart3.exporting.title = "Reporte de Servicios";
+    this.chart3.exporting.filePrefix ="reporte";
     this.chart3.exporting.menu.items = [{
       "label": "<i class=\"fas fa-align-justify\"></i>",
       "menu": [
@@ -307,6 +313,7 @@ export class ReportesComponent implements OnInit {
         "country": "Gastos",
         "visits": gastos*-1
       }]
+      this.show = true;
     }, err => {
       this.movimientos = [];
     })
@@ -329,6 +336,7 @@ export class ReportesComponent implements OnInit {
     //exportacion 
     this.chart4.exporting.menu = new am4core.ExportMenu();
     this.chart4.exporting.title = "Reporte de Servicios";
+    this.chart4.exporting.filePrefix ="reporte";
     this.chart4.exporting.menu.items = [{
       "label": "<i class=\"fas fa-align-justify\"></i>",
       "menu": [

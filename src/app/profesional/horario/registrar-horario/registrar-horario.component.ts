@@ -66,6 +66,8 @@ export class RegistrarHorarioComponent implements OnInit {
     }
     this.restService.getProfesionalCorreo(this.restService.usuario.username).subscribe((res: any) => {
       this.restService.profesional = res;
+    }, err =>{
+      this.router.navigate(['login']);
     })
     this.restService.getListabloques().subscribe((res: any[]) => {
       this.restService.listaBloque = res;

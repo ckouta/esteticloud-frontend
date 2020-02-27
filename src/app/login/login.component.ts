@@ -33,11 +33,14 @@ export class LoginComponent implements OnInit {
       console.log(response);
     this.restService.guardarUsuario(response.access_token);
     this.restService.guardarToken(response.access_token);
-    this.router.navigate(['profesional']);
-    }, err =>{
-      if(err.status==400){
+    if(this.restService.hasRole('ROLE_CLIENT')){
+        this.restService.logout();
         Swal.fire('Credenciales incorrectas', 'Las credenciales no coinciden', 'error');
-      }
+    }else{
+      this.router.navigate(['profesional']);
+    }
+    }, err =>{
+        Swal.fire('Credenciales incorrectas', 'Las credenciales no coinciden', 'error');
     }
     )
   }

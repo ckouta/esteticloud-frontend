@@ -64,11 +64,10 @@
             </div>
             <div class="modal-body">
                 <div class="">
-                    <label>Cliente:</label>
-                    <select [(ngModel)]="cliente" id="exampleFormControlSelect1" class="form-control">
-                        <option [ngValue]="0"> Ninguno seleccionado</option>
-                        <option *ngFor="let cliente of listaClientes" [ngValue]="cliente"> {{cliente.nombre}}</option>
-                    </select>
+                    <label> Rut del cliente:</label>
+                    <ng-select [items]="listaClientes" bindLabel="rut" autofocus bindValue="id_cliente" [(ngModel)]="idCliente" (change)="test()">
+                    </ng-select>
+                    <label><b>Nombre cliente: </b>{{cliente.nombre}} {{cliente.apellido}}</label>
                 </div>
                 <div class="">
                     <label for="exampleForm2">Fecha:</label>
@@ -88,7 +87,7 @@
                         <option [ngValue]="0"> Ninguno seleccionado</option>
                         <option *ngFor="let horas of bloquesPosibles" [ngValue]="horas"> Hora de
                             inicio:{{horas.horaInicio}} - hora de fin:{{horas.horaFin}}</option>
-                    </select>                   
+                    </select>
                 </div>
                 <div class="modal-footer">
                     <button type="button" (click)="save()" class="btn btn-primary">Guardar</button>

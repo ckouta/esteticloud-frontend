@@ -6,4 +6,5 @@ import { Usuario } from './Usuario';
     usuario : Usuario;
     cliente: Cliente;
     profesional: Profesional;
+    nuevaContrasena: string;
    }

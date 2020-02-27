@@ -26,8 +26,16 @@
             <li class="nav-item" routerLinkActive="active" *ngIf="restService.hasRole('ROLE_ADMIN')">
                 <a [routerLink]="['/profesional/reportes']" class="nav-link"><i class="far fa-chart-bar"></i>Reportes</a>
             </li>
-            <li class="nav-item">
-                <a [routerLink]="['']" (click)="cerrarSesion()" class="nav-link"><i class="fas fa-sign-out-alt"></i>Cerrar sesión</a>
+            <li class="nav-item" routerLinkActive="active">
+                <div class="nav-item" mdbDropdown>
+                    <a mdbDropdownToggle type="button" color="secondary" class="dropdown-toggle waves-light nav-link" mdbWavesEffect style="background-color: rgba(170, 102, 204, 0)!important"><i class="fas fa-user-cog"></i>
+                        Mi cuenta
+                    </a>
+                    <div class="dropdown-menu " style="background-color: #aa66cc;">
+                        <a [routerLink]="['']" (click)="cerrarSesion()" class="nav-link">Cerrar sesión</a>
+                        <a class="nav-link" data-toggle="modal" data-target="#exampleModal">Cambiar contraseña</a>
+                    </div>
+                </div>
             </li>
         </ul>
     </div>
@@ -37,4 +45,34 @@
 </div>
 <div>
     <router-outlet></router-outlet>
+</div>
+<div [hidden]="IsmodelShow2" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Cambiar contraseña</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body mx-3">
+                <div class="md-form mb-4">
+                    <div class="md-form">
+                        <i class="fas fa-key prefix"></i>
+                        <input [(ngModel)]="contrasenaActual" type="password" id="actual" class="form-control">
+                        <label for="actual">Contraseña actual</label>
+                    </div>
+                    <div class="md-form">
+                        <i class="fas fa-key prefix"></i>
+                        <input [(ngModel)]="cambioContrasena.nuevaContrasena" type="password" id="nueva" class="form-control">
+                        <label for="nueva">Contraseña nueva</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" (click)="cambiarContrasena()">Guardar</button>
+            </div>
+        </div>
+    </div>
 </div>

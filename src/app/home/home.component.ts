@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { RestService } from '../servicioBackend/rest.service';
 import Swal from 'sweetalert2';
 import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
+import { Registro } from '../entidades/Registro';
 
 @Component({
   selector: 'app-home',
@@ -14,8 +15,13 @@ export class HomeComponent implements OnInit {
   usuario: Usuario;
   modalRef: MDBModalRef;
   IsmodelShow: boolean = false;
+  IsmodelShow2: boolean = false;
+  cambioContrasena: Registro;
+  contrasenaActual: string;
   constructor(private router: Router, public restService: RestService, private modalService: MDBModalService) {
     this.usuario = new Usuario();
+    this.cambioContrasena = new Registro();
+    this.cambioContrasena.usuario = new Usuario();
   }
 
   ngOnInit() {
@@ -58,5 +64,15 @@ cerrarSesion(){
   this.router.navigate(['home']);
 }
 
-
+cambiarContrasena(){
+  this.cambioContrasena.usuario.password = this.contrasenaActual;
+  this.cambioContrasena.usuario.username= this.restService.usuario.username;
+  this.restService.updateContrasena(this.cambioContrasena).subscribe(res =>{
+    Swal.fire('Cambio de contraseña ', 'La contraseña se cambio con éxito', 'success');
+    this.IsmodelShow2 = true;
+  },err =>{
+    Swal.fire('Credenciales incorrectas', 'Las credenciales no coinciden', 'error');
+    this.IsmodelShow2 = false;
+  })
+}
 }

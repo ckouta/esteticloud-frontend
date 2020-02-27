@@ -4,6 +4,8 @@ import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import { RestService } from 'src/app/servicioBackend/rest.service';
 import { IntervaloFecha } from 'src/app/entidades/IntervaloFecha';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 
 am4core.useTheme(am4themes_animated);
@@ -20,7 +22,7 @@ export class InicioProfesionalComponent {
   fechas: IntervaloFecha;
   reservas: any[] = [];
   profesionales: any[] = [];
-  constructor(private zone: NgZone, public restService: RestService) {
+  constructor(private zone: NgZone, public restService: RestService, private router: Router) {
     if (this.restService.hasRole('ROLE_ADMIN')) {
       this.nombre = "Administrador"
     } else {

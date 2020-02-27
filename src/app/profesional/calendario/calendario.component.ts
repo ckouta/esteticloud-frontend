@@ -34,6 +34,7 @@ export class CalendarioComponent implements OnInit {
   li: string = 'mes';
   display = 'none';
   display2 = 'none';
+  idCliente:number ;
 
   calendarEvents = [
     { title: 'event 2', start: '2019-10-17T10:30:00', end: '2019-10-17T11:30:00' }
@@ -76,7 +77,14 @@ export class CalendarioComponent implements OnInit {
     });
   }
 
-
+test(){
+  console.log(this.cliente);
+  this.listaClientes.forEach(element => {
+    if(element.id_cliente==this.idCliente){
+      this.cliente= element;
+    }
+  });
+}
 
   addEvent() {
     this.calendarEvents = this.calendarEvents.concat( // creates a new array!
@@ -92,6 +100,8 @@ export class CalendarioComponent implements OnInit {
     this.restService.getProfesionalCorreo(this.restService.usuario.username).subscribe((res: any) => {
       this.restService.profesional = res;
       this.reservas(this.restService.profesional);
+    }, err =>{
+      this.router.navigate(['login']);
     })
     this.restService.getListaCliente().subscribe((res: any[]) => {
       this.listaClientes = res;
