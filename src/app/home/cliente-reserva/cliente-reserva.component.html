@@ -15,7 +15,7 @@
             <mdb-card-body>
                 <div class="overflow-auto" style="max-height:200px">
                     <div class="list-group" *ngFor="let reserva of reserva">
-                        <a class="list-group-item list-group-item-action " *ngIf="reserva.reserva.estado_reserva.id_estado_reserva == 1">
+                        <a class="list-group-item list-group-item-action " *ngIf="reserva.reserva.estado_reserva.id_estado_reserva == 1 && reserva.profesional">
                             <div class="media">
                                 <img src="http://parra.chillan.ubiobio.cl:8080/alvaro.castillo1501/servicio/uploads/img/{{reserva.reserva.servicio.foto}}" class="align-self-center mr-3" style="width: 60px;height:60px;">
                                 <div class="media-body">
