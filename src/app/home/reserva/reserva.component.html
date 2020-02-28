@@ -30,12 +30,14 @@
                         <option *ngFor="let profesional of listProfesionales" [ngValue]="profesional" > {{profesional.nombre}} {{profesional.apellido}}</option>                       
                     </select>
                     <h5 style="margin-bottom: 4%; margin-top: 30%;">Servicios anteriores</h5>
-                    <div *ngFor="let reserva of listServicios">
-                        <a (click)="press(servicio)">
-                            <div class="media-body">
-                                <p class="mt-0"><b>{{servicio.nombre}}</b></p>
-                            </div>
-                        </a>
+                    <div class="hr">
+                    </div>
+                    <br>
+                    <div *ngFor="let servicio of listServicioAnteriores">
+                        <button type="button" class="btn btn-default btn-sm btn-block" (click)="press(servicio)" id="pills-fecha-tab" data-toggle="pill" href="#pills-fecha" role="tab" aria-controls="pills-fecha" aria-selected="true" style="margin-bottom: 5px;border-radius: 100px;background-color: rgba(170, 111, 199, 0.842)!important">
+                            <b>{{servicio.nombre}}</b>
+                        </button>
+
                     </div>
 
                 </div>

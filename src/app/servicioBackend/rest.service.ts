@@ -23,8 +23,8 @@ import { estado } from '../entidades/Estado';
 })
 export class RestService {
 
-  //private URL = 'http://parra.chillan.ubiobio.cl:8080/alvaro.castillo1501';
-  private URL = 'http://localhost:8080';
+  private URL = 'http://parra.chillan.ubiobio.cl:8080/alvaro.castillo1501';
+  //private URL = 'http://localhost:8080';
   listaProfesional: Profesional[];
   listaServicio: Servicio[];
   listaBloque: Bloque[];
