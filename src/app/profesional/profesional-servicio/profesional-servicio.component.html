@@ -57,7 +57,7 @@
                                             <td style="vertical-align: middle">
                                                 <img src="http://parra.chillan.ubiobio.cl:8080/alvaro.castillo1501/servicio/uploads/img/{{servicio.servicio.foto}}" class="align-self-center mr-3" style="width: 80px;height:80px;">
                                             </td>
-                                            <td style="vertical-align: middle">{{servicio.servicio.nombre}}</td>
+                                            <td style="vertical-align: middle">{{servicio.servicio.nombre| slice:0:25 }} <span *ngIf="servicio.servicio.nombre.length>25">...</span></td>
                                             <td style="vertical-align: middle">{{servicio.servicio.duracion}} Min</td>
                                             <td style="vertical-align: middle">{{servicio.servicio.precio | currency:'CLP':'$ '}}</td>
                                             <td style="vertical-align: middle">
@@ -98,7 +98,7 @@
                                             <td style="vertical-align: middle">
                                                 <img src="http://parra.chillan.ubiobio.cl:8080/alvaro.castillo1501/servicio/uploads/img/{{servi.foto}}" class="align-self-center mr-3" style="width: 80px;height:80px;">
                                             </td>
-                                            <td style="vertical-align: middle">{{servi.nombre}}</td>
+                                            <td style="vertical-align: middle">{{servi.nombre | slice:0:25 }} <span *ngIf="servi.nombre.length>25">...</span></td>
                                             <td style="vertical-align: middle">{{servi.duracion}} Min </td>
                                             <td style="vertical-align: middle">{{servi.precio | currency:'CLP':'$ '}}</td>
                                             <td style="vertical-align: middle">

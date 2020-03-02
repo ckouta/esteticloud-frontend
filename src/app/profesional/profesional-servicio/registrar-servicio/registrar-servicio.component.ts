@@ -34,7 +34,7 @@ export class RegistrarServicioComponent implements OnInit {
       nombre: [{value: '', disabled: this.show}, [Validators.required]],
       duracion: [{value: '', disabled: this.show}, [Validators.required]],
       precio: [{value: '', disabled: this.show}, [Validators.required]],
-      descripcion: [{value: '', disabled: this.show}, [Validators.required]],
+      descripcion: [{value: '', disabled: this.show}, [Validators.required,Validators.maxLength(250)]],
     });
     if (this.rutaActiva.snapshot.params.id != null) {
       this.restService.getServicio(this.rutaActiva.snapshot.params.id).subscribe((res => {

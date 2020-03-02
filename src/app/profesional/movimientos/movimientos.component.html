@@ -44,9 +44,9 @@
                                 <tr style="text-align: center" *ngIf="movimiento.estado_movimiento.id_estado_movimiento != 2">
 
                                     <td style="vertical-align: middle">{{movimiento.fecha | date: 'dd/MM/yyyy'}}</td>
-                                    <td style="vertical-align: middle">{{movimiento.nombre}}</td>
-                                    <td style="vertical-align: middle">{{movimiento.descripcion}}</td>
-                                    <td style="vertical-align: middle">{{movimiento.valor| currency:'CLP':'$ '}}</td>
+                                    <td style="vertical-align: middle">{{movimiento.nombre| slice:0:20 }} <span *ngIf="movimiento.nombre.length>20">...</span></td>
+                                    <td style="vertical-align: middle">{{movimiento.descripcion | slice:0:35 }}<span *ngIf="movimiento.descripcion.length>35">...</span></td>
+                                    <td style="vertical-align: middle">{{movimiento.valor | currency:'CLP':'$ '}}</td>
                                     <td style="vertical-align: middle">
                                         <div>
                                             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalRegisterForm2" (click)="mostrar(movimiento)">
@@ -103,6 +103,9 @@
                         </div>
                         <div *ngIf="formMovimiento.get('descripcion').hasError('minlength') && (formMovimiento.get('descripcion').touched 
                         || formMovimiento.get('descripcion').dirty)" class="alert alert-danger p-1">* La descripción del movimiento debe tener más caracteres.
+                        </div>
+                        <div *ngIf="formMovimiento.get('descripcion').hasError('maxlength') && (formMovimiento.get('descripcion').touched 
+                        || formMovimiento.get('descripcion').dirty)" class="alert alert-danger p-1">* La descripción del movimiento debe tener menos de 250 caracteres.
                         </div>
                     </div>
                     <div class="form-group">

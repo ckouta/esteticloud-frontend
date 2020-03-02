@@ -124,9 +124,12 @@
                             <div class="form-group">
                                 <h6 for="descripcionProducto">Descripción</h6>
                                 <textarea formControlName="descripcion" class="form-control" placeholder="Ingrese una descripción para el profesional"></textarea>
-                                <div *ngIf="formProduct.get('descripcion').errors && (formProduct.get('descripcion').touched 
+                                <div *ngIf="formProduct.get('descripcion').hasError('required') && (formProduct.get('descripcion').touched 
                               || formProduct.get('descripcion').dirty)" class="alert alert-danger">* La descripción es obligatoria.
                                 </div>
+                                <div *ngIf="formProduct.get('descripcion').hasError('maxlength') && (formProduct.get('descripcion').touched 
+                                || formProduct.get('descripcion').dirty)" class="alert alert-danger">* La descripción debe tener menos de 250 caracteres.
+                                  </div>
                             </div>
                             <!-- fin Ingresar Descripción-->
 

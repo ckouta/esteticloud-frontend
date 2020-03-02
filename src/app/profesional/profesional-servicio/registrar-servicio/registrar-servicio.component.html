@@ -74,6 +74,9 @@
                                 <div *ngIf="formServicio.get('descripcion').hasError('required') && (formServicio.get('descripcion').touched 
                               || formServicio.get('descripcion').dirty)" class="alert alert-danger">* La descripción del servicio es obligatoria.
                                 </div>
+                                <div *ngIf="formServicio.get('descripcion').hasError('maxlength') && (formServicio.get('descripcion').touched 
+                                || formServicio.get('descripcion').dirty)" class="alert alert-danger">* La descripción del servicio debe tener menos de 250 caracteres.
+                                  </div>
                             </div>
                             <!-- fin Ingresar Descripción-->
 

@@ -55,7 +55,7 @@ export class RegistrarProfesionalesComponent implements OnInit {
       telefono: [{value: '', disabled: this.show}, [Validators.required, Validators.pattern(/^\d{9}$/)]],
       email: [{value: '', disabled: this.show}, [Validators.required, Validators.email]],
       estado: [{value: 1, disabled: this.show}, [Validators.required]],
-      descripcion: [{value: '', disabled: this.show}, [Validators.required]],
+      descripcion: [{value: '', disabled: this.show}, [Validators.required,Validators.maxLength(250)]],
       password: [{value:'', disabled: this.show},[Validators.required,Validators.minLength(6)]]
     });
 

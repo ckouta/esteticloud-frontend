@@ -27,7 +27,7 @@ export class MovimientosComponent implements OnInit {
       this.formMovimiento = this.formBuilder.group({
         id_movimiento: [],
         nombre: [{value: '', disabled: this.show}, [Validators.required, Validators.minLength(3)]],
-        descripcion: [{value: '', disabled: this.show}, [Validators.required, Validators.minLength(3)]],
+        descripcion: [{value: '', disabled: this.show}, [Validators.required, Validators.minLength(3),Validators.maxLength(250)]],
         radio:new FormControl(true),
         valor: [{value: '', disabled: this.show}, [Validators.required]],
         fecha: [{value: '', disabled: this.show}, [Validators.required]],
@@ -127,7 +127,7 @@ export class MovimientosComponent implements OnInit {
     this.formMovimiento = this.formBuilder.group({
       id_movimiento: [],
       nombre: [{value: '', disabled: this.show}, [Validators.required, Validators.minLength(3)]],
-      descripcion: [{value: '', disabled: this.show}, [Validators.required, Validators.minLength(3)]],
+      descripcion: [{value: '', disabled: this.show}, [Validators.required, Validators.minLength(3),Validators.maxLength(250)]],
       radio:new FormControl(true),
       valor: [{value: '', disabled: this.show}, [Validators.required]],
       fecha: [{value: '', disabled: this.show}, [Validators.required]],
