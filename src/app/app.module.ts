@@ -33,6 +33,7 @@ import { InicioProfesionalComponent } from './profesional/inicio-profesional/ini
 import { ClienteReservaComponent } from './home/cliente-reserva/cliente-reserva.component';
 import { ReportesComponent } from './profesional/reportes/reportes.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { DatePipe } from '@angular/common';
 @NgModule({
   declarations: [
     AppComponent,
@@ -77,7 +78,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     NgbModule,
     NgSelectModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

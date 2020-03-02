@@ -28,12 +28,28 @@ export class ClientesComponent implements OnInit {
       err => this.cliente = [])
   }
   clienteEliminar(id: number) {
-    this.restService.deleteCliente(id).subscribe((res => {
-      Swal.fire('Cliente eliminado', "Cliente eliminado correctamente", 'success')
-      return this.restService.getListaCliente().subscribe((res: any[]) => {
-        this.cliente = res;
-      });
-    }
-    ))
+    Swal.fire({
+      title: '¿Estás seguro que desea eliminar el cliente?',
+      text: "El cambio es irreversible",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.value) {
+        this.restService.deleteCliente(id).subscribe((res) => {
+          Swal.fire('Cliente eliminado', "Cliente eliminado correctamente", 'success')
+          return this.restService.getListaCliente().subscribe((res: any[]) => {
+            this.cliente = res;
+          });
+        },err=>{
+          Swal.fire('Solicitud rechazada', 'El cliente no se pudo eliminar', 'error');
+        }
+        )
+      }
+    })
+    
   }
 }

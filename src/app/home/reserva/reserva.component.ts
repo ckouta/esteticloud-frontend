@@ -1,4 +1,4 @@
-import { Component, OnInit ,OnChanges } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { Servicio } from '../../entidades/Servicio'
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGrigPlugin from '@fullcalendar/timegrid';
@@ -18,17 +18,17 @@ import { esI18n } from 'src/app/esI18n';
   selector: 'app-reserva',
   templateUrl: './reserva.component.html',
   providers: [
-    {provide: NgbDatepickerI18n, useClass: esI18n}
-],
+    { provide: NgbDatepickerI18n, useClass: esI18n }
+  ],
   styleUrls: ['./reserva.component.css'],
- 
+
 })
 
-export class ReservaComponent  implements OnInit, OnChanges {
+export class ReservaComponent implements OnInit, OnChanges {
   isDisabled;
   //date.day >= 3 && date.day <= 7  ||  date.day >= 9 && date.day <= 13 
-  
-  isWeekend = (date: NgbDate) =>  this.calendar.getWeekday(date) >= 6;
+
+  isWeekend = (date: NgbDate) => this.calendar.getWeekday(date) >= 6;
   calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
   calendarWeekends = true;
   arreglo: String[] = ["", "current", "done", "done", "done"];
@@ -43,15 +43,17 @@ export class ReservaComponent  implements OnInit, OnChanges {
   esteticista: any = 0;
   hora: any = 0;
   reserva: Reserva;
-  listServicioAnteriores: Servicio[]= [];
+  listServicioAnteriores: Servicio[] = [];
+  mensaje: boolean = false;
   constructor(public restService: RestService,
     private calendar: NgbCalendar,
     private ngbDatepickerI18n: NgbDatepickerI18n,
     private router: Router,
     private parseCalendar: NgbDateParserFormatter) {
     this.model = this.calendar.getToday();
-      this.isDisabled = (date: NgbDate, current: {month: number}) => {
-        current.month == 11 && date.day == 3};
+    this.isDisabled = (date: NgbDate, current: { month: number }) => {
+      current.month == 11 && date.day == 3
+    };
 
   }
 
@@ -63,7 +65,7 @@ export class ReservaComponent  implements OnInit, OnChanges {
     this.restService.getListaServicio().subscribe((res: any[]) => {
       res.forEach(element => {
         this.restService.getListaServicioOfrecidoporServicio(element).subscribe((res: any[]) => {
-          if(res.length != 0){
+          if (res.length != 0) {
             this.listServicios.push(element);
           }
         });
@@ -73,15 +75,15 @@ export class ReservaComponent  implements OnInit, OnChanges {
       this.listProfesionales = res;
     });
     this.restService.getCliente(this.restService.usuario.username).subscribe(res => {
-      this.restService.getListaServicioAnteriores(res.id_cliente).subscribe(respuesta =>{
+      this.restService.getListaServicioAnteriores(res.id_cliente).subscribe(respuesta => {
         for (let index = 0; index < respuesta.length; index++) {
-          if(this.listServicioAnteriores.length==3){
+          if (this.listServicioAnteriores.length == 3) {
             break
           }
-          if(this.listServicioAnteriores.findIndex(i => i.id_servicio == respuesta[index].servicio.id_servicio )<0){
-          this.listServicioAnteriores.push(respuesta[index].servicio);
-          }  
-        }   
+          if (this.listServicioAnteriores.findIndex(i => i.id_servicio == respuesta[index].servicio.id_servicio) < 0) {
+            this.listServicioAnteriores.push(respuesta[index].servicio);
+          }
+        }
       })
     })
   }
@@ -97,7 +99,7 @@ export class ReservaComponent  implements OnInit, OnChanges {
         this.horasProfesional = res;
         this.bloquesHorario();
       });
-    }else{
+    } else {
       this.servicioPorProfesional();
     }
   }
@@ -116,30 +118,41 @@ export class ReservaComponent  implements OnInit, OnChanges {
         horaFin: null,
         horarioProfesional: [],
       }
-      for (let j = 0; j < valor; j++) {
-        if (this.horasProfesional[i + j].reserva != null) {
+      for (let j = 0; j <= valor - 1; j++) {
+        if (this.horasProfesional[i + j].reserva != null ) {
           break;
         }
-        if (this.horasProfesional[i + j + 1].reserva != null || this.horasProfesional[i + j].bloque_horario.horaFin != this.horasProfesional[i + j + 1].bloque_horario.horaInicio) {
-          break;
+        if (i + j + 1 != this.horasProfesional.length) {
+          if (this.horasProfesional[i + j + 1].reserva != null ||this.horasProfesional[i + j].bloque_horario.horaFin != this.horasProfesional[i + j + 1].bloque_horario.horaInicio) {
+            break;
+          }
         }
         bloque.horarioProfesional.push(this.horasProfesional[i + j]);
-        if (j + 1 == valor - 1) {
-          bloque.horaFin = this.horasProfesional[i + j + 1].bloque_horario.horaFin;
+
+        if (j == valor - 1) {
+          bloque.horaFin = this.horasProfesional[i + j].bloque_horario.horaFin;
           this.bloquesPosibles.push(bloque);
         }
       }
     }
+    if (this.bloquesPosibles.length == 0) {
+      this.mensaje = true;
+    } else {
+      this.mensaje = false;
+    }
   }
   Select() {
+    this.hora = 0;
     this.bloquesPosibles = [];
     if (this.esteticista != 0) {
       let fecha: RangoFecha = { id: this.esteticista.id_profesional, fecha: this.parseCalendar.format(this.model), horaInicio: null, horaFin: null };
       this.restService.getHorarioprofesionalfecha(fecha).subscribe((res: any[]) => {
         this.horasProfesional = res;
         this.bloquesHorario();
+      }, err => {
+        this.mensaje = true;
       });
-    }
+    } 
   }
   save() {
     this.variable = this.variable + 1;
@@ -163,39 +176,39 @@ export class ReservaComponent  implements OnInit, OnChanges {
     })
 
   }
-  serviciosofrecidos(){
-    if(this.esteticista==0){
+  serviciosofrecidos() {
+    if (this.esteticista == 0) {
       this.restService.getListaServicio().subscribe((res: any[]) => {
-        this.listServicios= [];
+        this.listServicios = [];
         res.forEach(element => {
           this.restService.getListaServicioOfrecidoporServicio(element).subscribe((res: any[]) => {
-            if(res.length != 0){
+            if (res.length != 0) {
               this.listServicios.push(element);
             }
           });
         });
       });
-    }else{
-      this.listServicios=[];
+    } else {
+      this.listServicios = [];
       this.restService.getListaServicioOfrecidoporProfesional(this.esteticista).subscribe((res: any[]) => {
-        
-        res.forEach(element=>{
+
+        res.forEach(element => {
           this.listServicios.push(element.servicio);
         })
       });
     }
   }
-  servicioPorProfesional(){
-    if(this.esteticista==0){
+  servicioPorProfesional() {
+    if (this.esteticista == 0) {
       this.restService.getListaServicioOfrecidoporServicio(this.servicio).subscribe((res: any[]) => {
         this.listProfesionales = res;
-        if(res.length == 0){
+        if (res.length == 0) {
           console.log("hola");
         }
       });
     }
   }
-  validarServicio(servicio: Servicio){
+  validarServicio(servicio: Servicio) {
     this.restService.getListaServicioOfrecidoporServicio(servicio).subscribe((res: any[]) => {
       console.log(res);
     });

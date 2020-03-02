@@ -89,6 +89,12 @@
                     <option  [ngValue]="0" > Ninguno seleccionado</option>
                     <option *ngFor="let horas of bloquesPosibles"  [ngValue]="horas"> Hora de inicio:{{horas.horaInicio}} - hora de fin:{{horas.horaFin}}</option>                       
                 </select>
+                <div class="alert alert-primary" role="alert" *ngIf="esteticista ==0">
+                    Seleccione un profesional
+                </div>
+                <div class="alert alert-primary" role="alert" *ngIf="esteticista !=0 && mensaje">
+                    No hay horas disponible
+                </div>
                 <a class="btn btn-outline-success btn-lg btn-block" (click)="save()" id="pills-contact-tab" data-toggle="pill" href="#pills-contacto" role="tab" aria-controls="pills-contacto" aria-selected="true" *ngIf="hora !=0">Confirmar</a>
             </div>
         </div>

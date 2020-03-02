@@ -63,15 +63,19 @@
                 </button>
             </div>
             <div class="modal-body">
+
                 <div class="">
-                    <label> Rut del cliente:</label>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <label> Rut del cliente:</label><button mdbBtn type="button right" color="deep-orange" size="sm" mdbWavesEffect [routerLink]="['/profesional/clientes/registrar']">Agregar cliente</button>
+                    </div>
+
                     <ng-select [items]="listaClientes" bindLabel="rut" autofocus bindValue="id_cliente" [(ngModel)]="idCliente" (change)="test()">
                     </ng-select>
                     <label><b>Nombre cliente: </b>{{cliente.nombre}} {{cliente.apellido}}</label>
                 </div>
                 <div class="">
                     <label for="exampleForm2">Fecha:</label>
-                    <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" (click)="d.toggle()" (change)="Select()" ngbDatepicker #d="ngbDatepicker">
+                    <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" (click)="d.toggle()" (ngModelChange)="Select()" ngbDatepicker #d="ngbDatepicker">
                 </div>
                 <div class="">
                     <label>Servicio:</label>
