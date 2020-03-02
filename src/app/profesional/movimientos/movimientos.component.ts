@@ -6,6 +6,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { NgbCalendar, NgbDateStruct, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import { number } from '@amcharts/amcharts4/core';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-movimientos',
@@ -22,8 +23,11 @@ export class MovimientosComponent implements OnInit {
   formMovimiento: FormGroup;
   formMovimiento2: FormGroup;
   show:boolean=false;
+  MaxFecha:string;
+  MinFecha:string;
+  date:Date;
   constructor(public restService: RestService, private router: Router, private formBuilder: FormBuilder, private parseCalendar: NgbDateParserFormatter,
-    private calendar: NgbCalendar) {
+    private calendar: NgbCalendar, private datePipe: DatePipe) {
       this.formMovimiento = this.formBuilder.group({
         id_movimiento: [],
         nombre: [{value: '', disabled: this.show}, [Validators.required, Validators.minLength(3)]],
@@ -41,6 +45,10 @@ export class MovimientosComponent implements OnInit {
         fecha: [{value: '', disabled: true}, [Validators.required]],
       });
     this.model = this.calendar.getToday();
+    this.MaxFecha = this.parseCalendar.format(this.calendar.getToday());
+    this.MinFecha = this.parseCalendar.format(this.model);
+    this.date = new Date();
+    this.MinFecha=this.datePipe.transform(new Date(new Date().setDate(this.date.getDate() - 7)), 'yyyy-MM-dd');
   }
 
   ngOnInit() {
@@ -56,6 +64,14 @@ export class MovimientosComponent implements OnInit {
       })
     },
       err => this.movimientos = [])
+  }
+  test(){
+  
+    if(this.formMovimiento.value['fecha']>this.MaxFecha || this.formMovimiento.value['fecha']<this.MinFecha){
+       console.log(true);
+    }else{
+      console.log(false);
+    }
   }
   getCheckboxesValue() {
     console.log('ngModel value', this.valor);

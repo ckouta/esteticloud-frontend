@@ -97,7 +97,7 @@
                     <div class="form-group">
                         <i class="fas fa-tasks prefix grey-text"></i>
                         <label for="descripcion"> Descripción</label>
-                        <input formControlName="descripcion" type="text" id="descripcion" class="form-control ">
+                        <textarea formControlName="descripcion" type="text" id="descripcion" class="form-control " rows="5"></textarea>
                         <div *ngIf="formMovimiento.get('descripcion').hasError('required') && (formMovimiento.get('descripcion').touched 
                         || formMovimiento.get('descripcion').dirty)" class="alert alert-danger p-1">* La descripción del movimiento es obligatoria.
                         </div>
@@ -130,7 +130,7 @@
                     <div class="form-group">
                         <i class="fas fa-calendar-alt prefix grey-text"></i>
                         <label for="fecha"> Fecha</label>
-                        <input formControlName="fecha" data-format="yyyy-MM-dd" type="Date" id="fecha" class="form-control ">
+                        <input formControlName="fecha" data-format="yyyy-MM-dd" type="Date" id="fecha" class="form-control " (change)="test()" min="{{MinFecha}}" max="{{MaxFecha}}">
                         <div *ngIf="formMovimiento.get('fecha').errors && (formMovimiento.get('fecha').touched 
                         || formMovimiento.get('fecha').dirty)" class="alert alert-danger p-1">* La fecha del movimiento es obligatoria.
                         </div>
@@ -163,7 +163,7 @@
                     <div class="form-group">
                         <i class="fas fa-tasks prefix grey-text"></i>
                         <label for="descripcion"> Descripción</label>
-                        <input formControlName="descripcion" type="text" id="descripcion" class="form-control ">
+                        <textarea formControlName="descripcion" type="text" id="descripcion" class="form-control " rows="5"></textarea>
                     </div>
                     <div class="form-group">
                         <i class="fas fa-dollar-sign prefix grey-text"></i>
