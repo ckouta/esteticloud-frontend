@@ -22,8 +22,8 @@
                     </div>
                 </div>
                 <div class="col-md-4 d-flex justify-content-end align-self-start">
-                    <button class="btn btn-warning d-flex align-items-center align-self-center" [routerLink]="['registrar']" routerLinkActive="router-link-active" type="button" style="height: 38px;background-color:  #ff8000;">Agregar Profesional
-            <i class="fa fa-plus-circle"></i>
+                    <button class="btn btn-success d-flex align-items-center align-self-center" [routerLink]="['registrar']" routerLinkActive="router-link-active" type="button" style="height: 38px;background-color:  #ff8000;">Agregar Profesional
+                        &nbsp;<i class="fa fa-plus-circle"></i>
           </button>
                 </div>
             </div>
@@ -49,7 +49,7 @@
                                     <td style="vertical-align: middle">{{Profesional.email}}</td>
                                     <td style="vertical-align: middle">
                                         <div>
-                                            <button type="button" class="btn btn-success" [routerLink]="['registrar/'+Profesional.id_profesional]" [queryParams]="{ ver: true }">
+                                            <button type="button" class="btn btn-primary" [routerLink]="['registrar/'+Profesional.id_profesional]" [queryParams]="{ ver: true }">
                                                 <i class="far fa-eye d-xl-flex justify-content-xl-center align-items-xl-center"></i>
                                             </button>&nbsp;
                                             <button type="button" class="btn btn-danger" (click)="profesionalEliminar(Profesional.id_profesional)">
