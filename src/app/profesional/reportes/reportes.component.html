@@ -30,7 +30,7 @@
     <div class="col-10">
         <div class="album py-5 z-depth-1" align="center">
             <div>
-                
+
                 <br>
                 <h3>Seleccione un rango de fechas</h3>
                 <div style="display: inline-flex;margin-bottom: 10px;">
@@ -131,9 +131,9 @@
                                         <th style="vertical-align: middle">Estado</th>
                                     </tr>
                                 </thead>
-                                <tbody *ngFor="let reserva of reservas | slice:0:15; let ind=index;">
+                                <tbody *ngFor="let reserva of reservas | slice:0:15; index as i;">
                                     <tr style="text-align: center">
-                                        <td style="vertical-align: middle">{{ind}}</td>
+                                        <td style="vertical-align: middle">{{i+1}}</td>
                                         <td style="vertical-align: middle">{{reserva[1]}}</td>
                                         <td style="vertical-align: middle">{{reserva[0].cliente.nombre}}</td>
                                         <td style="vertical-align: middle">{{reserva[0].servicio.nombre}}</td>
@@ -226,7 +226,7 @@
                         </div>
                         <br>
                         <div align="right" style="padding-right: 40px;">
-                            <h5>Ingresos totales :{{ingresos  | currency:'CLP':'$ '}}</h5>
+                            <h5>Ingresos totales :{{ingresos | currency:'CLP':'$ '}}</h5>
                             <h5>Gastos totales :{{egresos | currency:'CLP':'$ '}}</h5>
                             <h5>Total ganancias :{{total | currency:'CLP':'$ '}}</h5>
                         </div>
