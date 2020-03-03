@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RestService } from 'src/app/servicioBackend/rest.service';
 import { Router } from '@angular/router';
 import { Movimiento } from 'src/app/entidades/Movimiento';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { NgbCalendar, NgbDateStruct, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import { number } from '@amcharts/amcharts4/core';
@@ -34,7 +34,7 @@ export class MovimientosComponent implements OnInit {
         descripcion: [{value: '', disabled: this.show}, [Validators.required, Validators.minLength(3),Validators.maxLength(250)]],
         radio:new FormControl(true),
         valor: [{value: '', disabled: this.show}, [Validators.required]],
-        fecha: [{value: '', disabled: this.show}, [Validators.required]],
+        fecha: [{value: '', disabled: this.show}, [Validators.required, this.validarFecha]],
       });
       this.formMovimiento2 = this.formBuilder.group({
         id_movimiento: [],
@@ -65,14 +65,27 @@ export class MovimientosComponent implements OnInit {
     },
       err => this.movimientos = [])
   }
-  test(){
-  
-    if(this.formMovimiento.value['fecha']>this.MaxFecha || this.formMovimiento.value['fecha']<this.MinFecha){
-       console.log(true);
-    }else{
-      console.log(false);
+
+/**valida que la fecha del movimietno sea máximo una semana en el pasado */
+  private validarFecha(control: AbstractControl){
+    const fechaMili = new Date(control.value).getTime();
+    let error = null;
+    const semanaMili = new Date(8*24*60*60*1000).getTime();
+    const hoyMili =  new Date().getTime();
+    const diferenciaHoy = (hoyMili-fechaMili); /* si la diferencia < 0 es futuro */
+    const diferenciaSem = semanaMili-diferenciaHoy; /* si es < 0 paso la semana */
+    
+    if(diferenciaHoy < 0 || diferenciaSem<0){
+      return {'fechaValida': true }
     }
+
+    return null; 
   }
+ 
+
+ 
+
+
   getCheckboxesValue() {
     console.log('ngModel value', this.valor);
   }
@@ -119,6 +132,9 @@ export class MovimientosComponent implements OnInit {
     })
 
   }
+
+
+
   setDatosMovimiento(movimiento: Movimiento) {
     let radio = true;
     let valor = +movimiento.valor;
@@ -145,8 +161,8 @@ export class MovimientosComponent implements OnInit {
       nombre: [{value: '', disabled: this.show}, [Validators.required, Validators.minLength(3)]],
       descripcion: [{value: '', disabled: this.show}, [Validators.required, Validators.minLength(3),Validators.maxLength(250)]],
       radio:new FormControl(true),
-      valor: [{value: '', disabled: this.show}, [Validators.required]],
-      fecha: [{value: '', disabled: this.show}, [Validators.required]],
+      valor: [{value: '', disabled: this.show}, [Validators.required, Validators.min(1)]],
+      fecha: [{value: '', disabled: this.show}, [Validators.required, this.validarFecha]],
     });
   }
   mostrar(movimiento: Movimiento) {
