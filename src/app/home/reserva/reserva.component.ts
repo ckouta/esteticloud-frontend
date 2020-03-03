@@ -45,12 +45,15 @@ export class ReservaComponent implements OnInit, OnChanges {
   reserva: Reserva;
   listServicioAnteriores: Servicio[] = [];
   mensaje: boolean = false;
+  fecha: string; // establecer fecha de hoy
   constructor(public restService: RestService,
     private calendar: NgbCalendar,
     private ngbDatepickerI18n: NgbDatepickerI18n,
     private router: Router,
     private parseCalendar: NgbDateParserFormatter) {
     this.model = this.calendar.getToday();
+    this.fecha = this.parseCalendar.format(this.model);
+    console.log(this.fecha);
     this.isDisabled = (date: NgbDate, current: { month: number }) => {
       current.month == 11 && date.day == 3
     };

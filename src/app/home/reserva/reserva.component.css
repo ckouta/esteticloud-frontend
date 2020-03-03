@@ -216,3 +216,8 @@ input:focus {
 .hidden {
     display: none;
 }
+
+.reserva {
+    margin: 30px;
+    padding: 20px;
+}

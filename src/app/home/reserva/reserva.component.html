@@ -67,7 +67,7 @@
         </div>
     </div>
     <div class="tab-pane fade" id="pills-fecha" role="tabpanel" aria-labelledby="pills-fecha-tab">
-        <div class="row" style="padding: 2%;">
+        <div class="row" style="padding: 2%; margin: 0;">
             <div class="col-2" style="margin-bottom: 30px;">
 
             </div>
@@ -95,37 +95,41 @@
                 <div class="alert alert-primary" role="alert" *ngIf="esteticista !=0 && mensaje">
                     No hay horas disponible
                 </div>
-                <a class="btn btn-outline-success btn-lg btn-block" (click)="save()" id="pills-contact-tab" data-toggle="pill" href="#pills-contacto" role="tab" aria-controls="pills-contacto" aria-selected="true" *ngIf="hora !=0">Confirmar</a>
+                <a class="btn btn-success" (click)="save()" id="pills-contact-tab" data-toggle="pill" href="#pills-contacto" role="tab" aria-controls="pills-contacto" aria-selected="true" *ngIf="hora !=0" style="border-radius: 40px;">Confirmar</a>
             </div>
         </div>
     </div>
     <div class="tab-pane fade" id="pills-contacto" role="tabpanel" aria-labelledby="pills-contact-tab">
         <div *ngIf="reserva" style="display: flex;justify-content: center;">
-            <div class="z-depth-1" style="margin: 30px;padding: 20px;">
-                <div style="text-align: center;">
-                    <img src="assets/logo.jpg" style="width: 300px;">
+            <div style="background-image: url('assets/logo.jpg');background-repeat: no-repeat;
+            background-size: 65%;
+            background-position-y: center;
+            background-position-x: right;">
+                <div class="z-depth-1 reserva" style="background-color: rgba(255, 255, 255,  0.881);">
+                    <div>
+                        <h1>¡Reserva realizada con éxito!</h1>
+                        &nbsp;
+                        <h4>Información de la reserva</h4>
+                        <h6>Fecha: {{fecha | date: 'dd-MM-yyyy'}}</h6>
+                        <hr>
+                        <h6>Nombre del cliente : {{reserva.cliente.nombre}} {{reserva.cliente.apellido}}</h6>
+                        <h6>Correo : {{reserva.cliente.email}}</h6>
+                        <h6>RUN :<strong> {{reserva.cliente.rut}}</strong></h6>
+                        <hr>
+                        <h6>Nombre del profesional :<strong>{{hora.horarioProfesional[0].profesional.nombre}} {{hora.horarioProfesional[0].profesional.apellido}}</strong></h6>
+                        <h6>Nombre del servicio :<strong> {{reserva.servicio.nombre}}</strong></h6>
+                        <h6>Duración del servicio :<strong>  {{reserva.servicio.duracion}} Minutos</strong> </h6>
+                        <h6>Fecha de atención:<strong> {{hora.horarioProfesional[0].fecha | date: 'dd-MM-yyyy'}}</strong></h6>
+                        <h6>Hora de atención :<strong> {{hora.horarioProfesional[0].bloque_horario.horaInicio}}</strong></h6>
+                        <h6>Precio mínimo del servicio :<strong> {{reserva.servicio.precio | currency:'CLP':'$ '}}</strong></h6>
+                    </div>
                     <hr>
-                </div>
-                <div>
-                    <h1>¡Reserva realizada con éxito!</h1>
-                    &nbsp;
-                    <h2>Detalles de la reserva</h2>
-                    &nbsp;
-                    <h5>Nombre del servicio : {{reserva.servicio.nombre}}</h5>
-                    <h5>Duración del servicio : {{reserva.servicio.duracion}} Minutos</h5>
-                    <h5>Precio mínimo del servicio : {{reserva.servicio.precio | currency:'CLP':'$ '}}</h5>
-                    <h5>Nombre del cliente : {{reserva.cliente.nombre}} {{reserva.cliente.apellido}}</h5>
-                    <h5>Correo : {{reserva.cliente.email}}</h5>
-                    <h5>Fecha : {{hora.horarioProfesional[0].fecha}}</h5>
-                    <h5>Nombre del profesional : {{hora.horarioProfesional[0].profesional.nombre}} {{hora.horarioProfesional[0].profesional.apellido}}</h5>
-                    <h5>Hora de atención : {{hora.horarioProfesional[0].bloque_horario.horaInicio}}</h5>
-                </div>
-                <hr>
-                <div style="width: 450px; text-align: center;">
-                    <p>Recuerde llegar con 10 minutos de anticipación a su cita para evitar inconvenientes, si desea cancelar la cita agendada hágalo con anticipación </p>
+                    <div style="width: 450px; text-align: center;">
+                        <p>Recuerde llegar con 10 minutos de anticipación a su cita para evitar inconvenientes, si desea cancelar la cita agendada hágalo con anticipación </p>
+                        <button type="button" class="btn btn-primary btn-rounded" [routerLink]="['']" style="border-radius: 40px;">Volver al inicio</button>
+                    </div>
                 </div>
             </div>
-
         </div>
 
 
