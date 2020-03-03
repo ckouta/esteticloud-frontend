@@ -10,25 +10,25 @@
 <div class="" style="margin-left: 2%;margin-right: 2%;">
     <div class="row" style="background-color: rgba(240, 248, 255, 0.281);padding-top: 10px;">
         <div class="col-12">
+            <div class="row" >
+                <h3 >Ingrese las horas en que va a trabajar</h3>
+            </div>
             <div class="row">
                 <div class="col-5">
                     <div class="alert alert-warning">
-                        <h3 align="center" style="margin-bottom: 10px;"><i class="far fa-lightbulb "></i> Pasos a Seguir</h3>
+                        <h3 align="center" style="margin-bottom: 10px;"><i class="far fa-lightbulb "></i> Pasos a seguir:</h3>
                         <ul>
-                            <li>Seleccione un rango de fecha</li>
-                            <li>Deshabilite los dias con la casilla marcada</li>
-                            <li>Seleccione el horario inicial para cada dia</li>
-                            <li>Seleccione el horario de finalizacion para cada dia</li>
-                            <li>Oprima el boton registrar horario para terminar</li>
+                            <li>Seleccione la fecha de inicio y fin en el calendario</li>
+                            <li>Deshabilite los días que no va a trabajar</li>
+                            <li>Seleccione las horas de inicio y fin según el día </li>
+                            <li>Revise que los datos ingresados están correctos </li>
+                            <li>Para guardar su horario, oprima el botón registrar horario</li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-7">
                     <div class="row" style="display: table;margin-left: auto;margin-right: auto;">
-                        <div class="row">
-                            <h3>Ingrese las horas en que va a trabajar</h3>
-
-                        </div>
+                        
                         <div class="row">
                             <ngb-datepicker #dp (select)="onDateSelection($event)" [minDate]="minDate" [maxDate]="{year: 2048, month: 12, day: 31}" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden" [markDisabled]="isDisabled">
                             </ngb-datepicker>
