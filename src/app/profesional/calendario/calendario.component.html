@@ -88,7 +88,8 @@
                 <div class="">
                     <label>Hora:</label>
                     <select [(ngModel)]="hora" id="horario" class="form-control">
-                        <option [ngValue]="0"> Ninguno seleccionado</option>
+                        <option [ngValue]="0" *ngIf="bloquesPosibles.length !=0"> Ninguno seleccionado</option>
+                        <option [ngValue]="0" *ngIf="bloquesPosibles.length ==0"> No hay disponibilidad de horario</option>
                         <option *ngFor="let horas of bloquesPosibles" [ngValue]="horas"> Hora de
                             inicio:{{horas.horaInicio}} - hora de fin:{{horas.horaFin}}</option>
                     </select>

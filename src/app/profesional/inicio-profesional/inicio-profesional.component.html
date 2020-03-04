@@ -25,6 +25,9 @@
             <mdb-card-header>Reservas del dia</mdb-card-header>
             <mdb-card-body>
                 <div class="overflow-auto" style="max-height:200px">
+                    <div class="alert alert-primary" role="alert" *ngIf="listReservas.length==0">
+                        No hay reservas para el día de hoy
+                    </div>
                     <div class="list-group" *ngFor="let reserva of listReservas">
                         <a class="list-group-item list-group-item-action ">
                             <div class="media">
