@@ -7,6 +7,10 @@ import { IntervaloFecha } from 'src/app/entidades/IntervaloFecha';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Movimiento } from 'src/app/entidades/Movimiento';
+import { HorarioProfesional } from 'src/app/entidades/HorarioProfesional';
+import { NgbDateStruct, NgbDateParserFormatter, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+import { Reserva } from 'src/app/entidades/Reserva';
+import { estado } from 'src/app/entidades/Estado';
 
 
 am4core.useTheme(am4themes_animated);
@@ -25,13 +29,28 @@ export class InicioProfesionalComponent {
   profesionales: any[] = [];
   movimientos: Movimiento[] = [];
   ganancia:number =0;
-  constructor(private zone: NgZone, public restService: RestService, private router: Router) {
+  listReservas:HorarioProfesional[] =[];
+  model: NgbDateStruct;
+  listEstado:any;
+  constructor(private zone: NgZone, public restService: RestService, private router: Router, private parseCalendar: NgbDateParserFormatter,
+    private calendar: NgbCalendar) {
+      this.model = this.calendar.getToday();
     if (this.restService.hasRole('ROLE_ADMIN')) {
       this.nombre = "Administrador"
     } else {
       this.restService.getProfesionalCorreo(this.restService.usuario.username).subscribe((res: any) => {
         this.restService.profesional = res;
         this.nombre = this.restService.profesional.nombre + " " + this.restService.profesional.apellido;
+        this.restService.getHorarioprofesional(this.restService.profesional).subscribe((res: any[]) => {
+          this.model = this.calendar.getToday();
+          for (let index = 0; index < res.length; index++) {
+            if(res[index].fecha == this.parseCalendar.format(this.model)){
+              if (this.listReservas.findIndex(i => i.reserva.id_reserva == res[index].reserva.id_reserva) < 0) {
+                this.listReservas.push(res[index]);
+              }
+            }
+          }
+        })
         this.restService.getMovimientoProfesional(this.restService.profesional).subscribe((res: any[]) => {
           this.movimientos = res;
           this.movimientos.forEach(element => {
@@ -43,6 +62,10 @@ export class InicioProfesionalComponent {
           this.movimientos=[];
         })
       })
+      this.restService.getListEstadoReserva().subscribe((res => {
+        this.listEstado= res;
+        console.log(res);
+      }));
     }
 
   }
@@ -265,5 +288,19 @@ export class InicioProfesionalComponent {
     });
   }
 
+  actualizarEstadoReserva(reserva:Reserva, estado:number){
+    console.log(estado)
+    if(estado==1){
+      reserva.estado_reserva = this.listEstado[1];
+    }else{
+      reserva.estado_reserva = this.listEstado[4];
+    }
 
+    this.restService.updateReserva(reserva.id_reserva,reserva).subscribe((res: any[]) => {
+      Swal.fire('Solicitud aceptada', 'La reserva ha sido actualizada', 'success');
+    }, err =>{
+      Swal.fire('Solicitud rechazada', 'La reserva no se pudo actualizar', 'error');
+    });
+  
+  }
 }

@@ -19,8 +19,39 @@
     </div>
 
 </div>
-<div class="row">
-    <div class="col-4 ">
+<div class="row" *ngIf="restService.hasRole('ROLE_ESTETI')">
+    <div class="col-md mb-4">
+        <mdb-card class="mb-3" borderColor="border-secondary">
+            <mdb-card-header>Reservas del dia</mdb-card-header>
+            <mdb-card-body>
+                <div class="overflow-auto" style="max-height:200px">
+                    <div class="list-group" *ngFor="let reserva of listReservas">
+                        <a class="list-group-item list-group-item-action ">
+                            <div class="media">
+                                <div class="media-body">
+                                    <h6 class="mt-0"><b>Nombre del cliente:</b> {{reserva.reserva.cliente.nombre}} {{reserva.reserva.cliente.apellido}}</h6>
+                                    <h6><b>Teléfono:</b> {{reserva.reserva.cliente.telefono}}</h6>
+                                    <h6><b>Servicio:</b> {{reserva.reserva.servicio.nombre}}</h6>
+                                    <div class="d-flex" style="align-items: center;">
+                                        <b>Hora:</b> {{reserva.bloque_horario.horaInicio}}&nbsp;<b>Estado de la reserva:</b> {{reserva.reserva.estado_reserva.nombre}}
+                                    </div>
+                                    <div *ngIf="reserva.reserva.estado_reserva.id_estado_reserva == 1 && reserva.profesional">
+                                        <b>¿Reserva Realizada?</b>
+                                        <a class="btn btn-danger btn-sm float-right " (click)="actualizarEstadoReserva(reserva.reserva,2)">No</a>
+                                        <a class="btn btn-success btn-sm float-right " (click)="actualizarEstadoReserva(reserva.reserva,1)">Sí</a>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </a>
+                    </div>
+                </div>
+            </mdb-card-body>
+        </mdb-card>
+    </div>
+    <div class="col-md mb-4">
         <a class="list-group-item list-group-item-action " style="background: powderblue;">
             <div class="media">
                 <div style="padding: 6px;
