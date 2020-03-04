@@ -10,16 +10,27 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav my-auto">
             <li class="nav-list-item">
-                <a [routerLink]="['/home']" class="nav-link">Inicio</a>
+                <a [routerLink]="['/home']" class="nav-link" style="color: rgba(255, 255, 255, 0.938) !important;">Inicio</a>
             </li>
             <li class="nav-list-item">
-                <a [routerLink]="['/home/servicio']" class="nav-link">Servicios</a>
+                <a [routerLink]="['/home/servicio']" class="nav-link" style="color: rgba(255, 255, 255, 0.938) !important;">Servicios</a>
             </li>
             <li class="nav-list-item">
-                <a [routerLink]="['/home/equipo']" class="nav-link">Equipo</a>
+                <a [routerLink]="['/home/equipo']" class="nav-link" style="color: rgba(255, 255, 255, 0.938) !important;">Equipo</a>
             </li>
             <li class="nav-list-item">
-                <a [routerLink]="['/home/reserva']" class="nav-link">Reserva</a>
+                <a data-toggle="modal" data-target="#modalLoginForm" (click)="abrirmodal()" class="nav-link" style="color: rgba(255, 255, 255, 0.938) !important;">Reserva</a>
+            </li>
+            <li class="nav-list-item" *ngIf="!restService.hasRole('ROLE_CLIENT')">
+                <a data-toggle="modal" data-target="#modalLoginForm" (click)="abrirmodal()" class="nav-link" title="Ingresa" style="color: rgba(255, 255, 255, 0.938) !important;">Ingresa</a>
+            </li>
+            <li class="nav-item dropdown" dropdown *ngIf="restService.hasRole('ROLE_CLIENT')" style="color: rgba(255, 255, 255, 0.938) !important;">
+                <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect style="color: rgba(255, 255, 255, 0.938) !important;">
+                     Perfil<span class="caret"></span></a>
+                <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
+                    <a class="dropdown-item waves-light" mdbWavesEffect data-toggle="modal" data-target="#exampleModal" class="nav-link">Cambiar contraseña</a>
+                    <a class="dropdown-item waves-light" mdbWavesEffect (click)="cerrarSesion()" class="nav-link">Cerrar sesión</a>
+                </div>
             </li>
         </ul>
     </div>

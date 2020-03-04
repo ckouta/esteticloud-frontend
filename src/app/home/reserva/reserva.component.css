@@ -3,6 +3,19 @@
     max-width: 100px;
 }
 
+.responsive {
+    display: none;
+}
+
+@media screen and (max-width:700px) {
+    .responsive {
+        display: block;
+    }
+    .responsive2 {
+        display: none;
+    }
+}
+
 div.hr {
     border-bottom-style: solid;
     border-bottom-width: 1px;
@@ -39,6 +52,12 @@ div.hr {
 
 a:hover {
     color: #999;
+}
+
+@media screen and (max-width:800px) {
+    .arrow-steps {
+        display: none;
+    }
 }
 
 
@@ -121,14 +140,6 @@ a:hover {
 
 .arrow-steps .step.current:after {
     border-left: 17px solid #23468c;
-}
-
-.card {
-    height: 370px;
-    margin-top: 4%;
-    margin-bottom: 4%;
-    width: 400px;
-    background-color: rgba(0, 0, 0, 0.5) !important;
 }
 
 .social_icon span {

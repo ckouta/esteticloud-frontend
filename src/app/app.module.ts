@@ -34,6 +34,9 @@ import { ClienteReservaComponent } from './home/cliente-reserva/cliente-reserva.
 import { ReportesComponent } from './profesional/reportes/reportes.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DatePipe } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -76,7 +79,8 @@ import { DatePipe } from '@angular/common';
     TableModule,
     IconsModule ,
     NgbModule,
-    NgSelectModule
+    NgSelectModule,
+    BrowserAnimationsModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

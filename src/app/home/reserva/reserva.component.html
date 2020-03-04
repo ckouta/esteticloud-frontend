@@ -18,7 +18,69 @@
     <!--Inicio Servicio-->
     <div class="tab-pane fade show active" id="pills-servicio" role="tabpanel" aria-labelledby="pills-servicio-tab">
         <h1 style="margin-left: 30px;">Elegir servicio</h1>
-        <div class="row" style="padding: 2%;margin: 0;">
+        <div class="responsive">
+            <div class="row" style="padding: 2%;margin: 0;">
+                <div class="col-12 ">
+                    <mdb-card style="background-color: white !important;width: 100%;">
+                        <mdb-card-header (click)="test.toggle()">Profesionales
+                            <mdb-icon fas icon="angle-down"></mdb-icon>
+                        </mdb-card-header>
+                        <div class="" mdbCollapse #test="bs-collapse">
+                            <mdb-card-body>
+                                <select [(ngModel)]="esteticista" class="form-control" id="exampleFormControlSelect1" (ngModelChange)="serviciosofrecidos()" style="margin-left: 23px;
+                                width: 80%;">
+                        <option  [ngValue]="0"  > Ninguno seleccionado</option>
+                        <option *ngFor="let profesional of listProfesionales" [ngValue]="profesional" > {{profesional.nombre}} {{profesional.apellido}}</option>                       
+                    </select>
+                            </mdb-card-body>
+                        </div>
+                    </mdb-card>
+                </div>
+            </div>
+            <div class="row" style="padding: 2%;margin: 0;">
+                <div class="col-12 ">
+                    <mdb-card style="background-color: white !important;width: 100%;">
+                        <mdb-card-header (click)="test2.toggle()">Servicios anteriores
+                            <mdb-icon fas icon="angle-down"></mdb-icon>
+                        </mdb-card-header>
+                        <div class="" mdbCollapse #test2="bs-collapse">
+                            <mdb-card-body>
+                                <div *ngFor="let servicio of listServicioAnteriores" style="padding-left: 5px;padding-right: 5px;padding-bottom: 3px;">
+                                    <button type="button" class="btn btn-default btn-sm btn-block" (click)="press(servicio)" id="pills-fecha-tab" data-toggle="pill" href="#pills-fecha" role="tab" aria-controls="pills-fecha" aria-selected="true" style="margin-bottom: 5px;border-radius: 100px;background-color: rgba(170, 111, 199, 0.842)!important;">
+                                        <b>{{servicio.nombre}}</b>
+                                    </button>
+
+                                </div>
+                            </mdb-card-body>
+                        </div>
+                    </mdb-card>
+                </div>
+            </div>
+            <h5 class="mt-0" style="margin-bottom: 4%;padding-left: 10px;">Lista de servicios</h5>
+            <div class="row" style="margin: 0;margin-bottom: 20px;">
+                <div class="col-12">
+                    <div class="overflow-auto" style="height:500px">
+                        <div class="list-group" *ngFor="let servicio of listServicios">
+                            <a class="list-group-item list-group-item-action ">
+                                <div class="media">
+                                    <img src="http://parra.chillan.ubiobio.cl:8080/alvaro.castillo1501/servicio/uploads/img/{{servicio.foto}}" class="align-self-center mr-3" style="width: 80px;height:80px;">
+                                    <div class="media-body">
+                                        <h5 class="mt-0">{{servicio.nombre}}</h5>
+                                        <p> {{servicio.descripcion}}</p>
+                                        <p><a class="btn btn-success btn-lg float-right" (click)="press(servicio)" id="pills-fecha-tab" data-toggle="pill" href="#pills-fecha" role="tab" aria-controls="pills-fecha" aria-selected="true">Reserva</a></p>
+
+                                    </div>
+
+                                </div>
+
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row responsive2" style="padding: 2%;margin: 0;">
 
             <div class="col-3 z-depth-1" style="margin-right: 30px; padding: 3%;">
                 <div>
@@ -67,7 +129,43 @@
         </div>
     </div>
     <div class="tab-pane fade" id="pills-fecha" role="tabpanel" aria-labelledby="pills-fecha-tab">
-        <div class="row" style="padding: 2%; margin: 0;">
+        <div class="responsive">
+            <div class="row" style="margin: 0;">
+                <div class="col-12" style="margin-bottom: 10px;">
+                    <h4 class="mt-0" style="margin-bottom: 4%;">Fecha</h4>
+                    <hr>
+                    <input class="form-control" placeholder="dd-MM-yyyy" type="date" name="dp" [(ngModel)]="model" (click)="d.toggle()" (ngModelChange)="Select()" ngbDatepicker #d="ngbDatepicker">
+                </div>
+            </div>
+            <div class="row" style="margin: 0;">
+                <div class="col-12 " style=" margin-bottom: 10px;">
+                    <h4 class="mt-0" style="margin-bottom: 4%;">Profesional</h4>
+                    <hr>
+                    <select [(ngModel)]="esteticista" (change)="Select()" class="form-control" id="exampleFormControlSelect1" style="margin-top: 5%;">
+                        <option  [ngValue]="0" > Ninguno seleccionado</option>
+                        <option *ngFor="let profesional of listProfesionales"  [ngValue]="profesional"> {{profesional.nombre}}</option>                       
+                    </select>
+                    <div class="alert alert-primary" role="alert" *ngIf="esteticista ==0">
+                        Seleccione un profesional
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin: 0;">
+                <div class="col-12">
+                    <h4>Horarios</h4>
+                    <hr>
+                    <select [(ngModel)]="hora" class="form-control" id="horario" style="margin-top: 5%; margin-bottom: 20px;">
+                    <option  [ngValue]="0" > Ninguno seleccionado</option>
+                    <option *ngFor="let horas of bloquesPosibles"  [ngValue]="horas"> Hora de inicio:{{horas.horaInicio}} - hora de fin:{{horas.horaFin}}</option>                       
+                </select>
+                    <div class="alert alert-primary" role="alert" *ngIf="esteticista !=0 && mensaje">
+                        No hay horas disponible
+                    </div>
+                    <a class="btn btn-success" (click)="save()" id="pills-contact-tab" data-toggle="pill" href="#pills-contacto" role="tab" aria-controls="pills-contacto" aria-selected="true" *ngIf="hora !=0" style="border-radius: 40px;">Confirmar</a>
+                </div>
+            </div>
+        </div>
+        <div class="row responsive2" style="padding: 2%; margin: 0;">
             <div class="col-2" style="margin-bottom: 30px;">
 
             </div>
@@ -100,33 +198,68 @@
         </div>
     </div>
     <div class="tab-pane fade" id="pills-contacto" role="tabpanel" aria-labelledby="pills-contact-tab">
-        <div *ngIf="reserva" style="display: flex;justify-content: center;">
-            <div style="background-image: url('assets/logo.jpg');background-repeat: no-repeat;
+        <div class="responsive">
+            <div *ngIf="reserva" style="display: block;justify-content: center;">
+                <div style="background-image: url('assets/logo.jpg');background-repeat: no-repeat;
+                background-size: 65%;
+                background-position-y: center;
+                background-position-x: right;">
+                    <div class="z-depth-1 reserva" style="background-color: rgba(255, 255, 255,  0.881);">
+                        <div>
+                            <h1>¡Reserva realizada con éxito!</h1>
+                            &nbsp;
+                            <h4>Información de la reserva</h4>
+                            <h6>Fecha: {{fecha | date: 'dd-MM-yyyy'}}</h6>
+                            <hr>
+                            <h6>Nombre del cliente : {{reserva.cliente.nombre}} {{reserva.cliente.apellido}}</h6>
+                            <h6>Correo : {{reserva.cliente.email}}</h6>
+                            <h6>RUN :<strong> {{reserva.cliente.rut}}</strong></h6>
+                            <hr>
+                            <h6>Nombre del profesional :<strong>{{hora.horarioProfesional[0].profesional.nombre}} {{hora.horarioProfesional[0].profesional.apellido}}</strong></h6>
+                            <h6>Nombre del servicio :<strong> {{reserva.servicio.nombre}}</strong></h6>
+                            <h6>Duración del servicio :<strong>  {{reserva.servicio.duracion}} Minutos</strong> </h6>
+                            <h6>Fecha de atención:<strong> {{hora.horarioProfesional[0].fecha | date: 'dd-MM-yyyy'}}</strong></h6>
+                            <h6>Hora de atención :<strong> {{hora.horarioProfesional[0].bloque_horario.horaInicio}}</strong></h6>
+                            <h6>Precio mínimo del servicio :<strong> {{reserva.servicio.precio | currency:'CLP':'$ '}}</strong></h6>
+                        </div>
+                        <hr>
+                        <div style=" text-align: center;">
+                            <p>Recuerde llegar con 10 minutos de anticipación a su cita para evitar inconvenientes, si desea cancelar la cita agendada hágalo con anticipación </p>
+                            <button type="button" class="btn btn-primary btn-rounded" [routerLink]="['']" style="border-radius: 40px;">Volver al inicio</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="responsive2">
+            <div *ngIf="reserva" style="display: flex;justify-content: center;">
+                <div style="background-image: url('assets/logo.jpg');background-repeat: no-repeat;
             background-size: 65%;
             background-position-y: center;
             background-position-x: right;">
-                <div class="z-depth-1 reserva" style="background-color: rgba(255, 255, 255,  0.881);">
-                    <div>
-                        <h1>¡Reserva realizada con éxito!</h1>
-                        &nbsp;
-                        <h4>Información de la reserva</h4>
-                        <h6>Fecha: {{fecha | date: 'dd-MM-yyyy'}}</h6>
+                    <div class="z-depth-1 reserva" style="background-color: rgba(255, 255, 255,  0.881);">
+                        <div>
+                            <h1>¡Reserva realizada con éxito!</h1>
+                            &nbsp;
+                            <h4>Información de la reserva</h4>
+                            <h6>Fecha: {{fecha | date: 'dd-MM-yyyy'}}</h6>
+                            <hr>
+                            <h6>Nombre del cliente : {{reserva.cliente.nombre}} {{reserva.cliente.apellido}}</h6>
+                            <h6>Correo : {{reserva.cliente.email}}</h6>
+                            <h6>RUN :<strong> {{reserva.cliente.rut}}</strong></h6>
+                            <hr>
+                            <h6>Nombre del profesional :<strong>{{hora.horarioProfesional[0].profesional.nombre}} {{hora.horarioProfesional[0].profesional.apellido}}</strong></h6>
+                            <h6>Nombre del servicio :<strong> {{reserva.servicio.nombre}}</strong></h6>
+                            <h6>Duración del servicio :<strong>  {{reserva.servicio.duracion}} Minutos</strong> </h6>
+                            <h6>Fecha de atención:<strong> {{hora.horarioProfesional[0].fecha | date: 'dd-MM-yyyy'}}</strong></h6>
+                            <h6>Hora de atención :<strong> {{hora.horarioProfesional[0].bloque_horario.horaInicio}}</strong></h6>
+                            <h6>Precio mínimo del servicio :<strong> {{reserva.servicio.precio | currency:'CLP':'$ '}}</strong></h6>
+                        </div>
                         <hr>
-                        <h6>Nombre del cliente : {{reserva.cliente.nombre}} {{reserva.cliente.apellido}}</h6>
-                        <h6>Correo : {{reserva.cliente.email}}</h6>
-                        <h6>RUN :<strong> {{reserva.cliente.rut}}</strong></h6>
-                        <hr>
-                        <h6>Nombre del profesional :<strong>{{hora.horarioProfesional[0].profesional.nombre}} {{hora.horarioProfesional[0].profesional.apellido}}</strong></h6>
-                        <h6>Nombre del servicio :<strong> {{reserva.servicio.nombre}}</strong></h6>
-                        <h6>Duración del servicio :<strong>  {{reserva.servicio.duracion}} Minutos</strong> </h6>
-                        <h6>Fecha de atención:<strong> {{hora.horarioProfesional[0].fecha | date: 'dd-MM-yyyy'}}</strong></h6>
-                        <h6>Hora de atención :<strong> {{hora.horarioProfesional[0].bloque_horario.horaInicio}}</strong></h6>
-                        <h6>Precio mínimo del servicio :<strong> {{reserva.servicio.precio | currency:'CLP':'$ '}}</strong></h6>
-                    </div>
-                    <hr>
-                    <div style="width: 450px; text-align: center;">
-                        <p>Recuerde llegar con 10 minutos de anticipación a su cita para evitar inconvenientes, si desea cancelar la cita agendada hágalo con anticipación </p>
-                        <button type="button" class="btn btn-primary btn-rounded" [routerLink]="['']" style="border-radius: 40px;">Volver al inicio</button>
+                        <div style="width: 450px; text-align: center;">
+                            <p>Recuerde llegar con 10 minutos de anticipación a su cita para evitar inconvenientes, si desea cancelar la cita agendada hágalo con anticipación </p>
+                            <button type="button" class="btn btn-primary btn-rounded" [routerLink]="['']" style="border-radius: 40px;">Volver al inicio</button>
+                        </div>
                     </div>
                 </div>
             </div>
