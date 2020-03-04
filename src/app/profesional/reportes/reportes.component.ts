@@ -4,7 +4,7 @@ import * as html2canvas from 'html2canvas';
 import { RestService } from 'src/app/servicioBackend/rest.service';
 import { Router } from '@angular/router';
 import { IntervaloFecha } from 'src/app/entidades/IntervaloFecha';
-import { NgbDateParserFormatter, NgbCalendar, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateParserFormatter, NgbCalendar, NgbDateStruct, NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { Servicio } from 'src/app/entidades/Servicio';
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
@@ -17,6 +17,8 @@ import { Movimiento } from 'src/app/entidades/Movimiento';
   templateUrl: './reportes.component.html',
   styleUrls: ['./reportes.component.css']
 })
+
+
 export class ReportesComponent implements OnInit {
   @ViewChild('contenido', { static: false }) myDiv: ElementRef;
   titulo = 'Generar PDF con Angular JS 5';
@@ -39,15 +41,19 @@ export class ReportesComponent implements OnInit {
   private chart2: am4charts.XYChart; //clientes 
   private chart3: am4charts.XYChart; //reservas
   private chart4: am4charts.XYChart; //movimientos
+
+
   constructor(public restService: RestService, private router: Router, private parseCalendar: NgbDateParserFormatter,
     private calendar: NgbCalendar, private zone: NgZone) {
-    this.model = this.calendar.getToday();
+    this.model = this.calendar.getPrev(this.calendar.getToday(),'y');
     this.model2 = this.calendar.getToday();
   }
+
   ngOnInit() {
     if (!this.restService.hasRole('ROLE_ESTETI') && !this.restService.hasRole('ROLE_ADMIN')) {
       this.router.navigate(['login']);
     }
+    this.generarReporte()
     /*this.fechas = { fechaInicio: "2019-11-20", fechaFin: "2019-11-20" };
     this.restService.getTopReservas(this.fechas).subscribe((res: any) => {
       this.reservas = res;
@@ -56,6 +62,7 @@ export class ReportesComponent implements OnInit {
     })*/
 
   }
+
   tab(tab: string) {
     this.li = tab;
     this.show = false;
@@ -64,6 +71,7 @@ export class ReportesComponent implements OnInit {
     this.movimientos= [];
     this.clientes= []; // lista de clientes mas solicitados
   }
+
   generarReporte() {
     console.log(this.li);
     if (this.li == "Clientes") {
@@ -82,6 +90,7 @@ export class ReportesComponent implements OnInit {
       }
     }
   }
+
   generarPDF() {
     html2canvas(this.myDiv.nativeElement, {
       // Opciones
@@ -110,10 +119,10 @@ export class ReportesComponent implements OnInit {
     this.restService.getTopClientes(this.fechas).subscribe((res: any) => {
       this.clientes = res;
       let data = [];
-      this.clientes.forEach(element => {
+      this.clientes.forEach(element => {        
         data.push({
-          "country": element[0].nombre,
-          "visits": element[1]
+          "nombre": element[0].nombre,
+          "reservas": element[1]
         })
       });
       this.chart2.data = data;
@@ -121,33 +130,39 @@ export class ReportesComponent implements OnInit {
     })
     // Create axes
     let categoryAxis = this.chart2.xAxes.push(new am4charts.CategoryAxis());
-    categoryAxis.dataFields.category = "country";
+    categoryAxis.dataFields.category = "nombre";
     categoryAxis.renderer.grid.template.location = 0;
     categoryAxis.renderer.minGridDistance = 30;
+    categoryAxis.title.text = "[bold]Clientes[/] ";
+    
     let valueAxis = this.chart2.yAxes.push(new am4charts.ValueAxis());
+    valueAxis.title.text = "[bold]N° reservas[/]";
     // Create series
-    let series = this.chart2.series.push(new am4charts.ColumnSeries());
-    series.dataFields.valueY = "visits";
-    series.dataFields.categoryX = "country";
-    series.name = "Visits";
-    series.columns.template.tooltipText = "{categoryX}: [bold]{valueY}[/]";
+    let series = this.chart2.series.push(new am4charts.ColumnSeries3D());
+    series.dataFields.valueY = "reservas";
+    series.dataFields.categoryX = "nombre";
+    series.name = "reservas";
+
+    series.columns.template.tooltipText = "{categoryX}: solicitó [bold]{valueY}[/] reservas";
+    series.columns.template.fill = am4core.color("#BC60FF"); // fill
     series.columns.template.fillOpacity = .8;
     let columnTemplate = series.columns.template;
     columnTemplate.strokeWidth = 2;
     columnTemplate.strokeOpacity = 1;
     //exportacion 
     this.chart2.exporting.menu = new am4core.ExportMenu();
-    this.chart2.exporting.title = "Reporte de Servicios";
-    this.chart2.exporting.filePrefix ="reporte";
+    this.chart2.exporting.title = "Reporte de clientes frecuentes";
+    this.chart2.exporting.filePrefix ="Reporte "+ new Date().toLocaleDateString();
     this.chart2.exporting.menu.items = [{
       "label": "<i class=\"fas fa-align-justify\"></i>",
       "menu": [
-        { "type": "png", "label": " Grafico en PNG" },
-        { "type": "pdf", "label": " Grafico en PDF" },
-        { "type": "jpg", "label": " Grafico en JPG" }
+        { "type": "png", "label": " Exportar PNG" },
+        { "type": "pdf", "label": " Exportar PDF" },
+        { "type": "jpg", "label": " Exportar JPG" }
       ]
     }];
   }
+
   cargarGraficoServicio() {
     //inicializar grafico clientes
     this.chart = am4core.create("chartdiv", am4charts.XYChart);
@@ -196,6 +211,7 @@ export class ReportesComponent implements OnInit {
       ]
     }];
   }
+
   cargarGraficoReservas() {
     //inicializar grafico clientes
     this.chart3 = am4core.create("chartdiv3", am4charts.XYChart);
@@ -283,6 +299,7 @@ export class ReportesComponent implements OnInit {
       ]
     }];
   }
+
   cargarGraficoMovimientos() {
     //inicializar grafico clientes
     this.chart4 = am4core.create("chartdiv4", am4charts.XYChart);

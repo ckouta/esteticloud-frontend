@@ -39,7 +39,7 @@
                         <div class="form-group">
                             <div class="input-group" style="padding-right: 40px;">
                                 <h4 style="margin: 0px;">Desde: </h4>
-                                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d1="ngbDatepicker">
+                                <input class="form-control"  name="dp" [(ngModel)]="model" ngbDatepicker #d1="ngbDatepicker">
                                 <div class="input-group-append">
                                     <button class="" (click)="d1.toggle()" type="button">
                                         <mdb-icon far icon="calendar-alt" class="cyan-text" size="lg"></mdb-icon>
@@ -48,7 +48,7 @@
                             </div>
                             <div class="input-group">
                                 <h4 style="margin: 0px;">Hasta: </h4>
-                                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model2" ngbDatepicker #d2="ngbDatepicker">
+                                <input class="form-control" name="dp" [(ngModel)]="model2" ngbDatepicker #d2="ngbDatepicker">
                                 <div class="input-group-append">
                                     <button class="" (click)="d2.toggle()" type="button">
                                         <mdb-icon far icon="calendar-alt" class="cyan-text" size="lg"></mdb-icon>
@@ -166,7 +166,7 @@
                                         <th style="vertical-align: middle">Nombre</th>
                                         <th style="vertical-align: middle">Teléfono</th>
                                         <th style="vertical-align: middle">Correo</th>
-                                        <th style="vertical-align: middle">N° Servicios solicitados</th>
+                                        <th style="vertical-align: middle">N° Reservas solicitadas</th>
                                     </tr>
                                 </thead>
                                 <tbody *ngFor="let cliente of clientes;index as i">
