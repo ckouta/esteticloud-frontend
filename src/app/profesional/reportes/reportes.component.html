@@ -134,7 +134,7 @@
                                 <tbody *ngFor="let reserva of reservas | slice:0:15; index as i;">
                                     <tr style="text-align: center">
                                         <td style="vertical-align: middle">{{i+1}}</td>
-                                        <td style="vertical-align: middle">{{reserva[1]}}</td>
+                                        <td style="vertical-align: middle">{{reserva[1] | date:'dd-MM-yyyy'}}</td>
                                         <td style="vertical-align: middle">{{reserva[0].cliente.nombre}}</td>
                                         <td style="vertical-align: middle">{{reserva[0].servicio.nombre}}</td>
                                         <td style="vertical-align: middle">{{reserva[0].estado_reserva.nombre}}</td>
@@ -211,7 +211,7 @@
                                 <tbody *ngFor="let movimiento of movimientos; index as i">
                                     <tr style="text-align: center">
                                         <td style="vertical-align: middle">{{ i+1 }}</td>
-                                        <td style="vertical-align: middle">{{movimiento.fecha}}</td>
+                                        <td style="vertical-align: middle">{{movimiento.fecha | date:'dd-MM-yyyy' }}</td>
                                         <td style="vertical-align: middle">{{movimiento.nombre}}</td>
                                         <td style="vertical-align: middle">{{movimiento.profesional.nombre}}</td>
                                         <td style="vertical-align: middle">
