@@ -41,7 +41,7 @@ export class InicioProfesionalComponent {
         chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
         chart.paddingRight = 10;
 
-        this.fechas = { fechaInicio: "2019-10-20", fechaFin: "2020-11-20" };
+        this.fechas = { fechaInicio: "2020-03-01", fechaFin: "2020-03-31" };
         this.restService.getTopReservas(this.fechas).subscribe((res: any) => {
           this.reservas = res;
           this.restService.getListaProfesional().subscribe((res: any) => {
