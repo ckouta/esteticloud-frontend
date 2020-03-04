@@ -26,6 +26,19 @@
     }
 }
 
+.carruzel {
+    display: none;
+}
+
+@media screen and (max-width:500px) {
+    .carruzel {
+        display: flex;
+    }
+    .carruzel2 {
+        display: none;
+    }
+}
+
 .navbar-tile {
     color: #616161;
     font-size: 14px;
