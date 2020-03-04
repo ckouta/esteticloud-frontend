@@ -6,6 +6,7 @@ import { RestService } from 'src/app/servicioBackend/rest.service';
 import { IntervaloFecha } from 'src/app/entidades/IntervaloFecha';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { Movimiento } from 'src/app/entidades/Movimiento';
 
 
 am4core.useTheme(am4themes_animated);
@@ -22,6 +23,8 @@ export class InicioProfesionalComponent {
   fechas: IntervaloFecha;
   reservas: any[] = [];
   profesionales: any[] = [];
+  movimientos: Movimiento[] = [];
+  ganancia:number =0;
   constructor(private zone: NgZone, public restService: RestService, private router: Router) {
     if (this.restService.hasRole('ROLE_ADMIN')) {
       this.nombre = "Administrador"
@@ -29,9 +32,24 @@ export class InicioProfesionalComponent {
       this.restService.getProfesionalCorreo(this.restService.usuario.username).subscribe((res: any) => {
         this.restService.profesional = res;
         this.nombre = this.restService.profesional.nombre + " " + this.restService.profesional.apellido;
+        this.restService.getMovimientoProfesional(this.restService.profesional).subscribe((res: any[]) => {
+          this.movimientos = res;
+          this.movimientos.forEach(element => {
+            if(new Date(element.fecha).getMonth() == new Date().getMonth()){
+              this.ganancia+=+element.valor;
+            }
+          });
+        }, err =>{
+          this.movimientos=[];
+        })
       })
     }
 
+  }
+  ngOnInit() {
+    if (!this.restService.hasRole('ROLE_ESTETI') && !this.restService.hasRole('ROLE_ADMIN')) {
+      this.router.navigate(['login']);
+    }
   }
 
   ngAfterViewInit() {
