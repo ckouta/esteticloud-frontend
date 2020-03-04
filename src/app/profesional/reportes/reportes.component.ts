@@ -27,16 +27,16 @@ export class ReportesComponent implements OnInit {
   imagen3 = 'assets/img/al.jpg';
   show = false;
   li = 'Clientes';
-  ingresos:number = 0;
-  egresos:number = 0;
-  total:number = 0;
+  ingresos: number = 0;
+  egresos: number = 0;
+  total: number = 0;
   fechas: IntervaloFecha;
   model: NgbDateStruct; //fecha inicio
   model2: NgbDateStruct; //fecha fin
   servicios: Servicio[] = []; // lista servicios mas utilizados
   reservas: any[] = [];
   movimientos: Movimiento[] = [];
-  clientes: Cliente[] = []; // lista de clientes mas solicitados
+  clientes: any[] = []; // lista de clientes mas solicitados
   private chart: am4charts.XYChart; //servicios
   private chart2: am4charts.XYChart; //clientes 
   private chart3: am4charts.XYChart; //reservas
@@ -45,7 +45,7 @@ export class ReportesComponent implements OnInit {
 
   constructor(public restService: RestService, private router: Router, private parseCalendar: NgbDateParserFormatter,
     private calendar: NgbCalendar, private zone: NgZone) {
-    this.model = this.calendar.getPrev(this.calendar.getToday(),'y');
+    this.model = this.calendar.getPrev(this.calendar.getToday(), 'y');
     this.model2 = this.calendar.getToday();
   }
 
@@ -67,9 +67,9 @@ export class ReportesComponent implements OnInit {
     this.li = tab;
     this.show = false;
     this.servicios = []; // lista servicios mas utilizados
-    this.reservas= [];
-    this.movimientos= [];
-    this.clientes= []; // lista de clientes mas solicitados
+    this.reservas = [];
+    this.movimientos = [];
+    this.clientes = []; // lista de clientes mas solicitados
   }
 
   generarReporte() {
@@ -109,6 +109,121 @@ export class ReportesComponent implements OnInit {
     });
   }
 
+
+  crearPDF() {
+
+
+    Promise.all([
+      this.chart2.exporting.pdfmake,
+      this.cargarGraficoClientes(),
+      this.chart2.exporting.getImage("png")
+    ]).then((res) => {
+      let data = [];
+      if (!this.clientes) {
+        this.restService.getTopClientes(this.fechas).subscribe((res: any) => {
+          this.clientes = res;
+          console.log(this.clientes);
+          data.push([{ text: '#', bold: true }, { text: 'Nombre', bold: true }, { text: 'Teléfono', bold: true }, { text: 'Correo', bold: true }, { text: ' N° reservas solicitadas', bold: true }]);
+          this.clientes.map(function (alguien, index) {
+            console.log(alguien);
+            data.push([
+              { text: index + 1 },
+              { text: alguien[index].nombre + ' ' + alguien[0].apellido },
+              { text: alguien[index].telefono },
+              { text: alguien[index].email },
+              { text: alguien }
+            ])
+          });
+
+        })
+      } else {
+        data.push([{ text: '#', bold: true }, { text: 'Nombre', bold: true }, { text: 'Teléfono', bold: true }, { text: 'Correo', bold: true }, { text: ' N° reservas solicitadas', bold: true }]);
+
+        this.clientes.map(function (alguien, index) {
+          console.log(alguien);
+          data.push([
+            { text: index + 1 },
+            { text: alguien[0].nombre + ' ' + alguien[0].apellido },
+            { text: alguien[0].telefono },
+            { text: alguien[0].email },
+            { text: alguien[1] }
+          ]);
+        });
+      }
+      console.log(data);
+      
+
+      let pdfMake = res[0];
+
+      let doc = {
+        pageSize: "A4",
+        pageOrientation: "portrait",
+        pageMargins: [30, 30, 30, 30],
+        content: [
+          {
+            text: 'Reporte de clientes frecuentes',
+            style: 'header'
+          },
+          {
+            text: '\nFecha de creación del reporte: \t' + new Date().toLocaleDateString()+'\t-\tCentro: Esteticloud',
+            style: 'normal'
+          },
+          {
+            text: '\nFechas seleccionadas: \t' + new Date(this.fechas.fechaInicio).toLocaleDateString() + ' \ty\t '+ new Date(this.fechas.fechaFin).toLocaleDateString(),
+            style: 'normalB'
+          },
+          {
+            text: '\nGráfico de clientes frecuentes\n\n',
+            style: 'bigger'
+          },
+          {
+            image: res[2],
+            width: '500',
+            alignment: 'center'
+          },
+          {
+            text: '\nTabla de datos de clientes frecuentes\n\n',
+            style: 'bigger'
+          },
+          {
+            table: {
+              headerRows: 1,
+              widths:['auto','auto','*','auto','auto'],
+              body: data,
+              alignment:'center'
+            }
+
+          }
+
+        ],
+
+        styles: {
+          header: {
+            fontSize: 18,
+            bold: true,
+            alignment: 'center'
+          },
+          bigger: {
+            fontSize: 14,
+            italics: true,
+            alignment: 'center'
+          },
+          normal:{
+            fontSize:10,
+
+          },
+          normalB:{
+            fontSize:10,
+            bold:true
+
+          }
+        }
+      };
+      pdfMake.createPdf(doc).download("report.pdf");
+    }).catch((error) => console.log(error))
+
+  }
+
   cargarGraficoClientes() {
     //inicializar grafico clientes
     this.chart2 = am4core.create("chartdiv2", am4charts.XYChart);
@@ -119,7 +234,7 @@ export class ReportesComponent implements OnInit {
     this.restService.getTopClientes(this.fechas).subscribe((res: any) => {
       this.clientes = res;
       let data = [];
-      this.clientes.forEach(element => {        
+      this.clientes.forEach(element => {
         data.push({
           "nombre": element[0].nombre,
           "reservas": element[1]
@@ -134,7 +249,7 @@ export class ReportesComponent implements OnInit {
     categoryAxis.renderer.grid.template.location = 0;
     categoryAxis.renderer.minGridDistance = 30;
     categoryAxis.title.text = "[bold]Clientes[/] ";
-    
+
     let valueAxis = this.chart2.yAxes.push(new am4charts.ValueAxis());
     valueAxis.title.text = "[bold]N° reservas[/]";
     // Create series
@@ -152,7 +267,7 @@ export class ReportesComponent implements OnInit {
     //exportacion 
     this.chart2.exporting.menu = new am4core.ExportMenu();
     this.chart2.exporting.title = "Reporte de clientes frecuentes";
-    this.chart2.exporting.filePrefix ="Reporte "+ new Date().toLocaleDateString();
+    this.chart2.exporting.filePrefix = "Reporte " + new Date().toLocaleDateString();
     this.chart2.exporting.menu.items = [{
       "label": "<i class=\"fas fa-align-justify\"></i>",
       "menu": [
@@ -201,7 +316,7 @@ export class ReportesComponent implements OnInit {
     //exportacion 
     this.chart.exporting.menu = new am4core.ExportMenu();
     this.chart.exporting.title = "Reporte de Servicios";
-    this.chart.exporting.filePrefix ="reporte";
+    this.chart.exporting.filePrefix = "reporte";
     this.chart.exporting.menu.items = [{
       "label": "<i class=\"fas fa-align-justify\"></i>",
       "menu": [
@@ -268,7 +383,7 @@ export class ReportesComponent implements OnInit {
       this.show = true;
     }, err => {
       this.reservas = [];
-      
+
     })
     // Create axes
     let categoryAxis = this.chart3.xAxes.push(new am4charts.CategoryAxis());
@@ -289,7 +404,7 @@ export class ReportesComponent implements OnInit {
     //exportacion 
     this.chart3.exporting.menu = new am4core.ExportMenu();
     this.chart3.exporting.title = "Reporte de Servicios";
-    this.chart3.exporting.filePrefix ="reporte";
+    this.chart3.exporting.filePrefix = "reporte";
     this.chart3.exporting.menu.items = [{
       "label": "<i class=\"fas fa-align-justify\"></i>",
       "menu": [
@@ -312,15 +427,15 @@ export class ReportesComponent implements OnInit {
       let ingresos = 0;
       let gastos = 0;
       for (let index = 0; index < this.movimientos.length; index++) {
-        let valor:number = +this.movimientos[index].valor;
+        let valor: number = +this.movimientos[index].valor;
         if (+this.movimientos[index].valor >= 0) {
           ingresos = ingresos + valor;
         } else {
           gastos = gastos + valor;
         }
       }
-      this.ingresos= ingresos;
-      this.egresos =gastos;
+      this.ingresos = ingresos;
+      this.egresos = gastos;
       this.total = ingresos + gastos;
       this.chart4.data = [{
         "country": "Ingresos",
@@ -328,7 +443,7 @@ export class ReportesComponent implements OnInit {
       },
       {
         "country": "Gastos",
-        "visits": gastos*-1
+        "visits": gastos * -1
       }]
       this.show = true;
     }, err => {
@@ -353,7 +468,7 @@ export class ReportesComponent implements OnInit {
     //exportacion 
     this.chart4.exporting.menu = new am4core.ExportMenu();
     this.chart4.exporting.title = "Reporte de Servicios";
-    this.chart4.exporting.filePrefix ="reporte";
+    this.chart4.exporting.filePrefix = "reporte";
     this.chart4.exporting.menu.items = [{
       "label": "<i class=\"fas fa-align-justify\"></i>",
       "menu": [
@@ -363,4 +478,5 @@ export class ReportesComponent implements OnInit {
       ]
     }];
   }
+
 }
