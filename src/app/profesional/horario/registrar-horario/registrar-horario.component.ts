@@ -13,12 +13,12 @@ import { Bloque } from 'src/app/entidades/Bloque_horario';
   selector: 'app-registrar-horario',
   templateUrl: './registrar-horario.component.html',
   providers: [
-    {provide: NgbDatepickerI18n, useClass: esI18n}
-],
+    { provide: NgbDatepickerI18n, useClass: esI18n }
+  ],
   styleUrls: ['./registrar-horario.component.css'],
 })
 export class RegistrarHorarioComponent implements OnInit {
-  isDisabled = (date: NgbDate, current: {month: number}) => date.day < this.Dia.day && date.month<= this.Dia.month;
+  isDisabled = (date: NgbDate, current: { month: number }) => date.day < this.Dia.day && date.month <= this.Dia.month;
   minDate;
   hoveredDate: NgbDate;
   horaInicioLunes: string;
@@ -36,43 +36,45 @@ export class RegistrarHorarioComponent implements OnInit {
   horaInicioDomingo: string;
   horaFinDomingo: string = null;
   checklunes: boolean = true;
-  checkmartes: boolean= true;
-  checkmiercoles: boolean= true;
-  checkjueves: boolean= true;
-  checkviernes: boolean= true;
-  checksabado: boolean= true;
-  checkdomingo: boolean= true;
+  checkmartes: boolean = true;
+  checkmiercoles: boolean = true;
+  checkjueves: boolean = true;
+  checkviernes: boolean = true;
+  checksabado: boolean = true;
+  checkdomingo: boolean = true;
   fromDate: NgbDate;
   Dia: NgbDate;
   toDate: NgbDate;
-  listBloquesLunes: Bloque[] = [] ;
-  listBloquesMartes: Bloque[] = [] ;
-  listBloquesMiercoles: Bloque[] = [] ;
-  listBloquesJueves: Bloque[] = [] ;
-  listBloquesViernes: Bloque[] = [] ;
-  listBloquesSabado: Bloque[] = [] ;
-  listBloquesDomingo: Bloque[] = [] ;
+  listBloquesLunes: Bloque[] = [];
+  listBloquesMartes: Bloque[] = [];
+  listBloquesMiercoles: Bloque[] = [];
+  listBloquesJueves: Bloque[] = [];
+  listBloquesViernes: Bloque[] = [];
+  listBloquesSabado: Bloque[] = [];
+  listBloquesDomingo: Bloque[] = [];
 
   lunes: number = new Date().getDay();
   constructor(public restService: RestService, private calendar: NgbCalendar, private parseCalendar: NgbDateParserFormatter, private dia: NgbDatepickerI18n, private router: Router) {
     this.fromDate = calendar.getToday();
     this.Dia = calendar.getToday();
-    this.minDate = {year: this.fromDate.year, month: this.fromDate.month, day: 1};
+    this.minDate = { year: this.fromDate.year, month: this.fromDate.month, day: 1 };
 
   }
+
   ngOnInit() {
     if (!this.restService.hasRole('ROLE_ESTETI')) {
       this.router.navigate(['login']);
     }
     this.restService.getProfesionalCorreo(this.restService.usuario.username).subscribe((res: any) => {
       this.restService.profesional = res;
-    }, err =>{
+    }, err => {
       this.router.navigate(['login']);
     })
     this.restService.getListabloques().subscribe((res: any[]) => {
       this.restService.listaBloque = res;
     });
   }
+
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;
@@ -95,25 +97,26 @@ export class RegistrarHorarioComponent implements OnInit {
   isRange(date: NgbDate) {
     return date.equals(this.fromDate) || date.equals(this.toDate) || this.isInside(date) || this.isHovered(date);
   }
+
   registrarHorario() {
     let fechaInicio: NgbDate = this.fromDate;
     let fechaFIn: NgbDate = this.toDate;
-    let listaFecha: RangoFecha[]= [];
+    let listaFecha: RangoFecha[] = [];
     let id: number = this.restService.profesional.id_profesional;
     let horaInicio;
     let horaFin;
     if (fechaInicio == null || fechaFIn == null) {
       console.log(this.horaFinDomingo);
-      
+
       Swal.fire('Datos incorrectos', 'Verifique el ingreso de los datos', 'error');
     } else {
-      
+
       do {
         let fechaDate: Date = new Date(this.parseCalendar.format(fechaInicio));
         if (fechaDate.getDay() == 0 && this.checklunes) {
           horaInicio = this.horaInicioLunes;
           horaFin = this.horaFinLunes;
-          if( horaInicio== null || horaFin==null){
+          if (horaInicio == null || horaFin == null) {
             Swal.fire('Datos incorrectos', 'Verifique el ingreso de los datos', 'error');
             return;
           }
@@ -121,7 +124,7 @@ export class RegistrarHorarioComponent implements OnInit {
           if (fechaDate.getDay() == 1 && this.checkmartes) {
             horaInicio = this.horaInicioMartes;
             horaFin = this.horaFinMartes;
-            if( horaInicio== null || horaFin==null){
+            if (horaInicio == null || horaFin == null) {
               Swal.fire('Datos incorrectos', 'Verifique el ingreso de los datos', 'error');
               return;
             }
@@ -129,7 +132,7 @@ export class RegistrarHorarioComponent implements OnInit {
             if (fechaDate.getDay() == 2 && this.checkmiercoles) {
               horaInicio = this.horaInicioMiercoles;
               horaFin = this.horaFinMiercoles;
-              if( horaInicio== null || horaFin==null){
+              if (horaInicio == null || horaFin == null) {
                 Swal.fire('Datos incorrectos', 'Verifique el ingreso de los datos', 'error');
                 return;
               }
@@ -137,7 +140,7 @@ export class RegistrarHorarioComponent implements OnInit {
               if (fechaDate.getDay() == 3 && this.checkjueves) {
                 horaInicio = this.horaInicioJueves;
                 horaFin = this.horaFinJueves;
-                if( horaInicio== null || horaFin==null){
+                if (horaInicio == null || horaFin == null) {
                   Swal.fire('Datos Incorrectos', 'Verifique el ingreso de los datos', 'error');
                   return;
                 }
@@ -145,7 +148,7 @@ export class RegistrarHorarioComponent implements OnInit {
                 if (fechaDate.getDay() == 4 && this.checkviernes) {
                   horaInicio = this.horaInicioViernes;
                   horaFin = this.horaFinViernes;
-                  if( horaInicio== null || horaFin==null){
+                  if (horaInicio == null || horaFin == null) {
                     Swal.fire('Datos incorrectos', 'Verifique el ingreso de los datos', 'error');
                     return;
                   }
@@ -153,7 +156,7 @@ export class RegistrarHorarioComponent implements OnInit {
                   if (fechaDate.getDay() == 5 && this.checksabado) {
                     horaInicio = this.horaInicioSabado;
                     horaFin = this.horaFinSabado;
-                    if( horaInicio== null || horaFin==null){
+                    if (horaInicio == null || horaFin == null) {
                       Swal.fire('Datos incorrectos', 'Verifique el ingreso de los datos', 'error');
                       return;
                     }
@@ -161,7 +164,7 @@ export class RegistrarHorarioComponent implements OnInit {
                     if (fechaDate.getDay() == 6 && this.checkdomingo) {
                       horaInicio = this.horaInicioDomingo;
                       horaFin = this.horaFinDomingo;
-                      if( horaInicio== null || horaFin==null){
+                      if (horaInicio == null || horaFin == null) {
                         Swal.fire('Datos incorrectos', 'Verifique el ingreso de los datos', 'error');
                         return;
                       }
@@ -175,85 +178,92 @@ export class RegistrarHorarioComponent implements OnInit {
 
         let fecha: string = this.parseCalendar.format(fechaInicio);
         let rangoFecha: RangoFecha = { id, fecha, horaInicio, horaFin };
-        if( horaInicio!= null || horaFin!=null){
-          console.log(rangoFecha +"    "+fechaDate.getDay());
+        if (horaInicio != null || horaFin != null) {
+          console.log(rangoFecha + "    " + fechaDate.getDay());
           listaFecha.push(rangoFecha);
         }
-        horaInicio=null;
-        horaFin=null;
+        horaInicio = null;
+        horaFin = null;
         fechaInicio = this.calendar.getNext(fechaInicio, "d", 1);
       } while (!fechaInicio.after(fechaFIn));
-        listaFecha.forEach(element => {
-          this.restService.saveHorario(element).subscribe(() => {
-            return this.restService.getListaProfesional().subscribe((res: any[]) => {
-              this.restService.listaProfesional = res;
-            },
-              err => console.log(err));
-          });
-          
+      listaFecha.forEach(element => {
+        this.restService.saveHorario(element).subscribe(() => {
+          return this.restService.getListaProfesional().subscribe((res: any[]) => {
+            this.restService.listaProfesional = res;
+          },
+            err => console.log(err));
         });
-        Swal.fire('Horario registrado', 'el horario fue agregado ', 'success');
-        this.router.navigate(['profesional/horario']);
+
+      });
+      Swal.fire('Horario registrado', 'el horario fue agregado ', 'success');
+      this.router.navigate(['profesional/horario']);
     }
   }
-  limitarLunes(){
-    this.listBloquesLunes=[];
+
+  limitarLunes() {
+    this.listBloquesLunes = [];
     this.restService.listaBloque.forEach(element => {
-      if(element.diaSemana == "1" && element.horaInicio >= this.horaInicioLunes){
+      if (element.diaSemana == "1" && element.horaInicio >= this.horaInicioLunes) {
         this.listBloquesLunes.push(element);
       }
     });
     this.horaFinLunes = null;
   }
-  limitarMartes(){
-    this.listBloquesMartes=[];
+
+  limitarMartes() {
+    this.listBloquesMartes = [];
     this.restService.listaBloque.forEach(element => {
-      if(element.diaSemana == "2" && element.horaInicio >= this.horaInicioMartes){
+      if (element.diaSemana == "2" && element.horaInicio >= this.horaInicioMartes) {
         this.listBloquesMartes.push(element);
       }
     });
     this.horaFinMartes = null;
   }
-  limitarMiercoles(){
-    this.listBloquesMiercoles=[];
+
+  limitarMiercoles() {
+    this.listBloquesMiercoles = [];
     this.restService.listaBloque.forEach(element => {
-      if(element.diaSemana == "3" && element.horaInicio >= this.horaInicioMiercoles){
+      if (element.diaSemana == "3" && element.horaInicio >= this.horaInicioMiercoles) {
         this.listBloquesMiercoles.push(element);
       }
     });
     this.horaFinMiercoles = null;
   }
-  limitarJueves(){
-    this.listBloquesJueves=[];
+
+  limitarJueves() {
+    this.listBloquesJueves = [];
     this.restService.listaBloque.forEach(element => {
-      if(element.diaSemana == "4" && element.horaInicio >= this.horaInicioJueves){
+      if (element.diaSemana == "4" && element.horaInicio >= this.horaInicioJueves) {
         this.listBloquesJueves.push(element);
       }
     });
     this.horaFinJueves = null;
   }
-  limitarViernes(){
-    this.listBloquesJueves=[];
+
+  limitarViernes() {
+    this.listBloquesJueves = [];
     this.restService.listaBloque.forEach(element => {
-      if(element.diaSemana == "5" && element.horaInicio >= this.horaInicioViernes){
+      if (element.diaSemana == "5" && element.horaInicio >= this.horaInicioViernes) {
         this.listBloquesViernes.push(element);
       }
     });
     this.horaFinViernes = null;
   }
-   limitarSabado(){
-    this.listBloquesJueves=[];
+
+  limitarSabado() {
+    this.listBloquesJueves = [];
     this.restService.listaBloque.forEach(element => {
-      if(element.diaSemana == "6" && element.horaInicio >= this.horaInicioSabado){
+      if (element.diaSemana == "6" && element.horaInicio >= this.horaInicioSabado) {
         this.listBloquesSabado.push(element);
       }
     });
     this.horaFinSabado = null;
   }
-  limitarDomingo(){
-    this.listBloquesJueves=[];
+  
+  limitarDomingo() {
+    this.listBloquesJueves = [];
     this.restService.listaBloque.forEach(element => {
-      if(element.diaSemana == "0" && element.horaInicio >= this.horaInicioDomingo){
+      if (element.diaSemana == "0" && element.horaInicio >= this.horaInicioDomingo) {
         this.listBloquesDomingo.push(element);
       }
     });
