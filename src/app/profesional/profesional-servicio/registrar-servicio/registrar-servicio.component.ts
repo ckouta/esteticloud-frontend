@@ -4,7 +4,7 @@ import { RestService } from 'src/app/servicioBackend/rest.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Servicio } from 'src/app/entidades/Servicio';
 import Swal from 'sweetalert2';
-
+import { ServicioOfrecido } from 'src/app/entidades/ServicioOfrecido';
 @Component({
   selector: 'app-registrar-servicio',
   templateUrl: './registrar-servicio.component.html',
@@ -54,6 +54,11 @@ export class RegistrarServicioComponent implements OnInit {
   }
   guardarServicio(servicio: Servicio) {
     this.restService.saveServicio(servicio).subscribe((servicio) => {
+      let ServicioOfrecido: ServicioOfrecido = { id_servicioOfrecido: null, profesional: this.restService.profesional, servicio: servicio };
+      this.restService.saveServicioOfrecido(ServicioOfrecido).subscribe((res => { 
+    
+      })
+    )
       if (this.fotoSeleccionada == null) {
         
         return this.restService.getListaServicio().subscribe((res: any[]) => {
@@ -126,4 +131,5 @@ saveData() {
 seleccionarFoto(event) {
   this.fotoSeleccionada = event.target.files[0];
 }
+
 }
