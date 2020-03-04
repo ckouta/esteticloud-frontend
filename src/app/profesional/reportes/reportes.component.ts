@@ -4,14 +4,17 @@ import * as html2canvas from 'html2canvas';
 import { RestService } from 'src/app/servicioBackend/rest.service';
 import { Router } from '@angular/router';
 import { IntervaloFecha } from 'src/app/entidades/IntervaloFecha';
-import { NgbDateParserFormatter, NgbCalendar, NgbDateStruct,
-  NgbInputDatepicker } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbDateParserFormatter, NgbCalendar, NgbDateStruct,
+  NgbInputDatepicker
+} from '@ng-bootstrap/ng-bootstrap';
 import { Servicio } from 'src/app/entidades/Servicio';
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import { Cliente } from 'src/app/entidades/Cliente';
 import { Movimiento } from 'src/app/entidades/Movimiento';
+import { any } from '@amcharts/amcharts4/.internal/core/utils/Array';
 
 @Component({
   selector: 'app-reportes',
@@ -45,14 +48,14 @@ export class ReportesComponent implements OnInit {
 
 
   constructor(
-    public restService: RestService, 
-    private router: Router, 
-    private parseCalendar: NgbDateParserFormatter, 
-    private calendar: NgbCalendar, 
+    public restService: RestService,
+    private router: Router,
+    private parseCalendar: NgbDateParserFormatter,
+    private calendar: NgbCalendar,
     private zone: NgZone) {
-    
-   
-    
+
+
+
   }
 
   ngOnInit() {
@@ -61,9 +64,9 @@ export class ReportesComponent implements OnInit {
       this.router.navigate(['login']);
     }
     const hoy = this.calendar.getToday();
-    this.model =  { year: hoy.year, month:hoy.month-1, day:hoy.month};
+    this.model = { year: hoy.year, month: hoy.month - 1, day: hoy.month };
     this.model2 = hoy;
-   
+
     this.generarReporte()
     /*this.fechas = { fechaInicio: "2019-11-20", fechaFin: "2019-11-20" };
     this.restService.getTopReservas(this.fechas).subscribe((res: any) => {
@@ -127,14 +130,15 @@ export class ReportesComponent implements OnInit {
     let data = []
     /* los headers del reporte */
     data.push([{ text: '#', bold: true }, { text: 'Nombre', bold: true }, { text: 'Teléfono', bold: true }, { text: 'Correo', bold: true }, { text: ' N° reservas solicitadas', bold: true }]);
-    
+
     this.clientes.map(function (alguien, index) {
+      
       data.push([
         { text: index + 1 },
         { text: alguien[0].nombre + ' ' + alguien[0].apellido },
         { text: alguien[0].telefono },
         { text: alguien[0].email },
-        { text: alguien }
+        { text: alguien[1] }
       ])
     });
     return data;
@@ -153,7 +157,6 @@ export class ReportesComponent implements OnInit {
       } else {
         data = this.getDataClientes();
       }
-      console.log(data);
 
       let pdfMake = res[0];
 
@@ -260,7 +263,7 @@ export class ReportesComponent implements OnInit {
     series.dataFields.categoryX = "nombre";
     series.name = "reservas";
 
-    series.columns.template.tooltipText = "{categoryX}: solicitó [bold]{valueY}[/] reservas";
+    series.columns.template.tooltipText = "{categoryX} solicitó [bold]{valueY}[/] reserva(s)";
     series.columns.template.fill = am4core.color("#BC60FF"); // fill
     series.columns.template.fillOpacity = .8;
     let columnTemplate = series.columns.template;
@@ -269,7 +272,7 @@ export class ReportesComponent implements OnInit {
     //exportacion 
     this.chart2.exporting.menu = new am4core.ExportMenu();
     this.chart2.exporting.title = "Reporte de clientes frecuentes";
-    this.chart2.exporting.filePrefix = "Reporte " + new Date().toLocaleDateString();
+    this.chart2.exporting.filePrefix = "Reporte_clientes_" + new Date().toLocaleDateString();
     this.chart2.exporting.menu.items = [{
       "label": "<i class=\"fas fa-align-justify\"></i>",
       "menu": [
@@ -280,9 +283,9 @@ export class ReportesComponent implements OnInit {
     }];
   }
 
-  crearPDFServicios(){
+  crearPDFServicios() {
     console.log("aun no funciona");
-    
+
   }
   cargarGraficoServicio() {
     //inicializar grafico clientes
@@ -333,7 +336,7 @@ export class ReportesComponent implements OnInit {
     }];
   }
 
-  
+
 
   cargarGraficoReservas() {
     //inicializar grafico clientes
@@ -345,92 +348,240 @@ export class ReportesComponent implements OnInit {
     this.restService.getTopReservas(this.fechas).subscribe((res: any) => {
       this.reservas = res;
       console.log(this.reservas);
-      
+
       let agendada = 0;
       let reservada = 0;
       let canceladaCliente = 0;
       let canceladaProfesional = 0;
       let ausente = 0;
+
       for (let index = 0; index < this.reservas.length; index++) {
-        if (this.reservas[index][0].estado_reserva.id_estado_reserva == 1) {
-          agendada++;
-        } else {
-          if (this.reservas[index][0].estado_reserva.id_estado_reserva == 2) {
-            reservada++;
-          } else {
-            if (this.reservas[index][0].estado_reserva.id_estado_reserva == 3) {
-              canceladaCliente++;
-            } else {
-              if (this.reservas[index][0].estado_reserva.id_estado_reserva == 4) {
-                canceladaProfesional++;
-              } else {
-                ausente++;
-              }
-            }
-          }
+        switch (this.reservas[index][0].estado_reserva.id_estado_reserva) {
+          case 1: agendada++; break;
+          case 2: reservada++; break;
+          case 3: canceladaCliente++; break;
+          case 4: canceladaProfesional++; break;
+          case 5: ausente++; break;
+          default: break;
         }
       }
       this.chart3.data = [{
-        "country": "Agendada",
-        "visits": agendada
+        "estado": "Agendada",
+        "cantidad": agendada
       },
       {
-        "country": "Reservada",
-        "visits": reservada
+        "estado": "Reservada",
+        "cantidad": reservada
       },
       {
-        "country": "Cancelada Cliente",
-        "visits": canceladaCliente
+        "estado": "Cancelada Cliente",
+        "cantidad": canceladaCliente
       },
       {
-        "country": "Cancelada Profesional",
-        "visits": canceladaProfesional
+        "estado": "Cancelada Profesional",
+        "cantidad": canceladaProfesional
       },
       {
-        "country": "Ausente Cliente",
-        "visits": ausente
+        "estado": "no se presentó",
+        "cantidad": ausente
       }]
       this.show = true;
     }, err => {
       this.reservas = [];
-
     })
     // Create axes
     let categoryAxis = this.chart3.xAxes.push(new am4charts.CategoryAxis());
-    categoryAxis.dataFields.category = "country";
+    categoryAxis.dataFields.category = "estado";
     categoryAxis.renderer.grid.template.location = 0;
     categoryAxis.renderer.minGridDistance = 30;
+    categoryAxis.title.text = "[bold]Estado de la reserva[/] ";
+
     let valueAxis = this.chart3.yAxes.push(new am4charts.ValueAxis());
+    valueAxis.title.text = "[bold]N° reservas[/]";
     // Create series
-    let series = this.chart3.series.push(new am4charts.ColumnSeries());
-    series.dataFields.valueY = "visits";
-    series.dataFields.categoryX = "country";
-    series.name = "Visits";
+    let series = this.chart3.series.push(new am4charts.ColumnSeries3D());
+    series.dataFields.valueY = "cantidad";
+    series.dataFields.categoryX = "estado";
+    series.name = "cantidad";
+
     series.columns.template.tooltipText = "{categoryX}: [bold]{valueY}[/]";
+
     series.columns.template.fillOpacity = .8;
+    series.columns.template.fill = am4core.color("#BC60FF");
+    series.columns.template.stroke = am4core.color("#9400FF");
+
     let columnTemplate = series.columns.template;
+
     columnTemplate.strokeWidth = 2;
     columnTemplate.strokeOpacity = 1;
     //exportacion 
     this.chart3.exporting.menu = new am4core.ExportMenu();
-    this.chart3.exporting.title = "Reporte de Servicios";
-    this.chart3.exporting.filePrefix = "reporte";
+    this.chart3.exporting.title = "Reporte de servicios según estado";
+    this.chart3.exporting.filePrefix = "Reporte_reservas" + new Date().toLocaleDateString();
     this.chart3.exporting.menu.items = [{
       "label": "<i class=\"fas fa-align-justify\"></i>",
       "menu": [
-        { "type": "png", "label": " Grafico en PNG" },
-        { "type": "pdf", "label": " Grafico en PDF" },
-        { "type": "jpg", "label": " Grafico en JPG" }
+        { "type": "png", "label": " Exportar PNG" },
+        { "type": "pdf", "label": " Exportar PDF" },
+        { "type": "jpg", "label": " Exportar JPG" }
       ]
     }];
   }
 
-  crearPDFReservas(){
-    console.log("aun no funciona");
+  getDataReservas() {
+    let data = { todo: [], porEstado: [] }
+    /* los headers del reporte */
+    data.todo.push([
+      { text: '#', bold: true },
+      { text: 'Fecha', bold: true },
+      { text: 'Cliente', bold: true },
+      { text: 'Servicio solicitado', bold: true },
+      { text: 'Estado reserva', bold: true }]);
+
+    data.porEstado.push([
+      { text: 'Estado de reserva', bold: true },
+      { text: 'Cantidad', bold: true }]);
+
     
+    let agendada = 0;
+    let reservada = 0;
+    let canceladaCliente = 0;
+    let canceladaProfesional = 0;
+    let ausente = 0;
+
+    this.reservas.forEach((element, index) => {
+      /*los datos del reporte */
+      data.todo.push([
+        { text: index + 1 },
+        { text: new Date(element[1]).toLocaleDateString() },
+        { text: element[0].cliente.nombre + ' ' + element[0].cliente.apellido },
+        { text: element[0].servicio.nombre },
+        { text: element[0].estado_reserva.nombre }
+      ])
+      /*tabla chica */
+      switch (this.reservas[index][0].estado_reserva.id_estado_reserva) {
+        case 1: agendada++; break;
+        case 2: reservada++; break;
+        case 3: canceladaCliente++; break;
+        case 4: canceladaProfesional++; break;
+        case 5: ausente++; break;
+        default: break;
+      }
+    });
+    
+    data.porEstado.push([ { text: 'Agendada'},  { text: agendada } ]);
+    data.porEstado.push([ { text: 'Reservada'},  { text: reservada } ]);
+    data.porEstado.push([ { text: 'Cancelada por el cliente'},  { text: canceladaCliente } ]);
+    data.porEstado.push([ { text: 'Cancelada por el Profesional'},  { text: canceladaProfesional } ]);
+    data.porEstado.push([ { text: 'El cliente no se presentó'},  { text: ausente } ]);
+    data.porEstado.push([ { text: 'Total'},  { text: (ausente+agendada+reservada+canceladaCliente+canceladaProfesional) } ]);
+   
+    
+    return data;
   }
 
-  crearPDFMovimientos(){
+  crearPDFReservas() {
+    Promise.all([
+      this.chart3.exporting.pdfmake,
+      this.cargarGraficoReservas(),
+      this.chart3.exporting.getImage("png")
+    ]).then((res) => {
+      let data : any;
+      if (!this.reservas) {
+        this.restService.getTopReservas(this.fechas).subscribe((res: any) => {
+          this.reservas = res;
+          data = this.getDataReservas();
+        })
+      } else {
+        data = this.getDataReservas();
+      }
+      console.log(data);
+
+      let pdfMake = res[0];
+
+      let doc = {
+        pageSize: "A4",
+        pageOrientation: "portrait",
+        pageMargins: [30, 30, 30, 30],
+        content: [
+          {
+            text: 'Reporte de reservas por estado',
+            style: 'header'
+          },
+          {
+            text: '\nFecha de creación del reporte: \t' + new Date().toLocaleDateString() + '\t-\tCentro: Esteticloud',
+            style: 'normal'
+          },
+          {
+            text: '\nFechas seleccionadas: \t' + new Date(this.fechas.fechaInicio).toLocaleDateString() + ' \ty\t ' + new Date(this.fechas.fechaFin).toLocaleDateString(),
+            style: 'normalB'
+          },
+          {
+            text: '\nGráfico de reservas por estado\n\n',
+            style: 'bigger'
+          },
+          {
+            image: res[2],
+            width: 500,
+            alignment: 'center'
+          }/*,
+          {
+            text: '\nTabla de reservas según estado\n\n',
+            style: 'bigger'
+          },
+          {
+            table: {
+              headerRows: 1,
+              widths: ['auto', 'auto', '*', 'auto', 'auto'],
+              body: data.porEstado,
+              alignment: 'center'
+            }
+          }*/,
+          {
+            text: '\nTabla de detalle de reservas\n\n',
+            style: 'bigger'
+          },
+          {
+            table: {
+              headerRows: 1,
+              widths: ['auto', 'auto', '*', 'auto', 'auto'],
+              body: data.todo,
+              alignment: 'center'
+            }
+          }
+
+        ],
+
+        styles: {
+          header: {
+            fontSize: 18,
+            bold: true,
+            alignment: 'center'
+          },
+          bigger: {
+            fontSize: 14,
+            italics: true,
+            alignment: 'center'
+          },
+          normal: {
+            fontSize: 10,
+
+          },
+          normalB: {
+            fontSize: 10,
+            bold: true
+
+          }
+        }
+      };
+      pdfMake.createPdf(doc).open();
+      pdfMake.createPdf(doc).download("ReporteReservas.pdf");
+    }).catch((error) => console.log(error))
+
+
+  }
+
+  crearPDFMovimientos() {
     console.log("aun no funciona");
   }
   cargarGraficoMovimientos() {
