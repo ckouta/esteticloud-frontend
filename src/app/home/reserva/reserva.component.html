@@ -134,7 +134,7 @@
                 <div class="col-12" style="margin-bottom: 10px;">
                     <h4 class="mt-0" style="margin-bottom: 4%;">Fecha</h4>
                     <hr>
-                    <input class="form-control" placeholder="dd-MM-yyyy" type="date" name="dp" [(ngModel)]="model" (click)="d.toggle()" (ngModelChange)="Select()" ngbDatepicker #d="ngbDatepicker">
+                    <input class="form-control" placeholder="dd/mm/yyyy" name="dp" [(ngModel)]="model" (click)="d.toggle()" (ngModelChange)="Select()" ngbDatepicker #d="ngbDatepicker" [minDate]="minDate" [maxDate]="{year: 2048, month: 12, day: 31}" [markDisabled]="isDisabled">
                 </div>
             </div>
             <div class="row" style="margin: 0;">
@@ -170,7 +170,7 @@
 
             </div>
             <div class="col-3" style="margin-bottom: 30px; ">
-                <ngb-datepicker #dp [(ngModel)]="model" (select)="Select()" [minDate]="{year: 2019, month: 10, day: 1}" [maxDate]="{year: 2048, month: 12, day: 31}" [markDisabled]="isDisabled" [dayTemplate]="customDay"></ngb-datepicker>
+                <ngb-datepicker #dp [(ngModel)]="model" (select)="Select()" [minDate]="minDate" [maxDate]="{year: 2048, month: 12, day: 31}" [markDisabled]="isDisabled" [dayTemplate]="customDay"></ngb-datepicker>
 
 
             </div>

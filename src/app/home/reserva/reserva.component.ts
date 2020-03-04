@@ -25,9 +25,8 @@ import { esI18n } from 'src/app/esI18n';
 })
 
 export class ReservaComponent implements OnInit, OnChanges {
-  isDisabled;
-  //date.day >= 3 && date.day <= 7  ||  date.day >= 9 && date.day <= 13 
-
+  isDisabled = (date: NgbDate, current: { month: number }) => date.day < this.Dia.day && date.month <= this.Dia.month;
+  minDate;
   isWeekend = (date: NgbDate) => this.calendar.getWeekday(date) >= 6;
   calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
   calendarWeekends = true;
@@ -46,6 +45,8 @@ export class ReservaComponent implements OnInit, OnChanges {
   listServicioAnteriores: Servicio[] = [];
   mensaje: boolean = false;
   fecha: string; // establecer fecha de hoy
+  fromDate: NgbDate;
+  Dia: NgbDate;
   constructor(public restService: RestService,
     private calendar: NgbCalendar,
     private ngbDatepickerI18n: NgbDatepickerI18n,
@@ -53,10 +54,9 @@ export class ReservaComponent implements OnInit, OnChanges {
     private parseCalendar: NgbDateParserFormatter) {
     this.model = this.calendar.getToday();
     this.fecha = this.parseCalendar.format(this.model);
-    console.log(this.fecha);
-    this.isDisabled = (date: NgbDate, current: { month: number }) => {
-      current.month == 11 && date.day == 3
-    };
+    this.fromDate = calendar.getToday();
+    this.Dia = calendar.getToday();
+    this.minDate = { year: this.fromDate.year, month: this.fromDate.month, day: 1 };
 
   }
 
