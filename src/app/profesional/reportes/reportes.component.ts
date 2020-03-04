@@ -4,7 +4,8 @@ import * as html2canvas from 'html2canvas';
 import { RestService } from 'src/app/servicioBackend/rest.service';
 import { Router } from '@angular/router';
 import { IntervaloFecha } from 'src/app/entidades/IntervaloFecha';
-import { NgbDateParserFormatter, NgbCalendar, NgbDateStruct, NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateParserFormatter, NgbCalendar, NgbDateStruct,
+  NgbInputDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import { Servicio } from 'src/app/entidades/Servicio';
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
@@ -43,16 +44,26 @@ export class ReportesComponent implements OnInit {
   private chart4: am4charts.XYChart; //movimientos
 
 
-  constructor(public restService: RestService, private router: Router, private parseCalendar: NgbDateParserFormatter,
-    private calendar: NgbCalendar, private zone: NgZone) {
-    this.model = this.calendar.getPrev(this.calendar.getToday(), 'y');
-    this.model2 = this.calendar.getToday();
+  constructor(
+    public restService: RestService, 
+    private router: Router, 
+    private parseCalendar: NgbDateParserFormatter, 
+    private calendar: NgbCalendar, 
+    private zone: NgZone) {
+    
+   
+    
   }
 
   ngOnInit() {
+
     if (!this.restService.hasRole('ROLE_ESTETI') && !this.restService.hasRole('ROLE_ADMIN')) {
       this.router.navigate(['login']);
     }
+    const hoy = this.calendar.getToday();
+    this.model =  { year: hoy.year, month:hoy.month-1, day:hoy.month};
+    this.model2 = hoy;
+   
     this.generarReporte()
     /*this.fechas = { fechaInicio: "2019-11-20", fechaFin: "2019-11-20" };
     this.restService.getTopReservas(this.fechas).subscribe((res: any) => {
@@ -70,6 +81,7 @@ export class ReportesComponent implements OnInit {
     this.reservas = [];
     this.movimientos = [];
     this.clientes = []; // lista de clientes mas solicitados
+    this.generarReporte();
   }
 
   generarReporte() {
@@ -91,28 +103,43 @@ export class ReportesComponent implements OnInit {
     }
   }
 
-  generarPDF() {
-    html2canvas(this.myDiv.nativeElement, {
-      // Opciones
-      allowTaint: true,
-      useCORS: false,
-      // Calidad del PDF
-      scale: 2
-
-    }).then(canvas => {
-      var img = canvas.toDataURL("image/jpeg", 1.0);
-      var doc = new jsPDF('landscape');
-      doc.setFontSize(20);
-      doc.addImage(img, 'JPEG', 10, 10, 280, 150);
-
-      doc.save('reporte.pdf');
-    });
-  }
-
 
   crearPDF() {
+    switch (this.li) {
+      case 'Clientes': {
+        this.crearPDFClientes(); break;
+      }
+      case 'Reservas': {
+        this.crearPDFReservas(); break;
+      }
+      case 'Servicios': {
+        this.crearPDFServicios(); break;
+      }
+      case 'Movimientos': {
+        this.crearPDFMovimientos(); break;
+      }
+      default:
+        break;
+    }
+  }
 
-
+  getDataClientes() {
+    let data = []
+    /* los headers del reporte */
+    data.push([{ text: '#', bold: true }, { text: 'Nombre', bold: true }, { text: 'Teléfono', bold: true }, { text: 'Correo', bold: true }, { text: ' N° reservas solicitadas', bold: true }]);
+    
+    this.clientes.map(function (alguien, index) {
+      data.push([
+        { text: index + 1 },
+        { text: alguien[0].nombre + ' ' + alguien[0].apellido },
+        { text: alguien[0].telefono },
+        { text: alguien[0].email },
+        { text: alguien }
+      ])
+    });
+    return data;
+  }
+  crearPDFClientes() {
     Promise.all([
       this.chart2.exporting.pdfmake,
       this.cargarGraficoClientes(),
@@ -121,37 +148,12 @@ export class ReportesComponent implements OnInit {
       let data = [];
       if (!this.clientes) {
         this.restService.getTopClientes(this.fechas).subscribe((res: any) => {
-          this.clientes = res;
-          console.log(this.clientes);
-          data.push([{ text: '#', bold: true }, { text: 'Nombre', bold: true }, { text: 'Teléfono', bold: true }, { text: 'Correo', bold: true }, { text: ' N° reservas solicitadas', bold: true }]);
-          this.clientes.map(function (alguien, index) {
-            console.log(alguien);
-            data.push([
-              { text: index + 1 },
-              { text: alguien[index].nombre + ' ' + alguien[0].apellido },
-              { text: alguien[index].telefono },
-              { text: alguien[index].email },
-              { text: alguien }
-            ])
-          });
-
+          data = this.getDataClientes();
         })
       } else {
-        data.push([{ text: '#', bold: true }, { text: 'Nombre', bold: true }, { text: 'Teléfono', bold: true }, { text: 'Correo', bold: true }, { text: ' N° reservas solicitadas', bold: true }]);
-
-        this.clientes.map(function (alguien, index) {
-          console.log(alguien);
-          data.push([
-            { text: index + 1 },
-            { text: alguien[0].nombre + ' ' + alguien[0].apellido },
-            { text: alguien[0].telefono },
-            { text: alguien[0].email },
-            { text: alguien[1] }
-          ]);
-        });
+        data = this.getDataClientes();
       }
       console.log(data);
-      
 
       let pdfMake = res[0];
 
@@ -165,11 +167,11 @@ export class ReportesComponent implements OnInit {
             style: 'header'
           },
           {
-            text: '\nFecha de creación del reporte: \t' + new Date().toLocaleDateString()+'\t-\tCentro: Esteticloud',
+            text: '\nFecha de creación del reporte: \t' + new Date().toLocaleDateString() + '\t-\tCentro: Esteticloud',
             style: 'normal'
           },
           {
-            text: '\nFechas seleccionadas: \t' + new Date(this.fechas.fechaInicio).toLocaleDateString() + ' \ty\t '+ new Date(this.fechas.fechaFin).toLocaleDateString(),
+            text: '\nFechas seleccionadas: \t' + new Date(this.fechas.fechaInicio).toLocaleDateString() + ' \ty\t ' + new Date(this.fechas.fechaFin).toLocaleDateString(),
             style: 'normalB'
           },
           {
@@ -188,9 +190,9 @@ export class ReportesComponent implements OnInit {
           {
             table: {
               headerRows: 1,
-              widths:['auto','auto','*','auto','auto'],
+              widths: ['auto', 'auto', '*', 'auto', 'auto'],
               body: data,
-              alignment:'center'
+              alignment: 'center'
             }
 
           }
@@ -208,13 +210,13 @@ export class ReportesComponent implements OnInit {
             italics: true,
             alignment: 'center'
           },
-          normal:{
-            fontSize:10,
+          normal: {
+            fontSize: 10,
 
           },
-          normalB:{
-            fontSize:10,
-            bold:true
+          normalB: {
+            fontSize: 10,
+            bold: true
 
           }
         }
@@ -278,6 +280,10 @@ export class ReportesComponent implements OnInit {
     }];
   }
 
+  crearPDFServicios(){
+    console.log("aun no funciona");
+    
+  }
   cargarGraficoServicio() {
     //inicializar grafico clientes
     this.chart = am4core.create("chartdiv", am4charts.XYChart);
@@ -327,6 +333,8 @@ export class ReportesComponent implements OnInit {
     }];
   }
 
+  
+
   cargarGraficoReservas() {
     //inicializar grafico clientes
     this.chart3 = am4core.create("chartdiv3", am4charts.XYChart);
@@ -336,6 +344,8 @@ export class ReportesComponent implements OnInit {
     //Datos
     this.restService.getTopReservas(this.fechas).subscribe((res: any) => {
       this.reservas = res;
+      console.log(this.reservas);
+      
       let agendada = 0;
       let reservada = 0;
       let canceladaCliente = 0;
@@ -415,6 +425,14 @@ export class ReportesComponent implements OnInit {
     }];
   }
 
+  crearPDFReservas(){
+    console.log("aun no funciona");
+    
+  }
+
+  crearPDFMovimientos(){
+    console.log("aun no funciona");
+  }
   cargarGraficoMovimientos() {
     //inicializar grafico clientes
     this.chart4 = am4core.create("chartdiv4", am4charts.XYChart);
