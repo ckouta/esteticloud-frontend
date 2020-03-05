@@ -39,18 +39,18 @@
                         <div class="form-group">
                             <div class="input-group" style="padding-right: 40px;">
                                 <h4 style="margin: 0px;">Desde: </h4>
-                                <input class="form-control" name="dp" [(ngModel)]="model" ngbDatepicker
-                                    #d1="ngbDatepicker">
+                                <input class="form-control" name="dp" [(ngModel)]="model"  ngbDatepicker
+                                    #d1="ngbDatepicker" (ngModelChange)="generarReporte()" >
                                 <div class="input-group-append">
-                                    <button class="" (click)="d1.toggle()" type="button">
+                                    <button class="" (click)="d1.toggle()" type="button" >
                                         <mdb-icon far icon="calendar-alt" class="cyan-text" size="lg"></mdb-icon>
                                     </button>
                                 </div>
                             </div>
                             <div class="input-group">
                                 <h4 style="margin: 0px;">Hasta: </h4>
-                                <input class="form-control" name="dp" [(ngModel)]="model2" ngbDatepicker
-                                    #d2="ngbDatepicker">
+                                <input class="form-control" name="dp" [(ngModel)]="model2" ngbDatepicker 
+                                    #d2="ngbDatepicker" (ngModelChange)="generarReporte()">
                                 <div class="input-group-append">
                                     <button class="" (click)="d2.toggle()" type="button">
                                         <mdb-icon far icon="calendar-alt" class="cyan-text" size="lg"></mdb-icon>
@@ -143,7 +143,7 @@
                                         <th style="vertical-align: middle">Estado</th>
                                     </tr>
                                 </thead>
-                                <tbody *ngFor="let reserva of reservas | slice:0:15; index as i;">
+                                <tbody *ngFor="let reserva of reservas ; index as i;">
                                     <tr style="text-align: center">
                                         <td style="vertical-align: middle">{{i+1}}</td>
                                         <td style="vertical-align: middle">{{reserva[1] | date:'dd-MM-yyyy'}}</td>

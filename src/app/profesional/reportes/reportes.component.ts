@@ -54,6 +54,11 @@ export class ReportesComponent implements OnInit {
     private calendar: NgbCalendar,
     private zone: NgZone) {
 
+    const hoy = this.calendar.getToday();
+    this.model = { year: hoy.year, month: hoy.month - 1, day: hoy.month };
+    this.model2 = hoy;
+
+
 
 
   }
@@ -63,15 +68,13 @@ export class ReportesComponent implements OnInit {
     if (!this.restService.hasRole('ROLE_ESTETI') && !this.restService.hasRole('ROLE_ADMIN')) {
       this.router.navigate(['login']);
     }
-    const hoy = this.calendar.getToday();
-    this.model = { year: hoy.year, month: hoy.month - 1, day: hoy.month };
-    this.model2 = hoy;
+
 
     this.generarReporte()
     /*this.fechas = { fechaInicio: "2019-11-20", fechaFin: "2019-11-20" };
     this.restService.getTopReservas(this.fechas).subscribe((res: any) => {
       this.reservas = res;
-      console.log(res);
+      ////console.log(res);
 
     })*/
 
@@ -89,7 +92,7 @@ export class ReportesComponent implements OnInit {
   }
 
   generarReporte() {
-    console.log(this.li);
+    console.log(this.model, this.model2);
     if (this.li == "Clientes") {
       this.cargarGraficoClientes();
     } else {
@@ -232,7 +235,7 @@ export class ReportesComponent implements OnInit {
         }
       };
       pdfMake.createPdf(doc).download("ReporteClientes" + new Date().toLocaleDateString() + ".pdf");
-    }).catch((error) => console.log(error))
+    }).catch((error) => console.error(error))
 
   }
 
@@ -312,7 +315,7 @@ export class ReportesComponent implements OnInit {
   }
 
   crearPDFServicios() {
-    console.log("probando");
+    ////console.log("probando");
     Promise.all([
       this.chart.exporting.pdfmake,
       this.cargarGraficoServicio(),
@@ -327,7 +330,7 @@ export class ReportesComponent implements OnInit {
       } else {
         data = this.getDataServicios();
       }
-      console.log(data);
+      ////console.log(data);
 
       let pdfMake = res[0];
 
@@ -396,7 +399,7 @@ export class ReportesComponent implements OnInit {
         }
       };
       pdfMake.createPdf(doc).download("ReporteClientes" + new Date().toLocaleDateString() + ".pdf");
-    }).catch((error) => console.log(error))
+    }).catch((error) => console.error(error))
 
   }
 
@@ -414,7 +417,7 @@ export class ReportesComponent implements OnInit {
 
       let data = [];
       this.servicios.forEach(element => {
-        console.log(element);
+        ////console.log(element);
 
         data.push({
           "servicio": element[0].nombre,
@@ -467,7 +470,7 @@ export class ReportesComponent implements OnInit {
     //Datos
     this.restService.getTopReservas(this.fechas).subscribe((res: any) => {
       this.reservas = res;
-      console.log(this.reservas);
+      ////console.log(this.reservas);
 
       let agendada = 0;
       let reservada = 0;
@@ -615,7 +618,7 @@ export class ReportesComponent implements OnInit {
       } else {
         data = this.getDataReservas();
       }
-      console.log(data);
+      ////console.log(data);
 
       let pdfMake = res[0];
 
@@ -696,11 +699,11 @@ export class ReportesComponent implements OnInit {
       };
 
       pdfMake.createPdf(doc).download("ReporteReservas" + new Date().toLocaleDateString() + ".pdf");
-    }).catch((error) => console.log(error))
+    }).catch((error) => console.error(error))
 
 
   }
-  getDataMovimientos(){
+  getDataMovimientos() {
     let data = { todo: [], resumen: [] }
     /* los headers del reporte */
     data.todo.push([
@@ -713,54 +716,54 @@ export class ReportesComponent implements OnInit {
 
     data.resumen.push([
       { text: 'Ingresos', bold: true, alignment: 'center' },
-      { text: 'Gastos', bold: true, alignment: 'center' },     
+      { text: 'Gastos', bold: true, alignment: 'center' },
       { text: 'Total', bold: true, alignment: 'center' }]);
 
 
     let ingresos = 0;
     let gastos = 0;
-  
+
     this.movimientos.forEach((element, index) => {
       /*los datos del reporte */
-      let nombre='-';
-      let ing ='-';
-      let eg='-';
-      if(element.profesional){
-        nombre = element.profesional.nombre
+      let nombre = '-';
+      let ing = '-';
+      let eg = '-';
+      if (element.profesional) {
+        nombre = element.profesional.nombre + ' ' + element.profesional.apellido;
       }
-      if(+element.valor>=0){
-        ingresos = ingresos +  +element.valor;
-        ing=element.valor;
-       
-      }else{
-        gastos = gastos + +element.valor; 
-        eg=element.valor;
+      if (+element.valor >= 0) {
+        ingresos = ingresos + +element.valor;
+        ing = element.valor;
+
+      } else {
+        gastos = gastos + +element.valor;
+        eg = element.valor;
 
       }
       data.todo.push([
         { text: index + 1 },
         { text: new Date(element.fecha).toLocaleDateString() },
-        { text: element.nombre},
-        { text: nombre},
+        { text: element.nombre },
+        { text: nombre },
         { text: ing },
         { text: eg }
       ])
-      
-      
-      
+
+
+
       /*tabla chica */
 
     });
 
-    data.resumen.push([{ text: ingresos }, { text: gastos }, {text: (ingresos+gastos)}]);
+    data.resumen.push([{ text: ingresos }, { text: gastos }, { text: (ingresos + gastos) }]);
 
 
     return data;
-  
+
   }
 
   crearPDFMovimientos() {
-    console.log("haciendo");
+    ////console.log("haciendo");
     Promise.all([
       this.chart4.exporting.pdfmake,
       this.cargarGraficoMovimientos(),
@@ -775,7 +778,7 @@ export class ReportesComponent implements OnInit {
       } else {
         data = this.getDataMovimientos();
       }
-      console.log(data);
+      ////console.log(data);
 
       let pdfMake = res[0];
 
@@ -812,7 +815,7 @@ export class ReportesComponent implements OnInit {
           {
             table: {
               headerRows: 1,
-              widths: ['33%', '33%','34%'],
+              widths: ['33%', '33%', '34%'],
               body: data.resumen,
               alignment: 'center'
             }
@@ -824,7 +827,7 @@ export class ReportesComponent implements OnInit {
           {
             table: {
               headerRows: 1,
-              widths: ['auto', 'auto', '*', '*', '*','*'],
+              widths: ['auto', 'auto', '*', 'auto', 'auto', 'auto'],
               body: data.todo,
               alignment: 'center'
             }
@@ -856,7 +859,7 @@ export class ReportesComponent implements OnInit {
       };
 
       pdfMake.createPdf(doc).download("ReporteMonetario" + new Date().toLocaleDateString() + ".pdf");
-    }).catch((error) => console.log(error))
+    }).catch((error) => console.error(error))
 
 
   }
@@ -893,7 +896,7 @@ export class ReportesComponent implements OnInit {
       }]
       this.show = true;
     }, err => {
-      console.log(err);
+      ////console.log(err);
 
       this.movimientos = [];
     })
@@ -902,7 +905,7 @@ export class ReportesComponent implements OnInit {
     categoryAxis.dataFields.category = "country";
     categoryAxis.renderer.grid.template.location = 0;
     categoryAxis.renderer.minGridDistance = 30;
-    
+
 
     let valueAxis = this.chart4.yAxes.push(new am4charts.ValueAxis());
     valueAxis.title.text = "[bold]Dinero ($)[/] ";
