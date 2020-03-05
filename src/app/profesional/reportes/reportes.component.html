@@ -22,7 +22,7 @@
             </li>
             <li>
                 <a href="#Movimientos" (click)="tab('Movimientos')" role="tab" data-toggle="tab">
-                    <i class="fas fa-dollar-sign"></i> Reportes monetarios </a>
+                    <i class="fas fa-dollar-sign"></i> Reporte monetario</a>
             </li>
 
         </ul>
@@ -148,8 +148,8 @@
                                         <td style="vertical-align: middle">{{i+1}}</td>
                                         <td style="vertical-align: middle">{{reserva[1] | date:'dd-MM-yyyy'}}</td>
                                         <td style="vertical-align: middle">
-                                            {{reserva[0].cliente.nombre +' '+reserva[0].cliente.apellido}}</td>
-                                        <td style="vertical-align: middle">{{reserva[0].servicio.nombre}}</td>
+                                            {{reserva[0].cliente?.nombre +' '+reserva[0].cliente?.apellido}}</td>
+                                        <td style="vertical-align: middle">{{reserva[0].servicio?.nombre}}</td>
                                         <td style="vertical-align: middle">{{reserva[0].estado_reserva.nombre}}</td>
                                     </tr>
                                 </tbody>
@@ -205,7 +205,11 @@
                             <div class="col-12">
                                 <div id="chartdiv4" style="width: 100%;height: 250px;" class="graph"></div>
                             </div>
-
+                        </div>
+                        <div class="row" style="display:block; text-align: right; margin-right: auto;">
+                            <div class="col-12">
+                                <h5 >Total de movimientos en el periodo de tiempo seleccionado: {{movimientos.length}}</h5>
+                            </div>
                         </div>
                         <br>
                         <h4><b>Detalles de ingresos y gastos</b></h4>
@@ -216,8 +220,8 @@
                                     <tr style="text-align: center">
                                         <th style="vertical-align: middle">#</th>
                                         <th style="vertical-align: middle">Fecha</th>
-                                        <th style="vertical-align: middle">Nombre monetario</th>
-                                        <th style="vertical-align: middle">Nombre profesional</th>
+                                        <th style="vertical-align: middle">Nombre del movimiento</th>
+                                        <th style="vertical-align: middle">Nombre del profesional</th>
                                         <th style="vertical-align: middle">Ingreso</th>
                                         <th style="vertical-align: middle">Gasto</th>
                                     </tr>
@@ -228,7 +232,7 @@
                                         <td style="vertical-align: middle">{{movimiento.fecha | date:'dd-MM-yyyy' }}
                                         </td>
                                         <td style="vertical-align: middle">{{movimiento.nombre}}</td>
-                                        <td style="vertical-align: middle">{{movimiento.profesional.nombre}}</td>
+                                        <td style="vertical-align: middle">{{movimiento.profesional?.nombre}}</td>
                                         <td style="vertical-align: middle">
                                             <div *ngIf="movimiento.valor>='0'">{{ movimiento.valor | currency:'CLP':'$ '}}
                                             </div>

@@ -39,7 +39,7 @@ export class ReportesComponent implements OnInit {
   model2: NgbDateStruct; //fecha fin
   servicios: Servicio[] = []; // lista servicios mas utilizados
   reservas: any[] = [];
-  movimientos: Movimiento[] = [];
+  movimientos: any[] = [];
   clientes: any[] = []; // lista de clientes mas solicitados
   private chart: am4charts.XYChart; //servicios
   private chart2: am4charts.XYChart; //clientes 
@@ -76,6 +76,7 @@ export class ReportesComponent implements OnInit {
     })*/
 
   }
+
 
   tab(tab: string) {
     this.li = tab;
@@ -282,15 +283,15 @@ export class ReportesComponent implements OnInit {
     this.chart2.exporting.menu.items = [{
       "label": "<i class=\"fas fa-align-justify\"></i>",
       "menu": [
-        { "type": "png", "label": " Exportar PNG" },
-        { "type": "pdf", "label": " Exportar PDF" },
-        { "type": "jpg", "label": " Exportar JPG" }
+        { "type": "png", "label": "Exportar PNG" },
+        { "type": "pdf", "label": "Exportar PDF" },
+        { "type": "jpg", "label": "Exportar JPG" }
       ]
     }];
   }
 
-  getDataServicios(){
-    let data= []
+  getDataServicios() {
+    let data = []
     data.push([
       { text: '#', bold: true, alignment: 'center' },
       { text: 'Nombre', bold: true, alignment: 'center' },
@@ -302,13 +303,14 @@ export class ReportesComponent implements OnInit {
 
       data.push([
         { text: index + 1 },
-        { text: element[0].nombre},
+        { text: element[0].nombre },
         { text: element[0].descripcion },
         { text: element[1] }
       ])
     });
     return data;
   }
+
   crearPDFServicios() {
     console.log("probando");
     Promise.all([
@@ -319,14 +321,14 @@ export class ReportesComponent implements OnInit {
       let data = [];
       if (!this.servicios) {
         this.restService.getTopServicios(this.fechas).subscribe((res: any) => {
-          this.servicios=res;
+          this.servicios = res;
           data = this.getDataServicios();
         })
       } else {
         data = this.getDataServicios();
       }
       console.log(data);
-      
+
       let pdfMake = res[0];
 
       let doc = {
@@ -397,6 +399,7 @@ export class ReportesComponent implements OnInit {
     }).catch((error) => console.log(error))
 
   }
+
   cargarGraficoServicio() {
     //inicializar grafico clientes
     this.chart = am4core.create("chartdiv", am4charts.XYChart);
@@ -405,14 +408,14 @@ export class ReportesComponent implements OnInit {
     this.fechas = { fechaInicio: this.parseCalendar.format(this.model), fechaFin: this.parseCalendar.format(this.model2) };
     //Datos
     this.restService.getTopServicios(this.fechas).subscribe((res: any) => {
-      
-      
+
+
       this.servicios = res;
- 
+
       let data = [];
       this.servicios.forEach(element => {
         console.log(element);
-        
+
         data.push({
           "servicio": element[0].nombre,
           "cantidad": element[1]
@@ -454,8 +457,6 @@ export class ReportesComponent implements OnInit {
       ]
     }];
   }
-
-
 
   cargarGraficoReservas() {
     //inicializar grafico clientes
@@ -699,10 +700,167 @@ export class ReportesComponent implements OnInit {
 
 
   }
+  getDataMovimientos(){
+    let data = { todo: [], resumen: [] }
+    /* los headers del reporte */
+    data.todo.push([
+      { text: '#', bold: true, alignment: 'center' },
+      { text: 'Fecha', bold: true, alignment: 'center' },
+      { text: 'Nombre del movimiento', bold: true, alignment: 'center' },
+      { text: 'Nombre del profesional', bold: true, alignment: 'center' },
+      { text: 'Ingreso', bold: true, alignment: 'center' },
+      { text: 'Gasto', bold: true, alignment: 'center' }]);
+
+    data.resumen.push([
+      { text: 'Ingresos', bold: true, alignment: 'center' },
+      { text: 'Gastos', bold: true, alignment: 'center' },     
+      { text: 'Total', bold: true, alignment: 'center' }]);
+
+
+    let ingresos = 0;
+    let gastos = 0;
+  
+    this.movimientos.forEach((element, index) => {
+      /*los datos del reporte */
+      let nombre='-';
+      let ing ='-';
+      let eg='-';
+      if(element.profesional){
+        nombre = element.profesional.nombre
+      }
+      if(+element.valor>=0){
+        ingresos = ingresos +  +element.valor;
+        ing=element.valor;
+       
+      }else{
+        gastos = gastos + +element.valor; 
+        eg=element.valor;
+
+      }
+      data.todo.push([
+        { text: index + 1 },
+        { text: new Date(element.fecha).toLocaleDateString() },
+        { text: element.nombre},
+        { text: nombre},
+        { text: ing },
+        { text: eg }
+      ])
+      
+      
+      
+      /*tabla chica */
+
+    });
+
+    data.resumen.push([{ text: ingresos }, { text: gastos }, {text: (ingresos+gastos)}]);
+
+
+    return data;
+  
+  }
 
   crearPDFMovimientos() {
-    console.log("aun no funciona");
+    console.log("haciendo");
+    Promise.all([
+      this.chart4.exporting.pdfmake,
+      this.cargarGraficoMovimientos(),
+      this.chart4.exporting.getImage("png")
+    ]).then((res) => {
+      let data: any;
+      if (!this.movimientos) {
+        this.restService.getTopMovimientos(this.fechas).subscribe((res: any) => {
+          this.movimientos = res;
+          data = this.getDataMovimientos();
+        })
+      } else {
+        data = this.getDataMovimientos();
+      }
+      console.log(data);
+
+      let pdfMake = res[0];
+
+      let doc = {
+        pageSize: "A4",
+        pageOrientation: "portrait",
+        pageMargins: [30, 30, 30, 30],
+        content: [
+          {
+            text: 'Reporte de ingresos y gastos',
+            style: 'header'
+          },
+          {
+            text: '\nFecha de creación del reporte: \t' + new Date().toLocaleDateString() + '\t-\tCentro: Esteticloud',
+            style: 'normal'
+          },
+          {
+            text: '\nFechas seleccionadas: \t' + new Date(this.fechas.fechaInicio).toLocaleDateString() + ' \ty\t ' + new Date(this.fechas.fechaFin).toLocaleDateString(),
+            style: 'normalB'
+          },
+          {
+            text: '\nGráfico de ingresos y gastos\n\n',
+            style: 'bigger'
+          },
+          {
+            image: res[2],
+            width: 500,
+            alignment: 'center'
+          },
+          {
+            text: '\nResumen\n\n',
+            style: 'bigger'
+          },
+          {
+            table: {
+              headerRows: 1,
+              widths: ['33%', '33%','34%'],
+              body: data.resumen,
+              alignment: 'center'
+            }
+          },
+          {
+            text: '\nDetalle de ingresos y gastos\n\n',
+            style: 'bigger'
+          },
+          {
+            table: {
+              headerRows: 1,
+              widths: ['auto', 'auto', '*', '*', '*','*'],
+              body: data.todo,
+              alignment: 'center'
+            }
+          }
+
+        ],
+
+        styles: {
+          header: {
+            fontSize: 18,
+            bold: true,
+            alignment: 'center'
+          },
+          bigger: {
+            fontSize: 14,
+            italics: true,
+            alignment: 'center'
+          },
+          normal: {
+            fontSize: 10,
+
+          },
+          normalB: {
+            fontSize: 10,
+            bold: true
+
+          }
+        }
+      };
+
+      pdfMake.createPdf(doc).download("ReporteMonetario" + new Date().toLocaleDateString() + ".pdf");
+    }).catch((error) => console.log(error))
+
+
   }
+
   cargarGraficoMovimientos() {
     //inicializar grafico clientes
     this.chart4 = am4core.create("chartdiv4", am4charts.XYChart);
@@ -735,6 +893,8 @@ export class ReportesComponent implements OnInit {
       }]
       this.show = true;
     }, err => {
+      console.log(err);
+
       this.movimientos = [];
     })
     // Create axes
@@ -742,27 +902,31 @@ export class ReportesComponent implements OnInit {
     categoryAxis.dataFields.category = "country";
     categoryAxis.renderer.grid.template.location = 0;
     categoryAxis.renderer.minGridDistance = 30;
+    
+
     let valueAxis = this.chart4.yAxes.push(new am4charts.ValueAxis());
+    valueAxis.title.text = "[bold]Dinero ($)[/] ";
     // Create series
-    let series = this.chart4.series.push(new am4charts.ColumnSeries());
+    let series = this.chart4.series.push(new am4charts.ColumnSeries3D());
     series.dataFields.valueY = "visits";
     series.dataFields.categoryX = "country";
     series.name = "Visits";
-    series.columns.template.tooltipText = "{categoryX}: [bold]{valueY}[/]";
+    series.columns.template.tooltipText = "{categoryX}: [bold]${valueY}[/]";
     series.columns.template.fillOpacity = .8;
+    series.columns.template.fill = am4core.color("#BC60FF");
     let columnTemplate = series.columns.template;
     columnTemplate.strokeWidth = 2;
     columnTemplate.strokeOpacity = 1;
     //exportacion 
     this.chart4.exporting.menu = new am4core.ExportMenu();
-    this.chart4.exporting.title = "Reporte de Servicios";
-    this.chart4.exporting.filePrefix = "reporte";
+    this.chart4.exporting.title = "Reporte de Ingresos y egresos";
+    this.chart4.exporting.filePrefix = "Reporte_Monetario_" + new Date().toLocaleDateString();;
     this.chart4.exporting.menu.items = [{
       "label": "<i class=\"fas fa-align-justify\"></i>",
       "menu": [
-        { "type": "png", "label": " Grafico en PNG" },
-        { "type": "pdf", "label": " Grafico en PDF" },
-        { "type": "jpg", "label": " Grafico en JPG" }
+        { "type": "png", "label": "Exportar PNG" },
+        { "type": "pdf", "label": "Exportar PDF" },
+        { "type": "jpg", "label": "Exportar JPG" }
       ]
     }];
   }
