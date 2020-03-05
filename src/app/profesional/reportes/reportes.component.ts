@@ -129,10 +129,15 @@ export class ReportesComponent implements OnInit {
   getDataClientes() {
     let data = []
     /* los headers del reporte */
-    data.push([{ text: '#', bold: true }, { text: 'Nombre', bold: true }, { text: 'Teléfono', bold: true }, { text: 'Correo', bold: true }, { text: ' N° reservas solicitadas', bold: true }]);
+    data.push([
+      { text: '#', bold: true, alignment: 'center' },
+      { text: 'Nombre', bold: true, alignment: 'center' },
+      { text: 'Teléfono', bold: true, alignment: 'center' },
+      { text: 'Correo', bold: true, alignment: 'center' },
+      { text: ' N° reservas solicitadas', bold: true, alignment: 'center' }]);
 
     this.clientes.map(function (alguien, index) {
-      
+
       data.push([
         { text: index + 1 },
         { text: alguien[0].nombre + ' ' + alguien[0].apellido },
@@ -224,7 +229,7 @@ export class ReportesComponent implements OnInit {
           }
         }
       };
-      pdfMake.createPdf(doc).download("report.pdf");
+      pdfMake.createPdf(doc).download("ReporteClientes" + new Date().toLocaleDateString() + ".pdf");
     }).catch((error) => console.log(error))
 
   }
@@ -382,7 +387,7 @@ export class ReportesComponent implements OnInit {
         "cantidad": canceladaProfesional
       },
       {
-        "estado": "no se presentó",
+        "estado": "El cliente no se presentó",
         "cantidad": ausente
       }]
       this.show = true;
@@ -432,17 +437,17 @@ export class ReportesComponent implements OnInit {
     let data = { todo: [], porEstado: [] }
     /* los headers del reporte */
     data.todo.push([
-      { text: '#', bold: true },
-      { text: 'Fecha', bold: true },
-      { text: 'Cliente', bold: true },
-      { text: 'Servicio solicitado', bold: true },
-      { text: 'Estado reserva', bold: true }]);
+      { text: '#', bold: true, alignment: 'center' },
+      { text: 'Fecha', bold: true, alignment: 'center' },
+      { text: 'Cliente', bold: true, alignment: 'center' },
+      { text: 'Servicio solicitado', bold: true, alignment: 'center' },
+      { text: 'Estado reserva', bold: true, alignment: 'center' }]);
 
     data.porEstado.push([
-      { text: 'Estado de reserva', bold: true },
-      { text: 'Cantidad', bold: true }]);
+      { text: 'Estado de reserva', bold: true, alignment: 'center' },
+      { text: 'Cantidad', bold: true, alignment: 'center' }]);
 
-    
+
     let agendada = 0;
     let reservada = 0;
     let canceladaCliente = 0;
@@ -468,15 +473,15 @@ export class ReportesComponent implements OnInit {
         default: break;
       }
     });
-    
-    data.porEstado.push([ { text: 'Agendada'},  { text: agendada } ]);
-    data.porEstado.push([ { text: 'Reservada'},  { text: reservada } ]);
-    data.porEstado.push([ { text: 'Cancelada por el cliente'},  { text: canceladaCliente } ]);
-    data.porEstado.push([ { text: 'Cancelada por el Profesional'},  { text: canceladaProfesional } ]);
-    data.porEstado.push([ { text: 'El cliente no se presentó'},  { text: ausente } ]);
-    data.porEstado.push([ { text: 'Total'},  { text: (ausente+agendada+reservada+canceladaCliente+canceladaProfesional) } ]);
-   
-    
+
+    data.porEstado.push([{ text: 'Agendada' }, { text: agendada }]);
+    data.porEstado.push([{ text: 'Reservada' }, { text: reservada }]);
+    data.porEstado.push([{ text: 'Cancelada por el cliente' }, { text: canceladaCliente }]);
+    data.porEstado.push([{ text: 'Cancelada por el Profesional' }, { text: canceladaProfesional }]);
+    data.porEstado.push([{ text: 'El cliente no se presentó' }, { text: ausente }]);
+    data.porEstado.push([{ text: 'Total' }, { text: (ausente + agendada + reservada + canceladaCliente + canceladaProfesional) }]);
+
+
     return data;
   }
 
@@ -486,7 +491,7 @@ export class ReportesComponent implements OnInit {
       this.cargarGraficoReservas(),
       this.chart3.exporting.getImage("png")
     ]).then((res) => {
-      let data : any;
+      let data: any;
       if (!this.reservas) {
         this.restService.getTopReservas(this.fechas).subscribe((res: any) => {
           this.reservas = res;
@@ -524,27 +529,27 @@ export class ReportesComponent implements OnInit {
             image: res[2],
             width: 500,
             alignment: 'center'
-          }/*,
+          },
           {
-            text: '\nTabla de reservas según estado\n\n',
+            text: '\nCantidad de reservas según estado\n\n',
             style: 'bigger'
           },
           {
             table: {
               headerRows: 1,
-              widths: ['auto', 'auto', '*', 'auto', 'auto'],
+              widths: ['60%', '40%'],
               body: data.porEstado,
               alignment: 'center'
             }
-          }*/,
+          },
           {
-            text: '\nTabla de detalle de reservas\n\n',
+            text: '\nDetalle de las reservas\n\n',
             style: 'bigger'
           },
           {
             table: {
               headerRows: 1,
-              widths: ['auto', 'auto', '*', 'auto', 'auto'],
+              widths: ['auto', 'auto', '*', '*', '*'],
               body: data.todo,
               alignment: 'center'
             }
@@ -574,8 +579,8 @@ export class ReportesComponent implements OnInit {
           }
         }
       };
-      pdfMake.createPdf(doc).open();
-      pdfMake.createPdf(doc).download("ReporteReservas.pdf");
+
+      pdfMake.createPdf(doc).download("ReporteReservas" + new Date().toLocaleDateString() + ".pdf");
     }).catch((error) => console.log(error))
 
 
