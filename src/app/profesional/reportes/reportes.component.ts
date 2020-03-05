@@ -148,6 +148,7 @@ export class ReportesComponent implements OnInit {
     });
     return data;
   }
+
   crearPDFClientes() {
     Promise.all([
       this.chart2.exporting.pdfmake,
@@ -288,8 +289,112 @@ export class ReportesComponent implements OnInit {
     }];
   }
 
+  getDataServicios(){
+    let data= []
+    data.push([
+      { text: '#', bold: true, alignment: 'center' },
+      { text: 'Nombre', bold: true, alignment: 'center' },
+      { text: 'Descripción', bold: true, alignment: 'center' },
+      { text: 'N° de veces agendado', bold: true, alignment: 'center' }
+    ])
+
+    this.servicios.map(function (element, index) {
+
+      data.push([
+        { text: index + 1 },
+        { text: element[0].nombre},
+        { text: element[0].descripcion },
+        { text: element[1] }
+      ])
+    });
+    return data;
+  }
   crearPDFServicios() {
-    console.log("aun no funciona");
+    console.log("probando");
+    Promise.all([
+      this.chart.exporting.pdfmake,
+      this.cargarGraficoServicio(),
+      this.chart.exporting.getImage("png")
+    ]).then((res) => {
+      let data = [];
+      if (!this.servicios) {
+        this.restService.getTopServicios(this.fechas).subscribe((res: any) => {
+          this.servicios=res;
+          data = this.getDataServicios();
+        })
+      } else {
+        data = this.getDataServicios();
+      }
+      console.log(data);
+      
+      let pdfMake = res[0];
+
+      let doc = {
+        pageSize: "A4",
+        pageOrientation: "portrait",
+        pageMargins: [30, 30, 30, 30],
+        content: [
+          {
+            text: 'Reporte de servicios agendados',
+            style: 'header'
+          },
+          {
+            text: '\nFecha de creación del reporte: \t' + new Date().toLocaleDateString() + '\t-\tCentro: Esteticloud',
+            style: 'normal'
+          },
+          {
+            text: '\nFechas seleccionadas: \t' + new Date(this.fechas.fechaInicio).toLocaleDateString() + ' \ty\t ' + new Date(this.fechas.fechaFin).toLocaleDateString(),
+            style: 'normalB'
+          },
+          {
+            text: '\nGráfico de servicios agendados\n\n',
+            style: 'bigger'
+          },
+          {
+            image: res[2],
+            width: '500',
+            alignment: 'center'
+          },
+          {
+            text: '\nTabla detalle servicios agendados\n\n',
+            style: 'bigger'
+          },
+          {
+            table: {
+              headerRows: 1,
+              widths: ['auto', '*', 'auto', 'auto'],
+              body: data,
+              alignment: 'center'
+            }
+
+          }
+
+        ],
+
+        styles: {
+          header: {
+            fontSize: 18,
+            bold: true,
+            alignment: 'center'
+          },
+          bigger: {
+            fontSize: 14,
+            italics: true,
+            alignment: 'center'
+          },
+          normal: {
+            fontSize: 10,
+
+          },
+          normalB: {
+            fontSize: 10,
+            bold: true
+
+          }
+        }
+      };
+      pdfMake.createPdf(doc).download("ReporteClientes" + new Date().toLocaleDateString() + ".pdf");
+    }).catch((error) => console.log(error))
 
   }
   cargarGraficoServicio() {
@@ -300,12 +405,17 @@ export class ReportesComponent implements OnInit {
     this.fechas = { fechaInicio: this.parseCalendar.format(this.model), fechaFin: this.parseCalendar.format(this.model2) };
     //Datos
     this.restService.getTopServicios(this.fechas).subscribe((res: any) => {
+      
+      
       this.servicios = res;
+ 
       let data = [];
       this.servicios.forEach(element => {
+        console.log(element);
+        
         data.push({
-          "country": element[0].nombre,
-          "visits": element[1]
+          "servicio": element[0].nombre,
+          "cantidad": element[1]
         })
       });
       this.chart.data = data;
@@ -313,30 +423,34 @@ export class ReportesComponent implements OnInit {
     })
     // Create axes
     let categoryAxis = this.chart.xAxes.push(new am4charts.CategoryAxis());
-    categoryAxis.dataFields.category = "country";
+    categoryAxis.dataFields.category = "servicio";
     categoryAxis.renderer.grid.template.location = 0;
     categoryAxis.renderer.minGridDistance = 30;
+    categoryAxis.title.text = "[bold]Servicios que han sido agendados[/] ";
+
     let valueAxis = this.chart.yAxes.push(new am4charts.ValueAxis());
+    valueAxis.title.text = "[bold]N° reservas[/]";
     // Create series
-    let series = this.chart.series.push(new am4charts.ColumnSeries());
-    series.dataFields.valueY = "visits";
-    series.dataFields.categoryX = "country";
-    series.name = "Visits";
+    let series = this.chart.series.push(new am4charts.ColumnSeries3D());
+    series.dataFields.valueY = "cantidad";
+    series.dataFields.categoryX = "servicio";
+    series.name = "Cantidad";
     series.columns.template.tooltipText = "{categoryX}: [bold]{valueY}[/]";
+    series.columns.template.fill = am4core.color("#BC60FF"); // fill
     series.columns.template.fillOpacity = .8;
     let columnTemplate = series.columns.template;
     columnTemplate.strokeWidth = 2;
     columnTemplate.strokeOpacity = 1;
     //exportacion 
     this.chart.exporting.menu = new am4core.ExportMenu();
-    this.chart.exporting.title = "Reporte de Servicios";
-    this.chart.exporting.filePrefix = "reporte";
+    this.chart.exporting.title = "Reporte de servicios reservados";
+    this.chart.exporting.filePrefix = "Reporte_servicios_" + new Date().toLocaleDateString();
     this.chart.exporting.menu.items = [{
       "label": "<i class=\"fas fa-align-justify\"></i>",
       "menu": [
-        { "type": "png", "label": " Grafico en PNG" },
-        { "type": "pdf", "label": " Grafico en PDF" },
-        { "type": "jpg", "label": " Grafico en JPG" }
+        { "type": "png", "label": "Exportar PNG" },
+        { "type": "pdf", "label": "Exportar PNG" },
+        { "type": "jpg", "label": "Exportar PNG" }
       ]
     }];
   }
