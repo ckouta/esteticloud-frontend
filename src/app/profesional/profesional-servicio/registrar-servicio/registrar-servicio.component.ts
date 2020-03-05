@@ -66,7 +66,7 @@ export class RegistrarServicioComponent implements OnInit {
           Swal.fire('Actualización servicio ', 'Servicio correctamente actualizado', 'success')
           this.router.navigate(['profesional/servicios']);
         },
-          err => console.log(err));
+          err => console.error(err));
       }
       this.restService.saveImagenServicio(servicio.id_servicio + "", this.fotoSeleccionada).subscribe(() => {
         return this.restService.getListaServicio().subscribe((res: any[]) => {
@@ -98,7 +98,7 @@ export class RegistrarServicioComponent implements OnInit {
           Swal.fire('Actualización servicio ', 'Servicio correctamente actualizado', 'success')
           this.router.navigate(['profesional/servicios']);
         },
-          err => console.log(err));
+          err => console.error(err));
       }
       this.restService.saveImagenServicio(servicio.id_servicio + "", this.fotoSeleccionada).subscribe(() => {
         return this.restService.getListaServicio().subscribe((res: any[]) => {

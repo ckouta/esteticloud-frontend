@@ -47,19 +47,19 @@ export class RegistrarClientesComponent implements OnInit {
          email: this.clienteActualizar.email,
          rut: this.clienteActualizar.rut
        });
-       console.log(this.clienteActualizar)
+       //console.log(this.clienteActualizar)
      })
    }
   }
   saveData() {
-    console.log(this.formCliente.value);
+    //console.log(this.formCliente.value);
     let cliente: Cliente = this.formCliente.value;
     if(!cliente.id_cliente){
       this.restService.saveCliente(cliente).subscribe(() => {
         Swal.fire('Solicitud aceptada', 'El cliente ha sido agregado', 'success');
         return this.router.navigate(['profesional/clientes'])
       },err =>{
-        console.log(err);
+        //console.log(err);
         
         Swal.fire('Solicitud rechazada', 'El cliente no se pudo agregar', 'error');
       })
@@ -74,7 +74,7 @@ export class RegistrarClientesComponent implements OnInit {
       Swal.fire('Solicitud aceptada', 'El cliente ha sido actualizado', 'success');
       return this.router.navigate(['profesional/clientes'])
     }, err =>{
-      console.log(err);
+      //console.log(err);
       
       Swal.fire('Solicitud rechazada', 'El cliente no se pudo actualizar', 'error');
     })

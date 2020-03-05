@@ -106,7 +106,7 @@ export class RegistrarHorarioComponent implements OnInit {
     let horaInicio;
     let horaFin;
     if (fechaInicio == null || fechaFIn == null) {
-      console.log(this.horaFinDomingo);
+      //console.log(this.horaFinDomingo);
 
       Swal.fire('Datos incorrectos', 'Verifique el ingreso de los datos', 'error');
     } else {
@@ -179,7 +179,7 @@ export class RegistrarHorarioComponent implements OnInit {
         let fecha: string = this.parseCalendar.format(fechaInicio);
         let rangoFecha: RangoFecha = { id, fecha, horaInicio, horaFin };
         if (horaInicio != null || horaFin != null) {
-          console.log(rangoFecha + "    " + fechaDate.getDay());
+          //console.log(rangoFecha + "    " + fechaDate.getDay());
           listaFecha.push(rangoFecha);
         }
         horaInicio = null;
@@ -191,7 +191,7 @@ export class RegistrarHorarioComponent implements OnInit {
           return this.restService.getListaProfesional().subscribe((res: any[]) => {
             this.restService.listaProfesional = res;
           },
-            err => console.log(err));
+            err => console.error(err));
         });
 
       });

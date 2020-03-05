@@ -83,7 +83,7 @@ export class RegistrarProfesionalesComponent implements OnInit {
 
 
   guardarProducto(registrar: Registro) {
-    console.log(this.fotoSeleccionada);
+    ////console.log(this.fotoSeleccionada);
 
     this.restService.saveUsuarioProfesional(registrar).subscribe((profesional) => {
       this.restService.saveImagenProfesional(profesional.id_profesional + "", this.fotoSeleccionada).subscribe(() => {
@@ -93,13 +93,13 @@ export class RegistrarProfesionalesComponent implements OnInit {
           this.router.navigate(['profesional/profesional']);
           });
       },
-      err =>   {Swal.fire('Imagen', 'Imagen no insertada', 'error'); console.log(err);
+      err =>   {Swal.fire('Imagen', 'Imagen no insertada', 'error'); ////console.log(err);
         }
       )
 
     },
     err=> {Swal.fire('Datos incorrectos', 'Profesional no insertado, datos incorrectos o duplicados', 'error');
-          console.log(err);
+          ////console.log(err);
           }
     )
   } 
@@ -130,7 +130,7 @@ export class RegistrarProfesionalesComponent implements OnInit {
       this.actualizarProfesional(this.formProduct.value);
     }
     //this.router.navigate(['profesional/profesional']);
-    console.log(this.formProduct.value);
+    ////console.log(this.formProduct.value);
   }
 
   seleccionarFoto(event) {

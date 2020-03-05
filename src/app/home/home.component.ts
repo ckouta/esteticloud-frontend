@@ -28,20 +28,20 @@ export class HomeComponent implements OnInit {
 
   }
   login(): void {
-    console.log(this.usuario);
+    //console.log(this.usuario);
     if (this.usuario.username == null || this.usuario.password == null) {
       Swal.fire('Campos vacíos', 'Los campos están vacíos', 'error');
       return;
     }
     this.restService.login(this.usuario).subscribe(response => {
-      console.log(response);
+      //console.log(response);
       this.restService.guardarUsuario(response.access_token);
       this.restService.guardarToken(response.access_token);
       this.router.navigate(['home/reserva']);
       this.IsmodelShow = true;
       this.restService.getCliente(this.usuario.username).subscribe(res =>{
         this.restService.cliente=res;
-        console.log(this.restService.cliente);
+        //console.log(this.restService.cliente);
       })
     }, err => {
       if (err.status == 400) {

@@ -78,7 +78,7 @@ export class CalendarioComponent implements OnInit {
   }
 
 test(){
-  console.log(this.cliente);
+  //console.log(this.cliente);
   this.listaClientes.forEach(element => {
     if(element.id_cliente==this.idCliente){
       this.cliente= element;
@@ -140,7 +140,7 @@ test(){
   AgregarEvento() {
 
     let calendar = this.calendarComponent.getApi();
-    console.log(new Date().toDateString())
+    //console.log(new Date().toDateString())
     calendar.addEvent({ title: "event 1", start: '2019-11-18T10:30:00', end: '2019-11-18T22:50:00', description: '2019-10-17', backgroundColor: '#A068F6', textColor: 'white' });
   }
   reservas(profesional: Profesional) {
@@ -220,12 +220,12 @@ test(){
   }
 
   handleEventClick(arg) { // handler method
-    console.log(arg.event);
+    //console.log(arg.event);
     this.display2 = 'block';
-    console.log(arg.event.extendedProps);
+    //console.log(arg.event.extendedProps);
     let id:number = arg.event.extendedProps.description;
     this.restService.getHorario(id).subscribe((res: any) => {
-      console.log(res);
+      //console.log(res);
       this.selectReserva = res ;
       this.formReserva.setValue({
         id_reserva: this.selectReserva.reserva.id_reserva,
@@ -240,7 +240,7 @@ test(){
 }
 
 changeEstado(e) {
-  console.log(this.formReserva.getRawValue().estado);
+  //console.log(this.formReserva.getRawValue().estado);
 }
 
 
@@ -299,7 +299,7 @@ save() {
     this.reserva = res;
     this.hora.horarioProfesional.forEach(element => {
       this.restService.updateHorarioReserva(element.id_horarioProfesional, res).subscribe(res => {
-        console.log(res);
+        //console.log(res);
       })
     });
    

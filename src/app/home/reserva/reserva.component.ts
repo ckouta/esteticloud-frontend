@@ -110,7 +110,7 @@ export class ReservaComponent implements OnInit, OnChanges {
     this.listServicios.push(sv);
   }
   onDateSelection(date: NgbDate) {
-    console.log(this.model);
+    //console.log(this.model);
   }
   //para agregar horarios posibles para reservar
   bloquesHorario() {
@@ -171,7 +171,7 @@ export class ReservaComponent implements OnInit, OnChanges {
         this.reserva = res;
         this.hora.horarioProfesional.forEach(element => {
           this.restService.updateHorarioReserva(element.id_horarioProfesional, res).subscribe(res => {
-            console.log(res);
+            //console.log(res);
           })
         });
       })
@@ -206,14 +206,14 @@ export class ReservaComponent implements OnInit, OnChanges {
       this.restService.getListaServicioOfrecidoporServicio(this.servicio).subscribe((res: any[]) => {
         this.listProfesionales = res;
         if (res.length == 0) {
-          console.log("hola");
+          //console.log("hola");
         }
       });
     }
   }
   validarServicio(servicio: Servicio) {
     this.restService.getListaServicioOfrecidoporServicio(servicio).subscribe((res: any[]) => {
-      console.log(res);
+      //console.log(res);
     });
   }
 }

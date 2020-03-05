@@ -64,7 +64,7 @@ export class InicioProfesionalComponent {
       })
       this.restService.getListEstadoReserva().subscribe((res => {
         this.listEstado= res;
-        console.log(res);
+        //console.log(res);
       }));
     }
 
@@ -289,7 +289,7 @@ export class InicioProfesionalComponent {
   }
 
   actualizarEstadoReserva(reserva:Reserva, estado:number){
-    console.log(estado)
+    //console.log(estado)
     if(estado==1){
       reserva.estado_reserva = this.listEstado[1];
     }else{

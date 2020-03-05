@@ -60,7 +60,7 @@ export class MovimientosComponent implements OnInit {
       this.restService.getMovimientoProfesional(this.restService.profesional).subscribe((res: any[]) => {
 
         this.movimientos = res;
-        console.log(this.movimientos);
+        ////console.log(this.movimientos);
       })
     },
       err => this.movimientos = [])
@@ -87,7 +87,7 @@ export class MovimientosComponent implements OnInit {
 
 
   getCheckboxesValue() {
-    console.log('ngModel value', this.valor);
+    ////console.log('ngModel value', this.valor);
   }
   movimientoEliminar(id: number) {
     Swal.fire({

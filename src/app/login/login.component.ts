@@ -24,13 +24,13 @@ export class LoginComponent implements OnInit {
   
   
   login(): void{
-    console.log(this.usuario);
+    //console.log(this.usuario);
     if(this.usuario.username ==null || this.usuario.password == null){
       Swal.fire('Campos vacíos', 'Los campos están vacíos', 'error');
       return;
     }
     this.restService.login(this.usuario).subscribe(response =>{
-      console.log(response);
+      //console.log(response);
     this.restService.guardarUsuario(response.access_token);
     this.restService.guardarToken(response.access_token);
     if(this.restService.hasRole('ROLE_CLIENT')){
