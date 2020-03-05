@@ -74,7 +74,7 @@ export class ReportesComponent implements OnInit {
     /*this.fechas = { fechaInicio: "2019-11-20", fechaFin: "2019-11-20" };
     this.restService.getTopReservas(this.fechas).subscribe((res: any) => {
       this.reservas = res;
-      ////console.log(res);
+      //console.log(res);
 
     })*/
 
@@ -92,7 +92,7 @@ export class ReportesComponent implements OnInit {
   }
 
   generarReporte() {
-    console.log(this.model, this.model2);
+    //console.log(this.model, this.model2);
     if (this.li == "Clientes") {
       this.cargarGraficoClientes();
     } else {
@@ -315,7 +315,7 @@ export class ReportesComponent implements OnInit {
   }
 
   crearPDFServicios() {
-    ////console.log("probando");
+    //console.log("probando");
     Promise.all([
       this.chart.exporting.pdfmake,
       this.cargarGraficoServicio(),
@@ -330,7 +330,7 @@ export class ReportesComponent implements OnInit {
       } else {
         data = this.getDataServicios();
       }
-      ////console.log(data);
+      //console.log(data);
 
       let pdfMake = res[0];
 
@@ -417,7 +417,7 @@ export class ReportesComponent implements OnInit {
 
       let data = [];
       this.servicios.forEach(element => {
-        ////console.log(element);
+        //console.log(element);
 
         data.push({
           "servicio": element[0].nombre,
@@ -470,7 +470,7 @@ export class ReportesComponent implements OnInit {
     //Datos
     this.restService.getTopReservas(this.fechas).subscribe((res: any) => {
       this.reservas = res;
-      ////console.log(this.reservas);
+      //console.log(this.reservas);
 
       let agendada = 0;
       let reservada = 0;
@@ -618,7 +618,7 @@ export class ReportesComponent implements OnInit {
       } else {
         data = this.getDataReservas();
       }
-      ////console.log(data);
+      //console.log(data);
 
       let pdfMake = res[0];
 
@@ -763,7 +763,7 @@ export class ReportesComponent implements OnInit {
   }
 
   crearPDFMovimientos() {
-    ////console.log("haciendo");
+    //console.log("haciendo");
     Promise.all([
       this.chart4.exporting.pdfmake,
       this.cargarGraficoMovimientos(),
@@ -778,7 +778,7 @@ export class ReportesComponent implements OnInit {
       } else {
         data = this.getDataMovimientos();
       }
-      ////console.log(data);
+      //console.log(data);
 
       let pdfMake = res[0];
 
@@ -896,7 +896,7 @@ export class ReportesComponent implements OnInit {
       }]
       this.show = true;
     }, err => {
-      ////console.log(err);
+      //console.log(err);
 
       this.movimientos = [];
     })

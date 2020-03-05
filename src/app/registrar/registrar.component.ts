@@ -36,13 +36,13 @@ export class RegistrarComponent implements OnInit {
   }
   
   saveData() {
-    ////console.log(this.formCliente.value);
+    //console.log(this.formCliente.value);
     let cliente: Cliente = this.formCliente.value;
     this.usuario.username = cliente.email;
     this.usuario.password = this.formCliente.get("password").value;
     this.registrar.cliente = cliente;
     this.registrar.usuario = this.usuario;
-    ////console.log(this.registrar);
+    //console.log(this.registrar);
     this.restService.saveClienteUsuario(this.registrar).subscribe(() => {
       Swal.fire('Solicitud aceptada', 'Se ha registrado correctamente', 'success');
       return this.router.navigate([''])
@@ -61,7 +61,7 @@ export class RegistrarComponent implements OnInit {
       let dato = control.value.replace(/-/g,'').replace(/\./g,'');
       let dv = dato.slice(dato.length-1);
       dato= dato.substring(0,dato.length-1)
-      ////console.log(dato +" "+ dv);
+      //console.log(dato +" "+ dv);
     }
 
     
