@@ -39,7 +39,8 @@
                         <div class="form-group">
                             <div class="input-group" style="padding-right: 40px;">
                                 <h4 style="margin: 0px;">Desde: </h4>
-                                <input class="form-control"  name="dp" [(ngModel)]="model" ngbDatepicker #d1="ngbDatepicker">
+                                <input class="form-control" name="dp" [(ngModel)]="model" ngbDatepicker
+                                    #d1="ngbDatepicker">
                                 <div class="input-group-append">
                                     <button class="" (click)="d1.toggle()" type="button">
                                         <mdb-icon far icon="calendar-alt" class="cyan-text" size="lg"></mdb-icon>
@@ -48,7 +49,8 @@
                             </div>
                             <div class="input-group">
                                 <h4 style="margin: 0px;">Hasta: </h4>
-                                <input class="form-control" name="dp" [(ngModel)]="model2" ngbDatepicker #d2="ngbDatepicker">
+                                <input class="form-control" name="dp" [(ngModel)]="model2" ngbDatepicker
+                                    #d2="ngbDatepicker">
                                 <div class="input-group-append">
                                     <button class="" (click)="d2.toggle()" type="button">
                                         <mdb-icon far icon="calendar-alt" class="cyan-text" size="lg"></mdb-icon>
@@ -74,15 +76,20 @@
                     <div role="tabpanel" class="tab-pane fade" id="Servicios">
                         <h2>Reporte de servicios</h2>
                         <br>
-                        <p><b>Gráfico de servicios solicitados</b></p>
+                        <h4><b>Gráfico de servicios agendados</b></h4>
                         <div class="row">
                             <div class="col-12">
-                                <div id="chartdiv" style="width: 100%;height: 200px;" class="graph"></div>
+                                <div id="chartdiv" style="width: 100%;height: 250px;" class="graph"></div>
                             </div>
 
                         </div>
+                        <div class="row" style="display:block; text-align: right; margin-right: auto;">
+                            <div class="col-12">
+                                <h5 >Total de servicios agendados en el periodo de tiempo seleccionado: {{servicios.length}}</h5>
+                            </div>
+                        </div>
                         <br>
-                        <p><b>Datos de servicios solicitados</b></p>
+                        <h4><b>Detalle de servicios agendados</b></h4>
 
                         <div class="table-responsive">
                             <table mdbTable>
@@ -91,7 +98,7 @@
                                         <th style="vertical-align: middle">#</th>
                                         <th style="vertical-align: middle">Nombre</th>
                                         <th style="vertical-align: middle">Descripción</th>
-                                        <th style="vertical-align: middle">Solicitado</th>
+                                        <th style="vertical-align: middle">N° veces agendado</th>
                                     </tr>
                                 </thead>
                                 <tbody *ngFor="let servicio of servicios; index as i">
@@ -110,15 +117,20 @@
                     <div role="tabpanel" class="tab-pane fade" id="Reservas">
                         <h2>Reporte de reservas</h2>
                         <br>
-                        <p><b>Gráfico de reservas por estado</b></p>
+                        <h4><b>Gráfico de reservas por estado</b></h4>
                         <div class="row">
                             <div class="col-12">
                                 <div id="chartdiv3" style="width: 100%;height: 250px;" class="graph"></div>
                             </div>
 
                         </div>
+                        <div class="row" style="display:block; text-align: right; margin-right: auto;">
+                            <div class="col-12">
+                                <h5 >Total de reservas agendadas en el periodo de tiempo seleccionado: {{reservas.length}}</h5>
+                            </div>
+                        </div>
                         <br>
-                        <p><b>Datos de reservas</b></p>
+                        <h4><b>Datos de reservas</b></h4>
 
                         <div class="table-responsive">
                             <table mdbTable>
@@ -135,7 +147,8 @@
                                     <tr style="text-align: center">
                                         <td style="vertical-align: middle">{{i+1}}</td>
                                         <td style="vertical-align: middle">{{reserva[1] | date:'dd-MM-yyyy'}}</td>
-                                        <td style="vertical-align: middle">{{reserva[0].cliente.nombre +' '+reserva[0].cliente.apellido}}</td>
+                                        <td style="vertical-align: middle">
+                                            {{reserva[0].cliente.nombre +' '+reserva[0].cliente.apellido}}</td>
                                         <td style="vertical-align: middle">{{reserva[0].servicio.nombre}}</td>
                                         <td style="vertical-align: middle">{{reserva[0].estado_reserva.nombre}}</td>
                                     </tr>
@@ -148,7 +161,7 @@
                     <div role="tabpanel" class="tab-pane fade show active" id="Clientes">
                         <h2>Reporte de clientes frecuentes</h2>
                         <br>
-                        <p><b>Gráfico de los 5 clientes más frecuentes</b></p>
+                        <h4><b>Gráfico de los 5 clientes más frecuentes</b></h4>
                         <div class="row">
                             <div class="col-12">
                                 <div id="chartdiv2" style="width: 100%;height: 250px;" class="graph"></div>
@@ -156,7 +169,7 @@
 
                         </div>
                         <br>
-                        <p><b>Datos de clientes frecuentes</b></p>
+                        <h4><b>Datos de clientes frecuentes</b></h4>
 
                         <div class="table-responsive">
                             <table mdbTable>
@@ -172,7 +185,8 @@
                                 <tbody *ngFor="let cliente of clientes;index as i">
                                     <tr style="text-align: center">
                                         <td style="vertical-align: middle">{{ i+1 }}</td>
-                                        <td style="vertical-align: middle">{{cliente[0].nombre}} {{cliente[0].apellido}}</td>
+                                        <td style="vertical-align: middle">{{cliente[0].nombre}} {{cliente[0].apellido}}
+                                        </td>
                                         <td style="vertical-align: middle">{{cliente[0].telefono}}</td>
                                         <td style="vertical-align: middle">{{cliente[0].email}}</td>
                                         <td style="vertical-align: middle">{{cliente[1]}}</td>
@@ -186,15 +200,15 @@
                     <div role="tabpanel" class="tab-pane fade" id="Movimientos">
                         <h2>Reporte monetario</h2>
                         <br>
-                        <p><b>Gráfico Monetario</b></p>
+                        <h4><b>Gráfico de ingresos y gastos</b></h4>
                         <div class="row">
                             <div class="col-12">
-                                <div id="chartdiv4" style="width: 100%;height: 170px;" class="graph"></div>
+                                <div id="chartdiv4" style="width: 100%;height: 250px;" class="graph"></div>
                             </div>
 
                         </div>
                         <br>
-                        <p><b>Datos de Monetarios</b></p>
+                        <h4><b>Detalles de ingresos y gastos</b></h4>
 
                         <div class="table-responsive">
                             <table mdbTable>
@@ -211,14 +225,17 @@
                                 <tbody *ngFor="let movimiento of movimientos; index as i">
                                     <tr style="text-align: center">
                                         <td style="vertical-align: middle">{{ i+1 }}</td>
-                                        <td style="vertical-align: middle">{{movimiento.fecha | date:'dd-MM-yyyy' }}</td>
+                                        <td style="vertical-align: middle">{{movimiento.fecha | date:'dd-MM-yyyy' }}
+                                        </td>
                                         <td style="vertical-align: middle">{{movimiento.nombre}}</td>
                                         <td style="vertical-align: middle">{{movimiento.profesional.nombre}}</td>
                                         <td style="vertical-align: middle">
-                                            <div *ngIf="movimiento.valor>=0">{{ movimiento.valor | currency:'CLP':'$ '}}</div>
+                                            <div *ngIf="movimiento.valor>='0'">{{ movimiento.valor | currency:'CLP':'$ '}}
+                                            </div>
                                         </td>
                                         <td style="vertical-align: middle">
-                                            <div *ngIf="movimiento.valor<0">{{movimiento.valor | currency:'CLP':'$ '}}</div>
+                                            <div *ngIf="movimiento.valor<'0'">{{movimiento.valor | currency:'CLP':'$ '}}
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>
