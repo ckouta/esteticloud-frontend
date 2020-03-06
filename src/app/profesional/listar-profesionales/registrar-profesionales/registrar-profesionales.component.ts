@@ -86,16 +86,15 @@ export class RegistrarProfesionalesComponent implements OnInit {
     //console.log(this.fotoSeleccionada);
 
     this.restService.saveUsuarioProfesional(registrar).subscribe((profesional) => {
-      this.restService.saveImagenProfesional(profesional.id_profesional + "", this.fotoSeleccionada).subscribe(() => {
-        return this.restService.getListaProfesional().subscribe((res: any[]) => {
-          this.restService.listaProfesional = res;
-          Swal.fire('Ingreso correcto ', 'Se ingresó correctamente el profesional', 'success')
-          this.router.navigate(['profesional/profesional']);
-          });
-      },
-      err =>   {Swal.fire('Imagen', 'Imagen no insertada', 'error'); //console.log(err);
-        }
-      )
+      Swal.fire('Ingreso correcto ', 'Se ingresó correctamente el profesional', 'success')
+      if(this.fotoSeleccionada.size !=null){
+        this.restService.saveImagenProfesional(profesional.id_profesional + "", this.fotoSeleccionada).subscribe(() => {
+        },
+        err =>   {Swal.fire('Imagen', 'Imagen no insertada', 'error'); //console.log(err);
+          }
+        )
+      }
+      this.router.navigate(['profesional/profesional']);
 
     },
     err=> {Swal.fire('Datos incorrectos', 'Profesional no insertado, datos incorrectos o duplicados', 'error');
@@ -109,11 +108,19 @@ export class RegistrarProfesionalesComponent implements OnInit {
 
     this.restService.updateProfesional(profesional.id_profesional, profesional).subscribe(() => {
       Swal.fire('Solicitud aceptada', 'El profesional ha sido actualizado', 'success');
-      return this.router.navigate(['profesional/profesional'])
+      if(this.fotoSeleccionada != null ){
+      this.restService.saveImagenProfesional(profesional.id_profesional + "", this.fotoSeleccionada).subscribe(() => {
       },
+      err =>   {Swal.fire('Imagen', 'Imagen no actualizada', 'error'); //console.log(err);
+        }
+      )
+      }
+      return this.router.navigate(['profesional/profesional'])
+    },
         err =>{
           Swal.fire('Solicitud rechazada', 'El profesional no se pudo actualizar', 'error');
         }
+      
     )
   }
 

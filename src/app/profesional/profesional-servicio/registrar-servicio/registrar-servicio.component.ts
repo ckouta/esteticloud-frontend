@@ -56,11 +56,8 @@ export class RegistrarServicioComponent implements OnInit {
     this.restService.saveServicio(servicio).subscribe((servicio) => {
       let ServicioOfrecido: ServicioOfrecido = { id_servicioOfrecido: null, profesional: this.restService.profesional, servicio: servicio };
       this.restService.saveServicioOfrecido(ServicioOfrecido).subscribe((res => { 
-    
-      })
-    )
+      }))
       if (this.fotoSeleccionada == null) {
-        
         return this.restService.getListaServicio().subscribe((res: any[]) => {
           this.restService.listaServicio = res;
           Swal.fire('Actualización servicio ', 'Servicio correctamente actualizado', 'success')
@@ -75,11 +72,13 @@ export class RegistrarServicioComponent implements OnInit {
           this.router.navigate(['profesional/servicios']);
         },
           err => {
-            Swal.fire('Campos vacíos', 'Los campos están vacíos', 'error')
+            Swal.fire('Imagen', 'Imagen no insertada', 'error')
+            this.router.navigate(['profesional/servicios']);
           })
       },
         err => {
           Swal.fire('Imagen', 'Imagen no insertada', 'error')
+          this.router.navigate(['profesional/servicios']);
         }
       )
 
@@ -112,6 +111,7 @@ export class RegistrarServicioComponent implements OnInit {
       },
         err => {
           Swal.fire('Imagen', 'Imagen no insertada', 'error')
+          this.router.navigate(['profesional/servicios']);
         }
       )
     }

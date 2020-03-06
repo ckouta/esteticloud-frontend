@@ -241,7 +241,7 @@ export class RegistrarHorarioComponent implements OnInit {
   }
 
   limitarViernes() {
-    this.listBloquesJueves = [];
+    this.listBloquesViernes = [];
     this.restService.listaBloque.forEach(element => {
       if (element.diaSemana == "5" && element.horaInicio >= this.horaInicioViernes) {
         this.listBloquesViernes.push(element);
@@ -251,7 +251,7 @@ export class RegistrarHorarioComponent implements OnInit {
   }
 
   limitarSabado() {
-    this.listBloquesJueves = [];
+    this.listBloquesSabado = [];
     this.restService.listaBloque.forEach(element => {
       if (element.diaSemana == "6" && element.horaInicio >= this.horaInicioSabado) {
         this.listBloquesSabado.push(element);
@@ -261,7 +261,7 @@ export class RegistrarHorarioComponent implements OnInit {
   }
   
   limitarDomingo() {
-    this.listBloquesJueves = [];
+    this.listBloquesDomingo = [];
     this.restService.listaBloque.forEach(element => {
       if (element.diaSemana == "0" && element.horaInicio >= this.horaInicioDomingo) {
         this.listBloquesDomingo.push(element);
