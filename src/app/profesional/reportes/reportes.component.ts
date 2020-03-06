@@ -59,8 +59,9 @@ export class ReportesComponent implements OnInit {
     private zone: NgZone) {
 
     const hoy = this.calendar.getToday();
-    this.model = { year: hoy.year, month: hoy.month - 1, day: hoy.month };
+    this.model = { year: hoy.year, month: hoy.month - 1, day: hoy.day };
     this.model2 = hoy;
+    
 
 
 

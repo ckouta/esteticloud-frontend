@@ -39,18 +39,16 @@
                         <div class="form-group">
                             <div class="input-group" style="padding-right: 40px;">
                                 <h4 style="margin: 0px;">Desde: </h4>
-                                <input class="form-control" name="dp" [(ngModel)]="model"  ngbDatepicker
-                                    #d1="ngbDatepicker" (ngModelChange)="generarReporte()" >
+                                <input class="form-control" name="d1" [(ngModel)]="model" ngbDatepicker #d1="ngbDatepicker" (ngModelChange)="generarReporte()">
                                 <div class="input-group-append">
-                                    <button class="" (click)="d1.toggle()" type="button" >
+                                    <button class="" (click)="d1.toggle()" type="button">
                                         <mdb-icon far icon="calendar-alt" class="cyan-text" size="lg"></mdb-icon>
                                     </button>
                                 </div>
                             </div>
                             <div class="input-group">
                                 <h4 style="margin: 0px;">Hasta: </h4>
-                                <input class="form-control" name="dp" [(ngModel)]="model2" ngbDatepicker 
-                                    #d2="ngbDatepicker" (ngModelChange)="generarReporte()">
+                                <input class="form-control" name="d2" [(ngModel)]="model2" ngbDatepicker #d2="ngbDatepicker" (ngModelChange)="generarReporte()">
                                 <div class="input-group-append">
                                     <button class="" (click)="d2.toggle()" type="button">
                                         <mdb-icon far icon="calendar-alt" class="cyan-text" size="lg"></mdb-icon>
@@ -77,7 +75,7 @@
                         <h2>Reporte de servicios</h2>
                         <br>
                         <h4><b>Gráfico de servicios agendados</b></h4>
-                        
+
                         <div class="row">
                             <div class="col-12 z-depth-1">
                                 <div id="chartdiv" style="width: 100%;height: 250px;" class="graph"></div>
@@ -86,7 +84,7 @@
                         <br>
                         <div class="row" style="display:block; text-align: right; margin-right: auto;">
                             <div class="col-12">
-                                <h5 >Total de servicios agendados en el periodo de tiempo seleccionado: {{servicios.length}}</h5>
+                                <h5>Total de servicios agendados en el periodo de tiempo seleccionado: {{servicios.length}}</h5>
                             </div>
                         </div>
                         <br>
@@ -127,7 +125,7 @@
                         <br>
                         <div class="row" style="display:block; text-align: right; margin-right: auto;">
                             <div class="col-12">
-                                <h5 >Total de reservas agendadas en el periodo de tiempo seleccionado: {{reservas.length}}</h5>
+                                <h5>Total de reservas agendadas en el periodo de tiempo seleccionado: {{reservas.length}}</h5>
                             </div>
                         </div>
                         <br>
@@ -209,7 +207,7 @@
                         <br>
                         <div class="row" style="display:block; text-align: right; margin-right: auto;">
                             <div class="col-12">
-                                <h5 >Total de movimientos en el periodo de tiempo seleccionado: {{movimientos.length}}</h5>
+                                <h5>Total de movimientos en el periodo de tiempo seleccionado: {{movimientos.length}}</h5>
                             </div>
                         </div>
                         <br>
