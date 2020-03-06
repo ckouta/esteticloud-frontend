@@ -37,7 +37,6 @@ export class CalendarioComponent implements OnInit {
   idCliente:number ;
 
   calendarEvents = [
-    { title: 'event 2', start: '2019-10-17T10:30:00', end: '2019-10-17T11:30:00' }
   ];
   Evento: Evento ;
 
@@ -302,7 +301,9 @@ save() {
         //console.log(res);
       })
     });
-   
+    let calendar = this.calendarComponent.getApi();
+    calendar.removeAllEvents();
+    this.reservas(this.restService.profesional);
     Swal.fire('Solicitud aceptada', 'La reserva ha sido agregada', 'success');
       this.display = 'none';
       return this.router.navigate(['profesional/reserva'])

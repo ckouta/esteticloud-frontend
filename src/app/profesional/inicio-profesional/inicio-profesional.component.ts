@@ -54,7 +54,7 @@ export class InicioProfesionalComponent {
         this.restService.getMovimientoProfesional(this.restService.profesional).subscribe((res: any[]) => {
           this.movimientos = res;
           this.movimientos.forEach(element => {
-            if(new Date(element.fecha).getMonth() == new Date().getMonth()){
+            if(new Date(element.fecha).getMonth() == new Date().getMonth() && new Date(element.fecha).getFullYear() == new Date().getFullYear()){
               this.ganancia+=+element.valor;
             }
           });
