@@ -102,7 +102,7 @@ export class InicioProfesionalComponent {
             let data = [];
             this.profesionales.forEach(element => {
               data.push({
-                "name": element.nombre,
+                "name": element.nombre +' ' +element.apellido,
                 "steps": element.contador,
                 "href": "http://parra.chillan.ubiobio.cl:8080/alvaro.castillo1501/servicio/uploads/img/" + element.foto
               })
@@ -112,37 +112,43 @@ export class InicioProfesionalComponent {
         })
 
         let categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
+        
         categoryAxis.dataFields.category = "name";
         categoryAxis.renderer.grid.template.strokeOpacity = 0;
         categoryAxis.renderer.minGridDistance = 10;
         categoryAxis.renderer.labels.template.dx = -40;
         categoryAxis.renderer.minWidth = 120;
-        categoryAxis.renderer.tooltip.dx = -40;
+        categoryAxis.showTooltipOn = 'always';
+        categoryAxis.tooltip.dx = -30;
+        //categoryAxis.renderer.tooltip.dx = -40;
 
         let valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
+        valueAxis.title.text= "[bold]Cantidad de reservas[/]";
         valueAxis.renderer.inside = true;
         valueAxis.renderer.labels.template.fillOpacity = 0.3;
         valueAxis.renderer.grid.template.strokeOpacity = 0;
         valueAxis.min = 0;
         valueAxis.cursorTooltipEnabled = false;
         valueAxis.renderer.baseGrid.strokeOpacity = 0;
-        valueAxis.renderer.labels.template.dy = 20;
+        //valueAxis.renderer.labels.template.dy = 10;
 
         let series = chart.series.push(new am4charts.ColumnSeries);
         series.dataFields.valueX = "steps";
         series.dataFields.categoryY = "name";
         series.tooltipText = "{valueX.value}";
-        series.tooltip.pointerOrientation = "vertical";
-        series.tooltip.dy = - 30;
+        series.tooltip.pointerOrientation = "left";
+        //series.tooltip.dy = - 30;
+        series.tooltip.dx =  30;
+        
         series.columnsContainer.zIndex = 100;
 
         let columnTemplate = series.columns.template;
         columnTemplate.height = am4core.percent(50);
-        columnTemplate.maxHeight = 50;
-        columnTemplate.column.cornerRadius(60, 10, 60, 10);
+        columnTemplate.maxHeight = 30;
+        columnTemplate.column.cornerRadius(30, 10, 30, 10);
         columnTemplate.strokeOpacity = 0;
 
-        series.heatRules.push({ target: columnTemplate, property: "fill", dataField: "valueX", min: am4core.color("#e5dc36"), max: am4core.color("#5faa46") });
+        series.heatRules.push({ target: columnTemplate, property: "fill", dataField: "valueX", min: am4core.color("#a18bca"), max: am4core.color("#6946aa") });
         series.mainContainer.mask = undefined;
 
         let cursor = new am4charts.XYCursor();
@@ -152,9 +158,9 @@ export class InicioProfesionalComponent {
         cursor.behavior = "none";
 
         let bullet = columnTemplate.createChild(am4charts.CircleBullet);
-        bullet.circle.radius = 30;
+        bullet.circle.radius = 20;
         bullet.valign = "middle";
-        bullet.align = "left";
+        bullet.align = "right";
         bullet.isMeasured = true;
         bullet.interactionsEnabled = false;
         bullet.horizontalCenter = "right";
@@ -177,8 +183,6 @@ export class InicioProfesionalComponent {
         chart.cursor.events.on("cursorpositionchanged", function (event) {
           let dataItem = series.tooltipDataItem;
 
-
-
           if (previousBullet && previousBullet != bullet) {
             previousBullet.isHover = false;
           }
@@ -199,65 +203,68 @@ export class InicioProfesionalComponent {
         // Add data
         chart2.data = [{
           "country": "Enero",
-          "year2018": 3.5,
-          "year2019": 4.2
+          "year2018": 300,
+          "year2019": 350
         }, {
           "country": "Febrero",
-          "year2018": 1.7,
-          "year2019": 3.1
+          "year2018": 400,
+          "year2019": 450
         }, {
           "country": "Marzo",
-          "year2018": 2.8,
-          "year2019": 2.9
+          "year2018": 452,
+          "year2019": 562,
         }, {
           "country": "Abril",
-          "year2018": 2.6,
-          "year2019": 2.3
+          "year2018": 523,
+          "year2019": 569
         }, {
           "country": "Mayo",
-          "year2018": 1.4,
-          "year2019": 2.1
+          "year2018": 692,
+          "year2019": 624
         }, {
           "country": "Junio",
-          "year2018": 2.6,
-          "year2019": 4.9
+          "year2018": 741,
+          "year2019": 532
         }, {
           "country": "Julio",
-          "year2018": 6.4,
-          "year2019": 7.2
+          "year2018": 641,
+          "year2019": 712
         }, {
           "country": "Agosto",
-          "year2018": 8,
-          "year2019": 7.1
+          "year2018": 412,
+          "year2019": 456
         }, {
           "country": "Septiembre",
-          "year2018": 9.9,
-          "year2019": 10.1
+          "year2018": 647,
+          "year2019": 712
         }, {
           "country": "Octubre",
-          "year2018": 9.9,
-          "year2019": 10.1
+          "year2018": 541,
+          "year2019": 741
         }, {
           "country": "Noviembre",
-          "year2018": 9.9,
-          "year2019": 10.1
+          "year2018": 412,
+          "year2019": 475
         }, {
           "country": "Diciembre",
-          "year2018": 9.9,
-          "year2019": 10.1
+          "year2018": 658,
+          "year2019": 752
         }];
 
         // Create axes
         let categoryAxis2 = chart2.xAxes.push(new am4charts.CategoryAxis());
+        
         categoryAxis2.dataFields.category = "country";
         categoryAxis2.renderer.grid.template.location = 0;
         categoryAxis2.renderer.minGridDistance = 100;
 
         let valueAxis2 = chart2.yAxes.push(new am4charts.ValueAxis());
-        valueAxis2.title.text = "Ganancias EstetiCloud";
+        valueAxis2.title.text = "[bold]Ganancias en miles[/]";
         valueAxis2.renderer.labels.template.adapter.add("text", function (text) {
           return "$" + text;
         });
+        //leyends
+        chart2.legend = new am4charts.Legend();
 
         // Create series
         let series2 = chart2.series.push(new am4charts.ColumnSeries3D());
@@ -265,11 +272,15 @@ export class InicioProfesionalComponent {
         series2.dataFields.categoryX = "country";
         series2.name = "Year 2018";
         series2.clustered = false;
-        series2.columns.template.tooltipText = "Ganancias {category} (2018): [bold]{valueY}[/]";
-        series2.columns.template.fillOpacity = 0.9;
+        series2.columns.template.tooltipText = "Ganancias {category} (2018): [bold]${valueY}[/]";
+        series2.columns.template.fillOpacity = 0.8;
+        series2.columns.template.fill = am4core.color("#d9d1ea");
+        
 
 
         let series3 = chart2.series.push(new am4charts.ColumnSeries3D());
+        series3.columns.template.fill = am4core.color("#a18bca");
+        series2.columns.template.fillOpacity = 0.8;
         series3.dataFields.valueY = "year2019";
         series3.dataFields.categoryX = "country";
         series3.name = "Year 2019";
