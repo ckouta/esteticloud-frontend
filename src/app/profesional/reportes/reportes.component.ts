@@ -6,7 +6,8 @@ import { Router } from '@angular/router';
 import { IntervaloFecha } from 'src/app/entidades/IntervaloFecha';
 import {
   NgbDateParserFormatter, NgbCalendar, NgbDateStruct,
-  NgbInputDatepicker
+  NgbInputDatepicker,
+  NgbDatepickerI18n
 } from '@ng-bootstrap/ng-bootstrap';
 import { Servicio } from 'src/app/entidades/Servicio';
 import * as am4core from "@amcharts/amcharts4/core";
@@ -15,11 +16,14 @@ import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import { Cliente } from 'src/app/entidades/Cliente';
 import { Movimiento } from 'src/app/entidades/Movimiento';
 import { any } from '@amcharts/amcharts4/.internal/core/utils/Array';
+import { esI18n } from 'src/app/esI18n';
 
 @Component({
   selector: 'app-reportes',
   templateUrl: './reportes.component.html',
-  styleUrls: ['./reportes.component.css']
+  styleUrls: ['./reportes.component.css'],
+  providers: [
+    {provide: NgbDatepickerI18n, useClass: esI18n}]
 })
 
 
@@ -455,8 +459,8 @@ export class ReportesComponent implements OnInit {
       "label": "<i class=\"fas fa-align-justify\"></i>",
       "menu": [
         { "type": "png", "label": "Exportar PNG" },
-        { "type": "pdf", "label": "Exportar PNG" },
-        { "type": "jpg", "label": "Exportar PNG" }
+        { "type": "pdf", "label": "Exportar PDF" },
+        { "type": "jpg", "label": "Exportar JPG" }
       ]
     }];
   }
