@@ -1,27 +1,28 @@
 # EsteticloudFrontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.3.
+Este proyecto se generó con [Angular CLI] (https://github.com/angular/angular-cli) versión 8.3.3.
 
-## Development server
+## Preparar el ambiente
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Primero instalemos Angular-Cli, ejecutamos:
+npm install -g @angular/cli
 
-## Code scaffolding
+## Instalar dependencias 
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Para ejecutar se necesita la carpeta node_module,debemos dirigirnos adentro de la carpeta origen y ejecutamos :
+npm install
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Ejecutar la aplicacion 
 
-## Running unit tests
+Ejecutamos "ng serve" para generar el servidor de desarrollo. Navegue por "http: // localhost: 4200 /". 
+La aplicación se volverá a cargar automáticamente si cambia alguno de los archivos de origen.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
+## Compilar
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Ejecutar "ng build" para compilar el proyecto. Los artefactos de compilación se almacenarán en el directorio "dist /". Use el indicador "--prod" para una compilación de producción.
 
-## Further help
+## Ayuda adicional
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Para obtener más ayuda sobre la CLI Angular, use "ng help" o visite el [Angular CLI README] (https://github.com/angular/angular-cli/blob/master/README.md).
