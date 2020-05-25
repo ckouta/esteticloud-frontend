@@ -5,23 +5,26 @@ Este proyecto se generó con [Angular CLI] (https://github.com/angular/angular-c
 ## Preparar el ambiente
 
 Primero instalemos Angular-Cli, ejecutamos:
-npm install -g @angular/cli
 
-## Instalar dependencias 
+`npm install -g @angular/cli`
 
-Para ejecutar se necesita la carpeta node_module,debemos dirigirnos adentro de la carpeta origen y ejecutamos :
-npm install
+## Instalar dependencias para la aplicación
+
+Luego para que se descarguen todas las dependencias necesarias para el funcionamiento del software, debe localizar el archivo "package.json" dentro de la carpeta y ejecutar:
+
+`npm install`
 
 
 ## Ejecutar la aplicacion 
 
-Ejecutamos "ng serve" para generar el servidor de desarrollo. Navegue por "http: // localhost: 4200 /". 
-La aplicación se volverá a cargar automáticamente si cambia alguno de los archivos de origen.
+Finalmente debe ejecutar el comando `ng serve` para levantar el servidor de desarrollo. Navegue por "http: // localhost: 4200 /". 
+
+La aplicación se volverá a cargar automáticamente si guarda los cambios en alguno de los archivos de origen.
 
 
 ## Compilar
 
-Ejecutar "ng build" para compilar el proyecto. Los artefactos de compilación se almacenarán en el directorio "dist /". Use el indicador "--prod" para una compilación de producción.
+Si quiere montar la aplicación en un servidor debe ejecutar `ng build` para compilar el proyecto. Los artefactos de compilación se almacenarán en el directorio "dist /". Use el indicador `--prod` para una compilación de producción.
 
 ## Ayuda adicional
 
