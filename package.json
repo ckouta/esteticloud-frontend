@@ -36,7 +36,7 @@
         "bootstrap": "^4.4.1",
         "font-awesome": "^4.7.0",
         "html2canvas": "1.0.0-rc.1",
-        "jspdf": "^1.5.3",
+        "jspdf": "^2.3.1",
         "mdbootstrap": "^4.11.0",
         "rxjs": "~6.4.0",
         "sweetalert2": "^9.5.4",
